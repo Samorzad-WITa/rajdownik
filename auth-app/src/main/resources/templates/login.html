@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="lang='en'" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajdownik login</title>
+</head>
+
+<body>
+    <form method="post" action="/login">
+        <div th:classappend="${isError && false ? 'error' : ''}">
+            <input type="text" id="login" name="username" autocomplete="username">
+            <label for="login">Email address<span th:if="${isError && false}" th:text=" '- ' + ${errorCode}" /></label>
+        </div>
+        <div th:classappend="${isError && false ? 'error' : ''}">
+            <input type="password" id="password" name="password"
+                   th:formControlName="password" autocomplete="current-password">
+            <label for="password">Password<span th:if="${isError && false}" th:text=" '- ' + ${errorCode}" /></label>
+        </div>
+        <input type="hidden" th:value="${csrfTokenValue}" th:name="${csrfTokenParameterName}" />
+        <span th:if="${isError}" th:text="#{'login.error.' + ${errorCode}}" />
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        const btnShow = document.querySelector('.btn-show');
+
+        btnShow.addEventListener('click', () => {
+            const inputPassword = document.querySelector('.form-password');
+            inputPassword.getAttribute('type') === 'password' ? inputPassword.setAttribute('type', 'text') : inputPassword.setAttribute('type', 'password');
+        })
+    </script>
+</body>
+
+</html>

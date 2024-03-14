@@ -1,0 +1,24 @@
+logging:
+  level:
+    root: info
+
+server:
+  ssl:
+    enabled: false
+  port: 1144
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:postgresql://localhost:54321/rajdownik_dev
+    username: witta
+    password: witta
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+        default_schema: public
+    hibernate:
+      ddl-auto: update

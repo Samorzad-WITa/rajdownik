@@ -1,0 +1,52 @@
+package pl.pwr.ite.server.web;
+
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+import pl.pwr.ite.server.model.enums.Permission;
+import pl.pwr.ite.server.security.permission.PermissionAuthority;
+import pl.pwr.ite.server.service.PermissionService;
+import pl.pwr.ite.server.service.UserService;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+@Component
+@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
+@RequiredArgsConstructor
+public class SecurityFacade implements InitializingBean {
+
+    private final PermissionService permissionService;
+    private final UserService userService;
+
+    private boolean unrestrictedAccess = true;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+    }
+
+    public void checkAccess(@NonNull Permission permission) {
+        if(!unrestrictedAccess && !hasAccess(permission)) {
+            throw new AccessDeniedException(String.format("Permission %s not granted", permission));
+        }
+    }
+
+    public boolean hasAccess(Permission permission) {
+        var authorities = getPermissionAuthorities();
+        return permissionService.hasAccess(permission, authorities);
+    }
+
+    protected Collection<PermissionAuthority> getPermissionAuthorities() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .filter(PermissionAuthority.class::isInstance)
+                .map(PermissionAuthority.class::cast)
+                .collect(Collectors.toList());
+    }
+}

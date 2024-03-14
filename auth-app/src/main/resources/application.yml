@@ -1,0 +1,48 @@
+logging:
+  level:
+    root: info
+
+server:
+  ssl:
+    enabled: false
+  port: 1122
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:postgresql://localhost:54321/rajdownik_dev
+    username: witta
+    password: witta
+    jpa:
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          default_schema: public
+          jdbc:
+            lob:
+              non_contextual_creation: true
+      hibernate:
+        ddl-auto: update
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "444129092352-qsh0209klhh1cqmooe4va2nuntn6dg0s.apps.googleusercontent.com"
+            client-secret: "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"
+
+
+rajdownik:
+  auth:
+    provider:
+      issuer: http://localhost:1122
+    jwk:
+      private-key: classpath:auth.key
+      public-key: classpath:auth.pub
+  security:
+    cors:
+      allowed-origins:
+        http://localhost:1133
+        http://localhost:1144
