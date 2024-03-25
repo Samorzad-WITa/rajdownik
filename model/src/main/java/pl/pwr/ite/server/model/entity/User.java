@@ -39,5 +39,8 @@ public class User extends EntityBase {
     private String passwordHash;
 
     @OneToMany(mappedBy = "user")
+    private Set<UserData> data = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
     private Set<UserRole> roles = new HashSet<>();
 }

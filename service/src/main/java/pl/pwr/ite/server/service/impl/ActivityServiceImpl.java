@@ -36,6 +36,8 @@ public class ActivityServiceImpl extends EntityServiceBase<Activity> implements 
                         QActivity.activity.timeFrom)
                         .eq(referenceTime.toLocalDate()
                         )
-                ).fetch();
+                )
+                .orderBy(path.timeFrom.asc())
+                .fetch();
     }
 }

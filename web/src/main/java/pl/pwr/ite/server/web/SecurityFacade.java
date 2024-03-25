@@ -9,7 +9,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.enums.Permission;
+import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.security.permission.PermissionAuthority;
 import pl.pwr.ite.server.service.PermissionService;
 import pl.pwr.ite.server.service.UserService;
@@ -48,5 +50,18 @@ public class SecurityFacade implements InitializingBean {
                 .filter(PermissionAuthority.class::isInstance)
                 .map(PermissionAuthority.class::cast)
                 .collect(Collectors.toList());
+    }
+
+    public User getAuthenticatedUser() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null) {
+            throw new IllegalStateException("No authenticated user available.");
+        }
+        var principal = authentication.getPrincipal();
+        if(!(principal instanceof AuthenticatedUser)) {
+            throw new IllegalStateException("Principal is not of type AuthenticatedUser.");
+        }
+        var userId = ((AuthenticatedUser) authentication).getUserId();
+        return userService.getReference(userId);
     }
 }

@@ -4,28 +4,19 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import pl.pwr.ite.server.mapping.MappingProperties;
 
-import java.util.UUID;
-
 @Data
-public class UserDto {
+public class UserDataDto {
 
     @Data
     @Accessors(chain = true)
     public static abstract class Properties implements MappingProperties {
         private boolean includeData;
+        private boolean includeUser;
     }
 
-    private UUID id;
+    private DataDto data;
 
-    private String email;
+    private UserDto user;
 
-    private String phoneNumber;
-
-    private String indexNumber;
-
-    private String firstName;
-
-    private String lastName;
-
-    private UserDataDto[] data;
+    private String value;
 }

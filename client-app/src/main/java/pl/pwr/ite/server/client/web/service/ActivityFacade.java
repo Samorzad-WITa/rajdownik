@@ -14,6 +14,7 @@ import java.util.Collections;
 
 @Service
 public class ActivityFacade extends EntityServiceFacade<Activity, ActivityService, ActivityDto, ActivityDto.Properties, ActivityMapper> {
+
     public ActivityFacade(ActivityService service, ActivityMapper mapper) {
         super(service, mapper);
     }

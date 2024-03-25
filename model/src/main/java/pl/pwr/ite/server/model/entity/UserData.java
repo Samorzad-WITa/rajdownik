@@ -30,4 +30,14 @@ public class UserData extends EntityBase {
 
     @Column(nullable = false, length = 50)
     private String value;
+
+    public void setUser(User user) {
+        this.user = user;
+        this.userId = user == null ? null : user.getId();
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+        this.dataId = data == null ? null : data.getId();
+    }
 }

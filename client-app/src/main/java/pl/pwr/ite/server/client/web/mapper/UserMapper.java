@@ -10,6 +10,8 @@ import pl.pwr.ite.server.model.entity.User;
 @RequiredArgsConstructor
 public class UserMapper extends MapperBase<User, UserDto, UserDto.Properties> {
 
+    private final UserDataMapper userDataMapper;
+
     @Override
     public void transform(User source, UserDto destination, UserDto.Properties properties) {
         destination.setEmail(source.getEmail());
@@ -17,5 +19,9 @@ public class UserMapper extends MapperBase<User, UserDto, UserDto.Properties> {
         destination.setIndexNumber(source.getIndexNumber());
         destination.setFirstName(source.getFirstName());
         destination.setLastName(source.getLastName());
+
+        if(properties.isIncludeData()) {
+            map(destination::setData, source.getData(), userDataMapper, properties);
+        }
     }
 }
