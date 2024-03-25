@@ -1,0 +1,55 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "dev": "turbo run dev",
+    "format": "turbo run format",
+    "format:check": "turbo run format:check",
+    "lint": "turbo run lint",
+    "postinstall": "husky install"
+  },
+  "packageManager": "pnpm@8.15.5",
+  "engines": {
+    "node": "^20"
+  },
+  "volta": {
+    "node": "20.11.1",
+    "pnpm": "8.15.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Serrwo/rajdownik-backend.git"
+  },
+  "maintainers": [
+    "Dominik Pokrzywa",
+    "Michał Korczak (https://omikor.in)"
+  ],
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Serrwo/rajdownik-backend/issues"
+  },
+  "homepage": "https://github.com/Serrwo/rajdownik-backend#readme",
+  "devDependencies": {
+    "@omikorin/prettier-config": "^1.0.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "husky": "^8.0.3",
+    "prettier": "^3.2.5",
+    "turbo": "^1.13.0",
+    "wait-on": "^7.2.0"
+  },
+  "prettier": "@omikorin/prettier-config",
+  "lint-staged": {
+    "*": [
+      "prettier --ignore-unknown --write"
+    ],
+    "*.{js,jsx,ts,tsx,graphql,gql}": "eslint --ext .js,.jsx,.ts,.tsx "
+  }
+}
