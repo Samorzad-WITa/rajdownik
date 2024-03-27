@@ -4,10 +4,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import pl.pwr.ite.server.mapping.MappingProperties;
 
-import java.time.LocalDateTime;
-
 @Data
-public class ActivityDto {
+public class AnnouncementDto {
 
     @Data
     @Accessors(chain = true)
@@ -15,14 +13,7 @@ public class ActivityDto {
         private boolean includeDescription;
     }
 
-    private LocalDateTime timeFrom;
-
-    private LocalDateTime timeTo;
-
-    private String location;
-
     private String title;
 
     private String description;
 }
-

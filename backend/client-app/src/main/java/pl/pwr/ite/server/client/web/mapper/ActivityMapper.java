@@ -15,7 +15,10 @@ public class ActivityMapper extends MapperBase<Activity, ActivityDto, ActivityDt
         destination.setTimeFrom(source.getTimeFrom());
         destination.setTimeTo(source.getTimeTo());
         destination.setTitle(source.getTitle());
-        destination.setDescription(source.getDescription());
         destination.setLocation(source.getLocation());
+
+        if(properties.isIncludeDescription()) {
+            destination.setDescription(source.getDescription());
+        }
     }
 }
