@@ -58,6 +58,7 @@ build
 
 # docker
 postgres-data/
+.m2
 
 # yarn
 .pnp*
