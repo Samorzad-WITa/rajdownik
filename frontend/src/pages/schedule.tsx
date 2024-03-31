@@ -1,6 +1,8 @@
 import { OutlineButton } from '@/components';
 import { Schedule } from '@/features/schedule';
+import { fetchActivities } from '@/hooks';
 import { Box, HStack, Icon, Text, VStack } from '@chakra-ui/react';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
 
@@ -20,6 +22,7 @@ export default function Agenda() {
           >
             Piątek
           </OutlineButton>
+
           <Box
             p={4}
             paddingX={6}
@@ -37,14 +40,31 @@ export default function Agenda() {
               13 kwietnia 2024
             </Text>
           </Box>
+
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
           >
             Niedziela
           </OutlineButton>
         </HStack>
+
         <Schedule />
       </VStack>
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['activities'],
+    queryFn: () => fetchActivities(),
+  });
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
