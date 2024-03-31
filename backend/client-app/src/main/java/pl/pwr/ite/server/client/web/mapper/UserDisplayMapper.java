@@ -17,6 +17,7 @@ public class UserDisplayMapper extends MapperBase<UserDisplay, UserDisplayDto, U
         destination.setLabel(source.getLabel());
         destination.setTimeFrom(source.getTimeFrom());
         destination.setTimeTo(source.getTimeTo());
+        destination.setId(source.getId());
 
         if(properties.isIncludeUser()) {
             map(destination::setUser, source.getUser(), userMapper, properties);
