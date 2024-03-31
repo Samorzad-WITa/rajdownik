@@ -32,7 +32,7 @@ public class ActivityController implements InitializingBean {
         defaultSingleProperties = mappingService.createProperties(ActivityDto.Properties.class)
                 .setIncludeDescription(true);
         defaultListProperties = mappingService.createProperties(ActivityDto.Properties.class)
-                .setIncludeDescription(false);
+                .setIncludeDescription(true);
     }
 
     @GetMapping

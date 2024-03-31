@@ -31,13 +31,13 @@ public class UserController implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         defaultSingleProperties = mappingService.createProperties(UserDto.Properties.class)
-                .setIncludeData(true)
+                .setIncludeData(false)
                 .as(UserDataDto.Properties.class)
                 .setIncludeData(true)
                 .setIncludeUser(false);
 
         defaultListProperties = mappingService.createProperties(UserDto.Properties.class)
-                .setIncludeData(true)
+                .setIncludeData(false)
                 .as(UserDataDto.Properties.class)
                 .setIncludeData(true)
                 .setIncludeUser(false);

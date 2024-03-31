@@ -38,6 +38,15 @@ public class User extends EntityBase {
     @Column(length = 64)
     private String passwordHash;
 
+    @Column(length = 5)
+    private String roomNumber;
+
+    @Column(length = 15)
+    private String dietType;
+
+    @Column
+    private Integer busNumber;
+
     @OneToMany(mappedBy = "user")
     private Set<UserData> data = new HashSet<>();
 

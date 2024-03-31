@@ -19,9 +19,12 @@ public class UserMapper extends MapperBase<User, UserDto, UserDto.Properties> {
         destination.setIndexNumber(source.getIndexNumber());
         destination.setFirstName(source.getFirstName());
         destination.setLastName(source.getLastName());
+        destination.setRoomNumber(source.getRoomNumber());
+        destination.setDietType(source.getDietType());
+        destination.setBusNumber(source.getBusNumber());
 
-        if(properties.isIncludeData()) {
-            map(destination::setData, source.getData(), userDataMapper, properties);
-        }
+//        if(properties.isIncludeData()) {
+//            map(destination::setData, source.getData(), userDataMapper, properties);
+//        }
     }
 }

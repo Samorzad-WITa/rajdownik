@@ -27,5 +27,11 @@ public class UserDto {
 
     private String lastName;
 
-    private UserDataDto[] data;
+    private String roomNumber;
+
+    private String dietType;
+
+    private Integer busNumber;
+
+//    private UserDataDto[] data;
 }
