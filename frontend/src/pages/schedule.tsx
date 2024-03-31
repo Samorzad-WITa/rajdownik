@@ -1,5 +1,5 @@
 import { OutlineButton } from '@/components';
-import { Calendar } from '@/features/schedule';
+import { Schedule } from '@/features/schedule';
 import { Box, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
@@ -43,7 +43,7 @@ export default function Agenda() {
             Niedziela
           </OutlineButton>
         </HStack>
-        <Calendar />
+        <Schedule />
       </VStack>
     </>
   );

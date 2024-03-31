@@ -1,7 +1,7 @@
 import { Box, Flex, Icon, Link, StackDivider, VStack } from '@chakra-ui/react';
 import { ChevronRight } from 'lucide-react';
 
-export const Calendar = () => {
+export const Schedule = () => {
   return (
     <VStack
       width="100%"
@@ -13,7 +13,7 @@ export const Calendar = () => {
       spacing={4}
       divider={<StackDivider />}
     >
-      {calendarItems.map((item) => (
+      {items.map((item) => (
         <Link key={item.id} href={`/agenda/${item.id}`}>
           <Flex align="center" justify="space-between" gap={3}>
             <Box>{item.hour}</Box>
@@ -26,7 +26,7 @@ export const Calendar = () => {
   );
 };
 
-const calendarItems = [
+const items = [
   {
     id: 7,
     title: 'Wydarzenie 7',
