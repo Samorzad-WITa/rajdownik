@@ -1,4 +1,4 @@
-import { useAnnouncements } from '@/hooks';
+import { AnnouncementItem, useAnnouncements } from '@/hooks';
 import {
   AbsoluteCenter,
   Flex,
@@ -27,7 +27,7 @@ export const Announcements = () => {
       gap={5}
       direction="column"
     >
-      {data?.map((item: any, index: number) => (
+      {data?.map((item: AnnouncementItem, index: number) => (
         // TODO: change index to item id when backend is fixed
         <Link key={index} href={`/announcement/${index}`}>
           <Flex backgroundColor="#344756" borderRadius={20} p={4}>

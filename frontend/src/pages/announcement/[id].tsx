@@ -1,8 +1,6 @@
 import { OutlineButton } from '@/components/OutlineButton';
-import {
-  Announcement,
-  AnnouncementItem,
-} from '@/features/announcements/Announcement';
+import { Announcement } from '@/features/announcements/Announcement';
+import { AnnouncementItem } from '@/hooks';
 import { Button, Flex, Icon, VStack } from '@chakra-ui/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';

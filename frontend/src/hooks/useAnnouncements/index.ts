@@ -1,5 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
+export type AnnouncementItem = {
+  id: number;
+  title: string;
+  description: string;
+};
+
 const fetchAnnouncements = async (limit = 10) => {
   const res = await fetch('/api/announcements');
   const parsed = await res.json();

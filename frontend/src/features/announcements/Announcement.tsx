@@ -1,3 +1,4 @@
+import { AnnouncementItem } from '@/hooks';
 import {
   Card,
   CardBody,
@@ -7,12 +8,6 @@ import {
   Heading,
   Text,
 } from '@chakra-ui/react';
-
-export type AnnouncementItem = {
-  id: number;
-  title: string;
-  description: string;
-};
 
 export const Announcement = ({
   announcement,
