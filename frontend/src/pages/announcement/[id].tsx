@@ -1,5 +1,6 @@
+import { OutlineButton } from '@/components/OutlineButton';
 import { Announcement } from '@/features/announcements/Announcement';
-import { Button, Flex, Icon, Text, VStack } from '@chakra-ui/react';
+import { Button, Flex, Icon, VStack } from '@chakra-ui/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -36,32 +37,16 @@ export default function Home() {
         </Button>
         <Announcement announcement={announcement} />
         <Flex width="100%" gap={2} justify="space-between">
-          <Button
-            size="xs"
-            fontSize={15}
-            fontWeight="bold"
-            textTransform="uppercase"
-            pl={0}
-            variant="outline"
-            color="#283d4e"
-            outlineColor="#283d4e"
+          <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
           >
             Poprzednie
-          </Button>
-          <Button
-            size="xs"
-            fontSize={15}
-            fontWeight="bold"
-            textTransform="uppercase"
-            pr={0}
-            variant="outline"
-            color="#283d4e"
-            outlineColor="#283d4e"
+          </OutlineButton>
+          <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
           >
             Następne
-          </Button>
+          </OutlineButton>
         </Flex>
       </VStack>
     </>

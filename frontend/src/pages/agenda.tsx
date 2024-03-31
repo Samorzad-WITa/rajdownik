@@ -1,3 +1,4 @@
+import { OutlineButton } from '@/components/OutlineButton';
 import { Calendar } from '@/features/agenda/Calendar';
 import { Box, Button, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -14,18 +15,11 @@ export default function Agenda() {
       </Head>
       <VStack mt={3} gap={5}>
         <HStack gap={2}>
-          <Button
-            size="xs"
-            pl={0}
-            variant="outline"
-            fontWeight="bold"
-            textTransform="uppercase"
-            color="#283d4e"
-            outlineColor="#283d4e"
+          <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
           >
             Piątek
-          </Button>
+          </OutlineButton>
           <Box
             p={4}
             paddingX={6}
@@ -43,18 +37,11 @@ export default function Agenda() {
               13 kwietnia 2024
             </Text>
           </Box>
-          <Button
-            size="xs"
-            pr={0}
-            variant="outline"
-            fontWeight="bold"
-            textTransform="uppercase"
-            color="#283d4e"
-            outlineColor="#283d4e"
+          <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
           >
             Niedziela
-          </Button>
+          </OutlineButton>
         </HStack>
         <Calendar />
       </VStack>
