@@ -1,3 +1,4 @@
+import { Link } from '@chakra-ui/next-js';
 import { Box, Flex, Image } from '@chakra-ui/react';
 
 export const Navbar = () => {
@@ -36,7 +37,13 @@ export const Navbar = () => {
         </Flex>
         <Flex justify="end">
           <Box>
-            <Image height="45px" src="/images/rajd-logo.png" alt="Logo Rajdu" />
+            <Link href="/">
+              <Image
+                height="45px"
+                src="/images/rajd-logo.png"
+                alt="Logo Rajdu"
+              />
+            </Link>
           </Box>
         </Flex>
       </Flex>

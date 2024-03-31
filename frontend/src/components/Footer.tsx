@@ -1,4 +1,5 @@
-import { Box, Flex, Icon, Link } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+import { Box, Flex, Icon } from '@chakra-ui/react';
 import { CalendarDays, Home, Phone, User } from 'lucide-react';
 import { useRouter } from 'next/router';
 
