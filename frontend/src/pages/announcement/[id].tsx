@@ -21,9 +21,14 @@ export default function Home() {
   if (data?.length === 0)
     return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
 
-  const announcement = data?.find(
-    (item: AnnouncementItem) => item.id === router.query.id,
-  )!;
+  let announcementIndex = 0;
+
+  const announcement = data?.find((item: AnnouncementItem, index) => {
+    if (item.id === router.query.id) {
+      announcementIndex = index;
+      return true;
+    }
+  })!;
 
   return (
     <>
@@ -53,21 +58,13 @@ export default function Home() {
         <Flex width="100%" gap={2} justify="space-between">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={
-              data?.find((item: AnnouncementItem) => item.id < announcement.id)
-                ? true
-                : undefined
-            }
+            disabled={data?.at(announcementIndex - 1) ? true : undefined}
           >
             Poprzednie
           </OutlineButton>
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={
-              data?.find((item: AnnouncementItem) => item.id > announcement.id)
-                ? true
-                : undefined
-            }
+            disabled={data?.at(announcementIndex + 1) ? true : undefined}
           >
             Następne
           </OutlineButton>
