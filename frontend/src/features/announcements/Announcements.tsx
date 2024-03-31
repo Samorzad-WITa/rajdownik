@@ -1,23 +1,15 @@
+import { PendingSpinner, SystemInformation } from '@/components';
 import { AnnouncementItem, useAnnouncements } from '@/hooks';
-import {
-  AbsoluteCenter,
-  Flex,
-  Icon,
-  Link,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
+import { Flex, Icon, Link, Text } from '@chakra-ui/react';
 import { ChevronRight } from 'lucide-react';
 
 export const Announcements = () => {
   const { data, isPending } = useAnnouncements(10);
 
-  if (isPending)
-    return (
-      <AbsoluteCenter>
-        <Spinner size="xl" color="#ff1c37" />
-      </AbsoluteCenter>
-    );
+  if (isPending) return <PendingSpinner />;
+
+  if (data.length === 0)
+    return <SystemInformation>Brak ogłoszeń</SystemInformation>;
 
   return (
     <Flex

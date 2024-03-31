@@ -1,7 +1,8 @@
-import { Button, ButtonOptions, chakra } from '@chakra-ui/react';
+import { Button, ButtonOptions } from '@chakra-ui/react';
 
 export const OutlineButton = (props: {
   children: React.ReactNode;
+  disabled?: boolean;
   leftIcon?: ButtonOptions['leftIcon'];
   rightIcon?: ButtonOptions['rightIcon'];
 }) => {
@@ -16,6 +17,7 @@ export const OutlineButton = (props: {
       variant="outline"
       pl={props.leftIcon ? 0 : undefined}
       pr={props.rightIcon ? 0 : undefined}
+      disabled={props.disabled}
       leftIcon={props.leftIcon ?? undefined}
       rightIcon={props.rightIcon ?? undefined}
     >

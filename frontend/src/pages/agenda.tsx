@@ -1,5 +1,5 @@
-import { OutlineButton } from '@/components/OutlineButton';
-import { Calendar } from '@/features/agenda/Calendar';
+import { OutlineButton } from '@/components';
+import { Calendar } from '@/features/agenda';
 import { Box, Button, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';

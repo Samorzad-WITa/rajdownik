@@ -1,19 +1,28 @@
-import { OutlineButton } from '@/components/OutlineButton';
-import { Announcement } from '@/features/announcements/Announcement';
-import { AnnouncementItem } from '@/hooks';
+import { OutlineButton, PendingSpinner, SystemInformation } from '@/components';
+import { Announcement } from '@/features/announcements';
+import {
+  AnnouncementItem,
+  fetchAnnouncements,
+  useAnnouncements,
+} from '@/hooks';
 import { Button, Flex, Icon, VStack } from '@chakra-ui/react';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-export default function Home({
-  items,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   const router = useRouter();
 
-  const announcement = items.find(
-    (item) => item.id === parseInt(router.query.id as string),
+  const { data, isPending } = useAnnouncements(10);
+
+  if (isPending) return <PendingSpinner />;
+
+  if (data.length === 0)
+    return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
+
+  const announcement = data?.find(
+    (item: AnnouncementItem) => item.id === parseInt(router.query.id as string),
   )!;
 
   return (
@@ -44,11 +53,21 @@ export default function Home({
         <Flex width="100%" gap={2} justify="space-between">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
+            disabled={
+              data?.find((item: AnnouncementItem) => item.id < announcement.id)
+                ? true
+                : undefined
+            }
           >
             Poprzednie
           </OutlineButton>
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
+            disabled={
+              data?.find((item: AnnouncementItem) => item.id > announcement.id)
+                ? true
+                : undefined
+            }
           >
             Następne
           </OutlineButton>
@@ -58,47 +77,17 @@ export default function Home({
   );
 }
 
-export const getServerSideProps = (async () => {
+export const getServerSideProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['announcements', 10],
+    queryFn: () => fetchAnnouncements(10),
+  });
+
   return {
     props: {
-      items: [
-        {
-          id: 7,
-          title: 'Ogłoszenie 7',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae convallis ante. Donec eget metus in nisl vestibulum pulvinar. In convallis cursus augue nec pretium. Sed blandit mi ex, sed vestibulum tortor ullamcorper ut. Maecenas ullamcorper vehicula accumsan. Donec eu mi id neque imperdiet sollicitudin. Pellentesque porta ornare velit in maximus. Proin posuere lectus sit amet posuere suscipit. ',
-        },
-        {
-          id: 6,
-          title: 'Ogłoszenie 6',
-          description: 'Opis ogłoszenia 6',
-        },
-        {
-          id: 5,
-          title: 'Ogłoszenie 5',
-          description: 'Opis ogłoszenia 5',
-        },
-        {
-          id: 4,
-          title: 'Ogłoszenie 4',
-          description: 'Opis ogłoszenia 4',
-        },
-        {
-          id: 3,
-          title: 'Ogłoszenie 3',
-          description: 'Opis ogłoszenia 3',
-        },
-        {
-          id: 2,
-          title: 'Ogłoszenie 2',
-          description: 'Opis ogłoszenia 2',
-        },
-        {
-          id: 1,
-          title: 'Ogłoszenie 1',
-          description: 'Opis ogłoszenia 1',
-        },
-      ],
+      dehydratedState: dehydrate(queryClient),
     },
   };
-}) satisfies GetServerSideProps<{ items: AnnouncementItem[] }>;
+};
