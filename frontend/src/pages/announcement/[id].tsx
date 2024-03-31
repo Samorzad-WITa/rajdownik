@@ -38,6 +38,7 @@ export default function Home({
           variant="outline"
           backgroundColor="#ff1c37"
           leftIcon={<Icon fontSize={30} as={ChevronLeft} />}
+          onClick={() => router.back()}
         >
           Wyjdź
         </Button>
