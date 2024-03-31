@@ -1,10 +1,12 @@
-import { OutlineButton, PendingSpinner, SystemInformation } from '@/components';
-import { Announcement } from '@/features/announcements';
 import {
-  AnnouncementItem,
-  fetchAnnouncements,
-  useAnnouncements,
-} from '@/hooks';
+  BackButton,
+  InfoCard,
+  OutlineButton,
+  PendingSpinner,
+} from '@/components';
+import { fetchActivities, useActivities } from '@/hooks';
+import { nextItemExists, previousItemExists } from '@/utils';
+import { Link } from '@chakra-ui/next-js';
 import { Button, Flex, Icon, VStack } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -14,16 +16,21 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const router = useRouter();
 
-  const { data, isPending } = useAnnouncements(10);
+  const { data, isPending } = useActivities();
 
   if (isPending) return <PendingSpinner />;
 
-  if (data.length === 0)
-    return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
+  // if (data?.length === 0)
+  //   return <SystemInformation>Nie znaleziono aktywności</SystemInformation>;
 
-  const announcement = data?.find(
-    (item: AnnouncementItem) => item.id === parseInt(router.query.id as string),
-  )!;
+  let activityIndex = 0;
+
+  const activity = data?.find((item, index) => {
+    if (item.id === router.query.id) {
+      activityIndex = index;
+      return true;
+    }
+  })!;
 
   return (
     <>
@@ -34,42 +41,35 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack gap={5}>
-        <Button
-          alignSelf="flex-start"
-          size="xs"
-          fontSize={15}
-          fontWeight="bold"
-          textTransform="uppercase"
-          pl={0}
-          py={3}
-          variant="outline"
-          backgroundColor="#ff1c37"
-          leftIcon={<Icon fontSize={30} as={ChevronLeft} />}
-          onClick={() => router.back()}
-        >
-          Wyjdź
-        </Button>
-        <Announcement announcement={announcement} />
+        <BackButton />
+
+        <InfoCard item={activity} />
+
         <Flex width="100%" gap={2} justify="space-between">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={
-              data?.find((item: AnnouncementItem) => item.id < announcement.id)
-                ? true
-                : undefined
-            }
+            disabled={previousItemExists(activityIndex)}
           >
-            Poprzednie
+            {previousItemExists(activityIndex) ? (
+              <Link href={`/activity/${data?.at(activityIndex - 1)?.id}`}>
+                Poprzednie
+              </Link>
+            ) : (
+              'Poprzednie'
+            )}
           </OutlineButton>
+
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={
-              data?.find((item: AnnouncementItem) => item.id > announcement.id)
-                ? true
-                : undefined
-            }
+            disabled={nextItemExists(activityIndex, data?.length!)}
           >
-            Następne
+            {nextItemExists(activityIndex, data?.length!) ? (
+              <Link href={`/activity/${data?.at(activityIndex + 1)?.id}`}>
+                Następne
+              </Link>
+            ) : (
+              'Następne'
+            )}
           </OutlineButton>
         </Flex>
       </VStack>
@@ -81,8 +81,8 @@ export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['announcements', 10],
-    queryFn: () => fetchAnnouncements(10),
+    queryKey: ['activities'],
+    queryFn: () => fetchActivities(),
   });
 
   return {

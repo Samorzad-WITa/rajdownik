@@ -48,7 +48,7 @@ const items = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     location: 'Sala 1',
     timeFrom: '2024-03-31T22:35:32.686Z',
-    timeTo: '2024-03-31T23:35:32.686Z',
+    timeTo: '2024-04-30T23:35:32.686Z',
   },
   {
     id: 6,

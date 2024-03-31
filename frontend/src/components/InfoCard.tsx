@@ -1,4 +1,3 @@
-import { AnnouncementItem } from '@/hooks';
 import {
   Card,
   CardBody,
@@ -9,21 +8,24 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-export const Announcement = ({
-  announcement,
+export const InfoCard = ({
+  item,
 }: {
-  announcement: AnnouncementItem;
+  item: {
+    title: string;
+    description: string;
+  };
 }) => {
   return (
     <Card width="90%" backgroundColor="#344756" borderRadius={20} px={5}>
       <CardHeader p={3}>
         <Flex justify="center">
-          <Heading size="md">{announcement.title}</Heading>
+          <Heading size="md">{item.title}</Heading>
         </Flex>
       </CardHeader>
       <Divider />
       <CardBody px={0} pt={3}>
-        <Text>{announcement.description}</Text>
+        <Text>{item.description}</Text>
       </CardBody>
     </Card>
   );

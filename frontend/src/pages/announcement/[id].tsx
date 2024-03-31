@@ -1,11 +1,14 @@
-import { OutlineButton, PendingSpinner, SystemInformation } from '@/components';
-import { Announcement } from '@/features/announcements';
 import {
-  AnnouncementItem,
-  fetchAnnouncements,
-  useAnnouncements,
-} from '@/hooks';
-import { Button, Flex, Icon, VStack } from '@chakra-ui/react';
+  BackButton,
+  InfoCard,
+  OutlineButton,
+  PendingSpinner,
+  SystemInformation,
+} from '@/components';
+import { fetchAnnouncements, useAnnouncements } from '@/hooks';
+import { nextItemExists, previousItemExists } from '@/utils';
+import { Link } from '@chakra-ui/next-js';
+import { Flex, Icon, VStack } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
@@ -23,7 +26,7 @@ export default function Home() {
 
   let announcementIndex = 0;
 
-  const announcement = data?.find((item: AnnouncementItem, index) => {
+  const announcement = data?.find((item, index) => {
     if (item.id === router.query.id) {
       announcementIndex = index;
       return true;
@@ -39,34 +42,39 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack gap={5}>
-        <Button
-          alignSelf="flex-start"
-          size="xs"
-          fontSize={15}
-          fontWeight="bold"
-          textTransform="uppercase"
-          pl={0}
-          py={3}
-          variant="outline"
-          backgroundColor="#ff1c37"
-          leftIcon={<Icon fontSize={30} as={ChevronLeft} />}
-          onClick={() => router.back()}
-        >
-          Wyjdź
-        </Button>
-        <Announcement announcement={announcement} />
+        <BackButton />
+
+        <InfoCard item={announcement} />
+
         <Flex width="100%" gap={2} justify="space-between">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={data?.at(announcementIndex - 1) ? true : undefined}
+            disabled={previousItemExists(announcementIndex)}
           >
-            Poprzednie
+            {previousItemExists(announcementIndex) ? (
+              <Link
+                href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}
+              >
+                Poprzednie
+              </Link>
+            ) : (
+              'Poprzednie'
+            )}
           </OutlineButton>
+
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={data?.at(announcementIndex + 1) ? true : undefined}
+            disabled={nextItemExists(announcementIndex, data?.length!)}
           >
-            Następne
+            {nextItemExists(announcementIndex, data?.length!) ? (
+              <Link
+                href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}
+              >
+                Następne
+              </Link>
+            ) : (
+              'Następne'
+            )}
           </OutlineButton>
         </Flex>
       </VStack>
