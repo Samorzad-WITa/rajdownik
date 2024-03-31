@@ -15,9 +15,11 @@ export default function Agenda() {
       <VStack mt={3} gap={5}>
         <HStack gap={2}>
           <Button
-            size='xs'
+            size="xs"
             pl={0}
             variant="outline"
+            fontWeight="bold"
+            textTransform="uppercase"
             color="#283d4e"
             outlineColor="#283d4e"
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
@@ -42,9 +44,11 @@ export default function Agenda() {
             </Text>
           </Box>
           <Button
-            size='xs'
+            size="xs"
             pr={0}
             variant="outline"
+            fontWeight="bold"
+            textTransform="uppercase"
             color="#283d4e"
             outlineColor="#283d4e"
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}

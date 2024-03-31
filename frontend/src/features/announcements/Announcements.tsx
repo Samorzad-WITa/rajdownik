@@ -3,7 +3,13 @@ import { ChevronRight } from 'lucide-react';
 
 export const Announcements = () => {
   return (
-    <Flex px={2} fontSize={'large'} fontWeight={'bold'} gap={5} direction="column">
+    <Flex
+      px={2}
+      fontSize={'large'}
+      fontWeight={'bold'}
+      gap={5}
+      direction="column"
+    >
       {items.map((item) => (
         <Link key={item.id} href={`/announcement/${item.id}`}>
           <Flex backgroundColor="#344756" borderRadius={20} p={4}>
