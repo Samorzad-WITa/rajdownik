@@ -9,7 +9,13 @@ export default function App({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
       <VStack minH="100vh" backgroundColor="#aeb5bb">
         <Navbar />
-        <Container maxW="container.xl" flex={1} display="flex" flexDir="column">
+        <Container
+          maxW="container.xl"
+          flex={1}
+          display="flex"
+          flexDir="column"
+          pt={6}
+        >
           <Component {...pageProps} />
         </Container>
         <Footer />
