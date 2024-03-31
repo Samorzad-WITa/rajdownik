@@ -14,15 +14,15 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const router = useRouter();
 
-  const { data, isPending } = useAnnouncements();
+  const { data, isPending } = useAnnouncements(10);
 
   if (isPending) return <PendingSpinner />;
 
-  if (data?.length === 0)
+  if (data.length === 0)
     return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
 
   const announcement = data?.find(
-    (item: AnnouncementItem) => item.id === router.query.id,
+    (item: AnnouncementItem) => item.id === parseInt(router.query.id as string),
   )!;
 
   return (
@@ -81,8 +81,8 @@ export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['announcements'],
-    queryFn: () => fetchAnnouncements(),
+    queryKey: ['announcements', 10],
+    queryFn: () => fetchAnnouncements(10),
   });
 
   return {

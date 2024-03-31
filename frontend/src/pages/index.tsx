@@ -24,8 +24,8 @@ export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['announcements', 10],
-    queryFn: () => fetchAnnouncements(10),
+    queryKey: ['announcements'],
+    queryFn: () => fetchAnnouncements(),
   });
 
   return {

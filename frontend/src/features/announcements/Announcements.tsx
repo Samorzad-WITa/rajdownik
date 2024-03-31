@@ -4,11 +4,11 @@ import { Flex, Icon, Link, Text } from '@chakra-ui/react';
 import { ChevronRight } from 'lucide-react';
 
 export const Announcements = () => {
-  const { data, isPending } = useAnnouncements(10);
+  const { data, isPending } = useAnnouncements();
 
   if (isPending) return <PendingSpinner />;
 
-  if (data.length === 0)
+  if (data?.length === 0)
     return <SystemInformation>Brak ogłoszeń</SystemInformation>;
 
   return (
@@ -19,9 +19,8 @@ export const Announcements = () => {
       gap={5}
       direction="column"
     >
-      {data?.map((item: AnnouncementItem, index: number) => (
-        // TODO: change index to item id when backend is fixed
-        <Link key={index} href={`/announcement/${index}`}>
+      {data?.map((item) => (
+        <Link key={item.id} href={`/announcement/${item.id}`}>
           <Flex backgroundColor="#344756" borderRadius={20} p={4}>
             <Text flex={1} align="center">
               {item.title}
