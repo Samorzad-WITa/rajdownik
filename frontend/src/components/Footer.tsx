@@ -10,7 +10,7 @@ export const Footer = () => {
       w="100%"
       p={4}
       backgroundColor="#101d27"
-      borderColor="#fc1a35"
+      borderColor="#ff1c37"
       borderTopWidth="5px"
       shadow="base"
     >

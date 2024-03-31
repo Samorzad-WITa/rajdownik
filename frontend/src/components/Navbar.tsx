@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Image } from '@chakra-ui/react';
 
 export const Navbar = () => {
   return (
@@ -6,18 +6,38 @@ export const Navbar = () => {
       w="100%"
       p={4}
       backgroundColor="#101d27"
-      borderColor="#fc1a35"
+      borderColor="#ff1c37"
       borderBottomWidth="5px"
       shadow="base"
     >
-      <Flex justify="space-between">
-        <Flex align="center" justify="start" gap={2}>
-          <Box>logo 1</Box>
-          <Box>logo 2</Box>
-          <Box>logo 3</Box>
+      <Flex align="center" justify="space-between">
+        <Flex justify="start" gap={2}>
+          <Box>
+            <Image
+              width="42px"
+              src="/images/w4-logo.png"
+              alt="Logo Samorządu W4"
+            />
+          </Box>
+          <Box>
+            <Image
+              width="42px"
+              src="/images/w7-logo.png"
+              alt="Logo Samorządu W7"
+            />
+          </Box>
+          <Box>
+            <Image
+              width="42px"
+              src="/images/w14-logo.png"
+              alt="Logo Samorządu W14"
+            />
+          </Box>
         </Flex>
-        <Flex align="center" justify="end" gap={2}>
-          <Box>logo x</Box>
+        <Flex justify="end" gap={2}>
+          <Box>
+            <Image height="42px" src="/images/rajd-logo.png" alt="Logo Rajdu" />
+          </Box>
         </Flex>
       </Flex>
     </Box>

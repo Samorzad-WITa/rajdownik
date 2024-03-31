@@ -19,9 +19,5 @@ pnpm install
 
 ```sh
 docker compose up -d
-```
-
-```sh
-cd frontend
 pnpm dev
 ```

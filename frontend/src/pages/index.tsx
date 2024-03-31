@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Rajd</title>
-        <meta name="description" content="Rajd" />
+        <title>Ogłoszenia</title>
+        <meta name="description" content="Ogłoszenia" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
