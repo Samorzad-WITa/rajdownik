@@ -28,6 +28,7 @@ export const Announcements = () => {
       direction="column"
     >
       {data?.map((item: any, index: number) => (
+        // TODO: change index to item id when backend is fixed
         <Link key={index} href={`/announcement/${index}`}>
           <Flex backgroundColor="#344756" borderRadius={20} p={4}>
             <Text flex={1} align="center">
