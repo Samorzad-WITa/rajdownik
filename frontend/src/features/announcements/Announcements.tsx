@@ -1,6 +1,7 @@
 import { PendingSpinner, SystemInformation } from '@/components';
-import { AnnouncementItem, useAnnouncements } from '@/hooks';
-import { Flex, Icon, Link, Text } from '@chakra-ui/react';
+import { useAnnouncements } from '@/hooks';
+import { Link } from '@chakra-ui/next-js';
+import { Flex, Icon, Text } from '@chakra-ui/react';
 import { ChevronRight } from 'lucide-react';
 
 export const Announcements = () => {
