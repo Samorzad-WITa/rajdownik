@@ -1,11 +1,11 @@
-import { AnnouncementItem } from '@/hooks';
+import { ContactItem } from '@/hooks';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<AnnouncementItem[]>,
+  res: NextApiResponse<ContactItem[]>,
 ) {
-  const result = await fetch(`${process.env.BACKEND_URL}/announcement`);
+  const result = await fetch(`${process.env.BACKEND_URL}/contact`);
   const parsed = await result.json();
 
   if (!result.ok) return res.status(500).json([]);
