@@ -1,4 +1,4 @@
-import { Announcements } from '@/features/announcements';
+import { Announcements } from '@/features';
 import { fetchAnnouncements } from '@/hooks';
 import { chakra } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';

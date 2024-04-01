@@ -1,4 +1,4 @@
-import { Contact } from '@/features/contact';
+import { Contact } from '@/features';
 import { fetchContact } from '@/hooks';
 import { chakra } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';

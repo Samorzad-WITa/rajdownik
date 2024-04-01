@@ -3,11 +3,12 @@ import {
   InfoCard,
   OutlineButton,
   PendingSpinner,
+  SystemInformation,
 } from '@/components';
 import { fetchActivities, useActivities } from '@/hooks';
 import { nextItemExists, previousItemExists } from '@/utils';
 import { Link } from '@chakra-ui/next-js';
-import { Button, Flex, Icon, VStack } from '@chakra-ui/react';
+import { Flex, Icon, VStack } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
@@ -20,8 +21,8 @@ export default function Home() {
 
   if (isPending) return <PendingSpinner />;
 
-  // if (data?.length === 0)
-  //   return <SystemInformation>Nie znaleziono aktywności</SystemInformation>;
+  if (data?.length === 0)
+    return <SystemInformation>Nie znaleziono aktywności</SystemInformation>;
 
   let activityIndex = 0;
 

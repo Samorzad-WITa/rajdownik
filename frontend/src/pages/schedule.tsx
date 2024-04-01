@@ -1,5 +1,5 @@
 import { OutlineButton } from '@/components';
-import { Schedule } from '@/features/schedule';
+import { Schedule } from '@/features';
 import { fetchActivities } from '@/hooks';
 import { Box, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
