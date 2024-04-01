@@ -1,4 +1,4 @@
-import { PendingSpinner } from '@/components';
+import { PendingSpinner, SystemInformation } from '@/components';
 import { useActivities } from '@/hooks';
 import { Link } from '@chakra-ui/next-js';
 import { Box, Flex, Icon, StackDivider, VStack } from '@chakra-ui/react';
@@ -10,8 +10,8 @@ export const Schedule = () => {
 
   if (isPending) return <PendingSpinner />;
 
-  // if (data?.length === 0)
-  //   return <SystemInformation>Brak harmonogramu</SystemInformation>;
+  if (data?.length === 0)
+    return <SystemInformation>Brak harmonogramu</SystemInformation>;
 
   return (
     <VStack

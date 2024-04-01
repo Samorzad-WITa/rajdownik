@@ -6,7 +6,7 @@ import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
 
-export default function Agenda() {
+export default function Page() {
   return (
     <>
       <Head>
