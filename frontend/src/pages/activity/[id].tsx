@@ -48,10 +48,10 @@ export default function Home() {
         <Flex width="100%" gap={2} justify="space-between">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={previousItemExists(activityIndex)}
+            disabled={nextItemExists(activityIndex, data?.length!)}
           >
-            {previousItemExists(activityIndex) ? (
-              <Link href={`/activity/${data?.at(activityIndex - 1)?.id}`}>
+            {nextItemExists(activityIndex, data?.length!) ? (
+              <Link href={`/activity/${data?.at(activityIndex + 1)?.id}`}>
                 Poprzednie
               </Link>
             ) : (
@@ -61,10 +61,10 @@ export default function Home() {
 
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={nextItemExists(activityIndex, data?.length!)}
+            disabled={previousItemExists(activityIndex)}
           >
-            {nextItemExists(activityIndex, data?.length!) ? (
-              <Link href={`/activity/${data?.at(activityIndex + 1)?.id}`}>
+            {previousItemExists(activityIndex) ? (
+              <Link href={`/activity/${data?.at(activityIndex - 1)?.id}`}>
                 Następne
               </Link>
             ) : (
