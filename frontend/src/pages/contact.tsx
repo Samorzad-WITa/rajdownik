@@ -1,20 +1,20 @@
-import { Announcements } from '@/features';
-import { fetchAnnouncements } from '@/hooks';
+import { Contact } from '@/features';
+import { fetchContact } from '@/hooks';
 import { chakra } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import Head from 'next/head';
 
-export default function Home() {
+export default function Page() {
   return (
     <>
       <Head>
-        <title>Ogłoszenia</title>
-        <meta name="description" content="Ogłoszenia" />
+        <title>Kontakt</title>
+        <meta name="description" content="Kontakt" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <chakra.main>
-        <Announcements />
+        <Contact />
       </chakra.main>
     </>
   );
@@ -24,8 +24,8 @@ export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['announcements'],
-    queryFn: () => fetchAnnouncements(),
+    queryKey: ['contact'],
+    queryFn: () => fetchContact(),
   });
 
   return {

@@ -5,7 +5,7 @@ import {
   PendingSpinner,
   SystemInformation,
 } from '@/components';
-import { fetchAnnouncements, useAnnouncements } from '@/hooks';
+import { fetchActivities, useActivities } from '@/hooks';
 import { nextItemExists, previousItemExists } from '@/utils';
 import { Link } from '@chakra-ui/next-js';
 import { Flex, Icon, VStack } from '@chakra-ui/react';
@@ -17,18 +17,18 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const router = useRouter();
 
-  const { data, isPending } = useAnnouncements();
+  const { data, isPending } = useActivities();
 
   if (isPending) return <PendingSpinner />;
 
   if (data?.length === 0)
-    return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
+    return <SystemInformation>Nie znaleziono aktywności</SystemInformation>;
 
-  let announcementIndex = 0;
+  let activityIndex = 0;
 
-  const announcement = data?.find((item, index) => {
+  const activity = data?.find((item, index) => {
     if (item.id === router.query.id) {
-      announcementIndex = index;
+      activityIndex = index;
       return true;
     }
   })!;
@@ -42,19 +42,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack gap={5}>
-        <BackButton to="/" />
+        <BackButton to="/schedule" />
 
-        <InfoCard item={announcement} />
+        <InfoCard item={activity} />
 
         <Flex width="100%" gap={2} justify="space-between">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={nextItemExists(announcementIndex, data?.length!)}
+            disabled={nextItemExists(activityIndex, data?.length!)}
           >
-            {nextItemExists(announcementIndex, data?.length!) ? (
-              <Link
-                href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}
-              >
+            {nextItemExists(activityIndex, data?.length!) ? (
+              <Link href={`/activity/${data?.at(activityIndex + 1)?.id}`}>
                 Poprzednie
               </Link>
             ) : (
@@ -64,12 +62,10 @@ export default function Home() {
 
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={previousItemExists(announcementIndex)}
+            disabled={previousItemExists(activityIndex)}
           >
-            {previousItemExists(announcementIndex) ? (
-              <Link
-                href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}
-              >
+            {previousItemExists(activityIndex) ? (
+              <Link href={`/activity/${data?.at(activityIndex - 1)?.id}`}>
                 Następne
               </Link>
             ) : (
@@ -86,8 +82,8 @@ export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['announcements'],
-    queryFn: () => fetchAnnouncements(),
+    queryKey: ['activities'],
+    queryFn: () => fetchActivities(),
   });
 
   return {

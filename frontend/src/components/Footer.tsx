@@ -1,5 +1,5 @@
-import { Box, Flex, Icon, Link } from '@chakra-ui/react';
-import { CalendarDays, Home, Phone, User } from 'lucide-react';
+import { Link } from '@chakra-ui/next-js';
+import { Box, Flex, Image } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 export const Footer = () => {
@@ -14,14 +14,14 @@ export const Footer = () => {
       borderTopWidth="5px"
       shadow="base"
     >
-      <Flex fontSize={30} justify="space-around">
+      <Flex justify="space-around">
         {navItems.map((item) => (
-          <Link key={item.href} href={item.href}>
-            <Icon
-              as={item.icon}
-              color={router.pathname === item.href ? 'black' : 'white'}
-              fill={router.pathname === item.href ? 'white' : ''}
-            ></Icon>
+          <Link key={item.href} href={item.href} filter="invert(100%)">
+            {router.pathname === item.href ? (
+              <Image width={30} src={item.iconActive} alt={item.label} />
+            ) : (
+              <Image width={30} src={item.iconInactive} alt={item.label} />
+            )}
           </Link>
         ))}
       </Flex>
@@ -33,21 +33,25 @@ const navItems = [
   {
     href: '/',
     label: 'Home',
-    icon: Home,
+    iconActive: '/images/home-active.png',
+    iconInactive: '/images/home-inactive.png',
   },
   {
-    href: '/agenda',
-    label: 'Agenda',
-    icon: CalendarDays,
+    href: '/schedule',
+    label: 'Schedule',
+    iconActive: '/images/schedule-active.png',
+    iconInactive: '/images/schedule-inactive.png',
   },
   {
     href: '/contact',
     label: 'Contact',
-    icon: Phone,
+    iconActive: '/images/sos-active.png',
+    iconInactive: '/images/sos-inactive.png',
   },
   {
     href: '/profile',
     label: 'Profile',
-    icon: User,
+    iconActive: '/images/profile-active.png',
+    iconInactive: '/images/profile-inactive.png',
   },
 ];

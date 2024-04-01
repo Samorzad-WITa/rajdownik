@@ -1,24 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 
 export type AnnouncementItem = {
-  id: number;
+  id: string;
   title: string;
   description: string;
 };
 
-const fetchAnnouncements = async (limit = 10) => {
+const fetchAnnouncements = async () => {
   const res = await fetch('/api/announcements');
   const parsed = await res.json();
 
-  return parsed;
-  // return parsed.filter((x: any) => x.id <= limit);
+  return parsed as AnnouncementItem[];
 };
 
-const useAnnouncements = (limit: number) => {
+const useAnnouncements = () => {
   return useQuery({
-    queryKey: ['announcements', limit],
-    queryFn: () => fetchAnnouncements(limit),
+    queryKey: ['announcements'],
+    queryFn: () => fetchAnnouncements(),
   });
 };
 
-export { useAnnouncements, fetchAnnouncements };
+export { fetchAnnouncements, useAnnouncements };
