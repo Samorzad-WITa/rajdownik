@@ -1,6 +1,7 @@
 import { PendingSpinner } from '@/components';
 import { useActivities } from '@/hooks';
-import { Box, Flex, Icon, Link, StackDivider, VStack } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+import { Box, Flex, Icon, StackDivider, VStack } from '@chakra-ui/react';
 import { format, isPast, parseISO } from 'date-fns';
 import { ChevronRight } from 'lucide-react';
 
