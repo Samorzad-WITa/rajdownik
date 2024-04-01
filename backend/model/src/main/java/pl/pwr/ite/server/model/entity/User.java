@@ -50,6 +50,6 @@ public class User extends EntityBase {
     @OneToMany(mappedBy = "user")
     private Set<UserData> data = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserRole> roles = new HashSet<>();
 }

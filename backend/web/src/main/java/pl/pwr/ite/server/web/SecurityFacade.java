@@ -6,6 +6,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
@@ -61,7 +62,7 @@ public class SecurityFacade implements InitializingBean {
         if(!(principal instanceof AuthenticatedUser)) {
             throw new IllegalStateException("Principal is not of type AuthenticatedUser.");
         }
-        var userId = ((AuthenticatedUser) authentication).getUserId();
+        var userId = ((AuthenticatedUser) authentication.getPrincipal()).getUserId();
         return userService.getReference(userId);
     }
 }

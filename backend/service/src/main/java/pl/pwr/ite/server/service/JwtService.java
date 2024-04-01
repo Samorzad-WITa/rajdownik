@@ -7,9 +7,13 @@ import pl.pwr.ite.server.security.AuthenticatedUser;
 
 public interface JwtService {
 
-    String createToken(AuthenticatedUser authenticatedUser);
+    String extractUsername(String token);
 
-    Claims resolveClaims(String token);
+    String generateToken(AuthenticatedUser authenticatedUser);
 
-    boolean validateClaims(Claims claims) throws AuthenticationException;
+    boolean isTokenValid(String token, AuthenticatedUser authenticatedUser);
+
+    boolean isTokenExpired(String token);
+
+    long getExpirationTime();
 }
