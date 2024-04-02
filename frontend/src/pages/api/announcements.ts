@@ -5,7 +5,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<AnnouncementItem[]>,
 ) {
-  const result = await fetch(`${process.env.BACKEND_URL}/announcement`);
+  const result = await fetch(`${process.env.BACKEND_URL}/announcement`, {
+    next: { revalidate: 30 },
+  });
   const parsed = await result.json();
 
   return res.status(200).json(items);
