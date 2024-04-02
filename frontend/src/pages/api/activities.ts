@@ -1,75 +1,62 @@
 import { ActivityItem } from '@/hooks';
+import { addDays, subDays } from 'date-fns';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ActivityItem[]>,
 ) {
-  const result = await fetch(`${process.env.BACKEND_URL}/activity`);
+  const result = await fetch(`${process.env.BACKEND_URL}/activity`, {
+    next: { revalidate: 600 },
+  });
   const parsed = await result.json();
 
-  return res.status(200).json(items);
+  return res.status(200).json(generateItems());
 
   if (!result.ok) return res.status(500).json([]);
 
   res.status(200).json(parsed);
 }
 
-const items = [
-  {
-    id: '7',
-    title: 'Wydarzenie 7',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    location: 'Sala 1',
-    timeFrom: '2024-03-31T22:35:32.686Z',
-    timeTo: '2024-04-30T23:35:32.686Z',
-  },
-  {
-    id: '6',
-    title: 'Wydarzenie 6',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    location: 'Sala 2',
-    timeFrom: '2024-03-31T21:35:32.686Z',
-    timeTo: '2024-03-31T22:35:32.686Z',
-  },
-  {
-    id: '5',
-    title: 'Wydarzenie 5',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    location: 'Sala 3',
-    timeFrom: '2024-03-31T21:35:32.686Z',
-    timeTo: '2024-03-31T22:35:32.686Z',
-  },
-  {
-    id: '4',
-    title: 'Wydarzenie 4',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    location: 'Sala 3',
-    timeFrom: '2024-03-31T21:35:32.686Z',
-    timeTo: '2024-03-31T22:35:32.686Z',
-  },
-  {
-    id: '3',
-    title: 'Wydarzenie 3',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    location: 'Sala 3',
-    timeFrom: '2024-03-31T21:35:32.686Z',
-    timeTo: '2024-03-31T22:35:32.686Z',
-  },
-  {
-    id: '2',
-    title: 'Wydarzenie 2',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    location: 'Sala 3',
-    timeFrom: '2024-03-31T21:35:32.686Z',
-    timeTo: '2024-03-31T22:35:32.686Z',
-  },
-  {
-    id: '1',
-    title: 'Wydarzenie 1',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    location: 'Sala 3',
-    timeFrom: '2024-03-31T21:35:32.686Z',
-    timeTo: '2024-03-31T22:35:32.686Z',
-  },
-];
+const generateItems = () => {
+  const items: ActivityItem[] = [];
+
+  for (let i = 0; i < 8; i++) {
+    items.push({
+      id: `${i}`,
+      title: `Wydarzenie ${i}`,
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      location: 'Sala XYZ',
+      timeFrom: '',
+      timeTo: '',
+    });
+  }
+
+  // zeroth index is the newest activity
+  items.reverse();
+
+  const today = new Date();
+  const yesterday = subDays(today, 1);
+  const tomorrow = addDays(today, 1);
+
+  const todayISO = today.toISOString();
+  const yesterdayISO = yesterday.toISOString();
+  const tomorrowISO = tomorrow.toISOString();
+
+  for (let i = 0; i < 3; i++) {
+    items[i]!.timeFrom = tomorrowISO;
+    items[i]!.timeTo = tomorrowISO;
+  }
+
+  for (let i = 3; i < 7; i++) {
+    items[i]!.timeFrom = todayISO;
+    items[i]!.timeTo = todayISO;
+  }
+
+  for (let i = 7; i < 8; i++) {
+    items[i]!.timeFrom = yesterdayISO;
+    items[i]!.timeTo = yesterdayISO;
+  }
+
+  return items;
+};
