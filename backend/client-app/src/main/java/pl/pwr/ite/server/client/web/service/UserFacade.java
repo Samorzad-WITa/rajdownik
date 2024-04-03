@@ -15,6 +15,7 @@ import pl.pwr.ite.server.client.web.dto.UserDto;
 import pl.pwr.ite.server.client.web.mapper.UserMapper;
 import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.entity.UserToken;
+import pl.pwr.ite.server.model.enums.Permission;
 import pl.pwr.ite.server.model.enums.UserTokenType;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.service.*;
@@ -111,8 +112,9 @@ public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, 
 
     @Transactional
     public Collection<User> performImport(MultipartFile multipartFile) {
+        securityFacade.checkAccess(Permission.UserImport);
         try(var inputStream = multipartFile.getInputStream()) {
-            userImporter.performImport(inputStream);
+            return userImporter.performImport(inputStream);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

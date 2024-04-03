@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -29,9 +31,9 @@ public class UserImporterImpl implements UserImporter {
     private final RoleService roleService;
 
     @Override
-    public void performImport(InputStream inputStream) {
+    public Collection<User> performImport(InputStream inputStream) {
+        var importedUsers = new ArrayList<User>();
         var objects = loadObjects(inputStream);
-
         var iterator = objects.iterator();
         while(iterator.hasNext()) {
             var csvUser = iterator.next();
@@ -60,8 +62,11 @@ public class UserImporterImpl implements UserImporter {
             } else if (csvUser.getBusNumber().equals("własny")) {
                 user.setBusNumber(0);
             }
-            userService.saveAndFlush(user);
+            user = userService.saveAndFlush(user);
+            importedUsers.add(user);
         }
+
+        return importedUsers;
     }
 
     private List<CsvObject> loadObjects(InputStream csvInputStream) {
