@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 public enum ApplicationError implements ErrorDescriptor {
     UserNotFound(HttpStatus.NOT_FOUND),
     DataNotFound(HttpStatus.NOT_FOUND),
-    UserDataNotFound(HttpStatus.NOT_FOUND)
+    UserDataNotFound(HttpStatus.NOT_FOUND),
+    UserTokenNotFound(HttpStatus.NOT_FOUND)
     ;
 
     private final HttpStatus defaultStatus;

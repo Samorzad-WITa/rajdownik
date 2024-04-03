@@ -2,11 +2,11 @@ package pl.pwr.ite.server.client.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.pwr.ite.server.client.web.dto.PasswordResetDto;
 import pl.pwr.ite.server.client.web.dto.UserDataDto;
 import pl.pwr.ite.server.client.web.dto.UserDto;
 import pl.pwr.ite.server.client.web.service.UserFacade;
@@ -49,7 +49,20 @@ public class UserController implements InitializingBean {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<Collection<UserDto>> importUsers() {
-        return ResponseEntity.ok(List.of(new UserDto()));
+    public ResponseEntity<Collection<UserDto>> importUsers(@RequestPart(name = "file") MultipartFile file) {
+        var users = userFacade.performImport(file);
+        return ResponseEntity.ok(userFacade.map(users, defaultListProperties));
+    }
+
+    @PostMapping("/password-reset-init")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void initPasswordReset(@RequestBody UserDto dto) {
+        userFacade.initPasswordReset(dto);
+    }
+
+    @PostMapping("/password-reset")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void resetPassword(@RequestBody PasswordResetDto dto) {
+        userFacade.resetPassword(dto);
     }
 }

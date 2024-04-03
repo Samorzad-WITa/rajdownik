@@ -20,13 +20,13 @@ public class User extends EntityBase {
     @Enumerated(EnumType.STRING)
     private UserType type;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(/*nullable = false, */length = 100, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 15)
+    @Column(/*nullable = false, */length = 15)
     private String phoneNumber;
 
-    @Column(nullable = false, length = 6)
+    @Column(/*nullable = false, */length = 15)
     private String indexNumber;
 
     @Column(length = 50)

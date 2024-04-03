@@ -22,10 +22,4 @@ public class AuthController {
     public ResponseEntity<JwtDto> login(@RequestBody CredentialsDto dto) {
         return ResponseEntity.ok(userFacade.authenticate(dto));
     }
-
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody CredentialsDto dto) {
-        var user = userFacade.register(dto);
-        return ResponseEntity.ok(userFacade.map(user));
-    }
 }
