@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/announcement")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class AnnouncementController implements InitializingBean {
 
@@ -31,17 +31,17 @@ public class AnnouncementController implements InitializingBean {
                 .setIncludeDescription(true);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/announcement/{id}")
     public ResponseEntity<AnnouncementDto> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(announcementFacade.getById(id, defaultSingleProperties));
     }
 
-    @GetMapping
+    @GetMapping("/api/announcement")
     public ResponseEntity<Collection<AnnouncementDto>> getAll() {
         return ResponseEntity.ok(announcementFacade.map(announcementFacade.getService().getAll(), defaultListProperties));
     }
 
-    @PostMapping
+    @PostMapping("/admin/announcement")
     public ResponseEntity<AnnouncementDto> create(@RequestBody AnnouncementDto dto) {
         return ResponseEntity.ok(announcementFacade.map(announcementFacade.create(dto), defaultSingleProperties));
     }

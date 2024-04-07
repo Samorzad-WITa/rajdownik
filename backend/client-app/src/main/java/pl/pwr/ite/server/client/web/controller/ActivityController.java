@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/activity")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class ActivityController implements InitializingBean {
 
@@ -32,17 +32,17 @@ public class ActivityController implements InitializingBean {
                 .setIncludeDescription(true);
     }
 
-    @GetMapping
+    @GetMapping("/api/activity")
     public ResponseEntity<Collection<ActivityDto>> getAll(ActivityFilter filter) {
         return ResponseEntity.ok(activityFacade.map(activityFacade.getAll(filter), defaultListProperties));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/activity/{id}")
     public ResponseEntity<ActivityDto> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(activityFacade.getById(id, defaultSingleProperties));
     }
 
-    @PostMapping
+    @PostMapping("/admin/activity")
     public ResponseEntity<ActivityDto> create(@RequestBody ActivityDto dto) {
         return ResponseEntity.ok(activityFacade.map(activityFacade.create(dto), defaultSingleProperties));
     }

@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class UserController implements InitializingBean {
 
@@ -48,19 +48,19 @@ public class UserController implements InitializingBean {
         return ResponseEntity.ok(userFacade.map(userFacade.getAuthenticatedUser(), defaultSingleProperties));
     }
 
-    @PostMapping("/import")
+    @PostMapping("/admin/user/import")
     public ResponseEntity<Collection<UserDto>> importUsers(@RequestPart(name = "file") MultipartFile file) {
         var users = userFacade.performImport(file);
         return ResponseEntity.ok(userFacade.map(users, defaultListProperties));
     }
 
-    @PostMapping("/password-reset-init")
+    @PostMapping("/admin/user/password-reset-init")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void initPasswordReset(@RequestBody UserDto dto) {
         userFacade.initPasswordReset(dto);
     }
 
-    @PostMapping("/password-reset")
+    @PostMapping("/admin/user/password-reset")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void resetPassword(@RequestBody PasswordResetDto dto) {
         userFacade.resetPassword(dto);

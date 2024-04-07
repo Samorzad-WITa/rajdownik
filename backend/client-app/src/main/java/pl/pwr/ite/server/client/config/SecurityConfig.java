@@ -50,7 +50,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(httpRequests -> httpRequests
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/user/password-reset", "/user/password-reset-init").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/admin/**").authenticated()
+                        .anyRequest().authenticated()
+                )
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationProvider(userAuthenticationProvider)

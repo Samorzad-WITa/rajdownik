@@ -12,7 +12,7 @@ import pl.pwr.ite.server.service.MappingService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/user-display")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class UserDisplayController implements InitializingBean {
 
@@ -30,12 +30,12 @@ public class UserDisplayController implements InitializingBean {
                 .setIncludeUser(true);
     }
 
-    @GetMapping
+    @GetMapping("/api/user-display")
     public ResponseEntity<Collection<UserDisplayDto>> getAll() {
         return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.getAll(), defaultListProperties));
     }
 
-    @PostMapping
+    @PostMapping("/admin/user-display")
     public ResponseEntity<UserDisplayDto> create(@RequestBody UserDisplayDto dto) {
         return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.create(dto), defaultSingleProperties));
     }
