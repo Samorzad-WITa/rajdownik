@@ -12,13 +12,13 @@ import pl.pwr.ite.server.client.web.dto.UserDto;
 import pl.pwr.ite.server.client.web.service.UserFacade;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final UserFacade userFacade;
 
-    @PostMapping("/login")
+    @PostMapping("/api/auth/login")
     public ResponseEntity<JwtDto> login(@RequestBody CredentialsDto dto) {
         return ResponseEntity.ok(userFacade.authenticate(dto));
     }
