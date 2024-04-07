@@ -7,7 +7,10 @@ import pl.pwr.ite.server.client.web.mapper.UserDisplayMapper;
 import pl.pwr.ite.server.model.entity.UserDisplay;
 import pl.pwr.ite.server.service.ClockService;
 import pl.pwr.ite.server.service.UserDisplayService;
+import pl.pwr.ite.server.service.UserService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
+import pl.pwr.ite.server.web.exception.ApplicationError;
+import pl.pwr.ite.server.web.exception.ApplicationException;
 
 import java.util.Collection;
 
@@ -15,15 +18,32 @@ import java.util.Collection;
 public class UserDisplayFacade extends EntityServiceFacade<UserDisplay, UserDisplayService, UserDisplayDto, UserDisplayDto.Properties, UserDisplayMapper> {
 
     private final ClockService clockService;
+    private final UserService userService;
 
-    public UserDisplayFacade(UserDisplayService service, UserDisplayMapper mapper, ClockService clockService) {
+    public UserDisplayFacade(UserDisplayService service, UserDisplayMapper mapper, ClockService clockService, UserService userService) {
         super(service, mapper);
         this.clockService = clockService;
+        this.userService = userService;
     }
 
     @Transactional
     public Collection<UserDisplay> getAll() {
         var currentTime = clockService.getCurrentTime();
         return getService().getAllActive(currentTime);
+    }
+
+    @Transactional
+    public UserDisplay create(UserDisplayDto dto) {
+        var userDisplay = new UserDisplay();
+        var user = userService.findById(dto.getId());
+        if(user == null) {
+            throw new ApplicationException(ApplicationError.UserNotFound);
+        }
+        userDisplay.setUser(user);
+        userDisplay.setLabel(dto.getLabel());
+        userDisplay.setTimeFrom(dto.getTimeFrom());
+        userDisplay.setTimeTo(dto.getTimeTo());
+
+        return saveAndFlush(userDisplay);
     }
 }

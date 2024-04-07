@@ -3,10 +3,7 @@ package pl.pwr.ite.server.client.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.pwr.ite.server.client.web.dto.AnnouncementDto;
 import pl.pwr.ite.server.client.web.service.AnnouncementFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
@@ -42,5 +39,10 @@ public class AnnouncementController implements InitializingBean {
     @GetMapping
     public ResponseEntity<Collection<AnnouncementDto>> getAll() {
         return ResponseEntity.ok(announcementFacade.map(announcementFacade.getService().getAll(), defaultListProperties));
+    }
+
+    @PostMapping
+    public ResponseEntity<AnnouncementDto> create(@RequestBody AnnouncementDto dto) {
+        return ResponseEntity.ok(announcementFacade.map(announcementFacade.create(dto), defaultSingleProperties));
     }
 }

@@ -3,9 +3,7 @@ package pl.pwr.ite.server.client.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.pwr.ite.server.client.web.dto.UserDisplayDto;
 import pl.pwr.ite.server.client.web.service.UserDisplayFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
@@ -35,5 +33,10 @@ public class UserDisplayController implements InitializingBean {
     @GetMapping
     public ResponseEntity<Collection<UserDisplayDto>> getAll() {
         return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.getAll(), defaultListProperties));
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDisplayDto> create(@RequestBody UserDisplayDto dto) {
+        return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.create(dto), defaultSingleProperties));
     }
 }

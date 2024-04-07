@@ -4,5 +4,7 @@ public enum Permission {
     EventEdit,
     ActivityEdit,
     UserImport,
-    SystemView
+    SystemView,
+    AnnouncementEdit,
+    UserDisplayEdit
 }

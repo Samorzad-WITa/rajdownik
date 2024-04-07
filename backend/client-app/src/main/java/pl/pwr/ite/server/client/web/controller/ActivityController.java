@@ -3,10 +3,7 @@ package pl.pwr.ite.server.client.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.pwr.ite.server.client.web.dto.ActivityDto;
 import pl.pwr.ite.server.client.web.service.ActivityFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
@@ -43,5 +40,10 @@ public class ActivityController implements InitializingBean {
     @GetMapping("/{id}")
     public ResponseEntity<ActivityDto> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(activityFacade.getById(id, defaultSingleProperties));
+    }
+
+    @PostMapping
+    public ResponseEntity<ActivityDto> create(@RequestBody ActivityDto dto) {
+        return ResponseEntity.ok(activityFacade.map(activityFacade.create(dto), defaultSingleProperties));
     }
 }
