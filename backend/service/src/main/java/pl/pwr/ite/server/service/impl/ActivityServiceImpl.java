@@ -26,17 +26,17 @@ public class ActivityServiceImpl extends EntityServiceBase<Activity> implements 
     }
 
     @Override
-    public Collection<Activity> getAllByDate(LocalDateTime referenceTime) {
+    public Collection<Activity> getAllByDate(/*LocalDateTime referenceTime*/) {
         var path = QActivity.activity;
         return new JPAQuery<>(entityManager)
                 .select(path).from(path)
-                .where(Expressions.dateTimeOperation(
-                        LocalDate.class,
-                        Ops.DateTimeOps.DATE,
-                        QActivity.activity.timeFrom)
-                        .eq(referenceTime.toLocalDate()
-                        )
-                )
+//                .where(Expressions.dateTimeOperation(
+//                        LocalDate.class,
+//                        Ops.DateTimeOps.DATE,
+//                        QActivity.activity.timeFrom)
+//                        .eq(referenceTime.toLocalDate()
+//                        )
+//                )
                 .orderBy(path.timeFrom.asc())
                 .fetch();
     }

@@ -7,5 +7,5 @@ import java.util.Collection;
 
 public interface ActivityService extends EntityService<Activity> {
 
-    Collection<Activity> getAllByDate(LocalDateTime referenceTime);
+    Collection<Activity> getAllByDate(/*LocalDateTime referenceTime*/);
 }

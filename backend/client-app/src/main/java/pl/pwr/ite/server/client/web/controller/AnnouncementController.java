@@ -2,8 +2,10 @@ package pl.pwr.ite.server.client.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.pwr.ite.server.client.web.dto.ActivityDto;
 import pl.pwr.ite.server.client.web.dto.AnnouncementDto;
 import pl.pwr.ite.server.client.web.service.AnnouncementFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
@@ -44,5 +46,16 @@ public class AnnouncementController implements InitializingBean {
     @PostMapping("/admin/announcement")
     public ResponseEntity<AnnouncementDto> create(@RequestBody AnnouncementDto dto) {
         return ResponseEntity.ok(announcementFacade.map(announcementFacade.create(dto), defaultSingleProperties));
+    }
+
+    @PutMapping("/admin/announcement/{id}")
+    public ResponseEntity<AnnouncementDto> update(@PathVariable UUID id, @RequestBody AnnouncementDto dto) {
+        return ResponseEntity.ok(announcementFacade.map(announcementFacade.update(id, dto), defaultSingleProperties));
+    }
+
+    @DeleteMapping("/admin/announcement/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void delete(@PathVariable UUID id) {
+        announcementFacade.delete(id);
     }
 }

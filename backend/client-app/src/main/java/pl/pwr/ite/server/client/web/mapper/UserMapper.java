@@ -14,14 +14,17 @@ public class UserMapper extends MapperBase<User, UserDto, UserDto.Properties> {
 
     @Override
     public void transform(User source, UserDto destination, UserDto.Properties properties) {
-        destination.setEmail(source.getEmail());
         destination.setPhoneNumber(source.getPhoneNumber());
-        destination.setIndexNumber(source.getIndexNumber());
         destination.setFirstName(source.getFirstName());
         destination.setLastName(source.getLastName());
-        destination.setRoomNumber(source.getRoomNumber());
-        destination.setDietType(source.getDietType());
-        destination.setBusNumber(source.getBusNumber());
+
+        if(properties.isIncludeDetails()) {
+            destination.setEmail(source.getEmail());
+            destination.setIndexNumber(source.getIndexNumber());
+            destination.setRoomNumber(source.getRoomNumber());
+            destination.setDietType(source.getDietType());
+            destination.setBusNumber(source.getBusNumber());
+        }
 
 //        if(properties.isIncludeData()) {
 //            map(destination::setData, source.getData(), userDataMapper, properties);

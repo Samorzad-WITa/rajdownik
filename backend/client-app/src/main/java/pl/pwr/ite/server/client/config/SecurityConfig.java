@@ -48,8 +48,8 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(httpRequests -> httpRequests
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/user/password-reset", "/user/password-reset-init").permitAll()
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/admin/**").authenticated()
                         .anyRequest().authenticated()

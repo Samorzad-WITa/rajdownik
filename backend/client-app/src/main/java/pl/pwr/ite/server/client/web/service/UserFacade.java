@@ -17,6 +17,7 @@ import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.entity.UserToken;
 import pl.pwr.ite.server.model.enums.Permission;
 import pl.pwr.ite.server.model.enums.UserTokenType;
+import pl.pwr.ite.server.model.enums.UserType;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.service.*;
 import pl.pwr.ite.server.web.EntityServiceFacade;
@@ -26,6 +27,7 @@ import pl.pwr.ite.server.web.exception.ApplicationException;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.UUID;
 
 @Component
 public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, UserDto.Properties, UserMapper> {
@@ -58,6 +60,30 @@ public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, 
         return user;
     }
 
+    @Transactional
+    public User create(UserDto dto) {
+        var user = new User();
+        securityFacade.checkAccess(Permission.UserEdit);
+        user.setType(UserType.Participant);
+        user.setPhoneNumber(dto.getPhoneNumber());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+
+        return saveAndFlush(user);
+    }
+
+    @Transactional
+    public User update(UUID id, UserDto dto) {
+        var user = getById(id);
+        if(user == null) {
+            throw new ApplicationException(ApplicationError.UserNotFound);
+        }
+        user.setPhoneNumber(dto.getPhoneNumber());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+
+        return saveAndFlush(user);
+    }
 
     @Transactional
     public JwtDto authenticate(CredentialsDto dto) {

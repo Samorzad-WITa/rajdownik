@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pl.pwr.ite.server.model.entity.EntityBase;
 import pl.pwr.ite.server.service.EntityService;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public abstract class EntityServiceBase<E extends EntityBase> implements EntityService<E> {
@@ -17,6 +18,11 @@ public abstract class EntityServiceBase<E extends EntityBase> implements EntityS
     @Override
     public E findById(UUID id) {
         return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Collection<E> getAll() {
+        return repository.findAll();
     }
 
     @Override

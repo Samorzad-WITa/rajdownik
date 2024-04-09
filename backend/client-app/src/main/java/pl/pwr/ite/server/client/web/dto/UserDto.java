@@ -13,6 +13,7 @@ public class UserDto {
     @Accessors(chain = true)
     public static abstract class Properties implements MappingProperties {
         private boolean includeData;
+        private boolean includeDetails;
     }
 
     private UUID id;

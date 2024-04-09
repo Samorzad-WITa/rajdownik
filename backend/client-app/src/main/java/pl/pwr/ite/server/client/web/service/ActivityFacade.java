@@ -10,8 +10,11 @@ import pl.pwr.ite.server.model.filter.ActivityFilter;
 import pl.pwr.ite.server.service.ActivityService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
 import pl.pwr.ite.server.web.SecurityFacade;
+import pl.pwr.ite.server.web.exception.ApplicationError;
+import pl.pwr.ite.server.web.exception.ApplicationException;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @Service
 public class ActivityFacade extends EntityServiceFacade<Activity, ActivityService, ActivityDto, ActivityDto.Properties, ActivityMapper> {
@@ -24,8 +27,8 @@ public class ActivityFacade extends EntityServiceFacade<Activity, ActivityServic
     }
 
     @Transactional
-    public Collection<Activity> getAll(ActivityFilter filter) {
-        return getService().getAllByDate(filter.getTime());
+    public Collection<Activity> getAll(/*ActivityFilter filter*/) {
+        return getService().getAllByDate(/*filter.getTime()*/);
     }
 
     @Transactional
@@ -39,5 +42,31 @@ public class ActivityFacade extends EntityServiceFacade<Activity, ActivityServic
         activity.setDescription(dto.getDescription());
 
         return saveAndFlush(activity);
+    }
+
+    @Transactional
+    public Activity update(UUID id, ActivityDto dto) {
+        var activity = getById(id);
+        if(activity == null) {
+            throw new ApplicationException(ApplicationError.ActivityNotFound);
+        }
+        securityFacade.checkAccess(Permission.ActivityEdit);
+
+        activity.setTitle(dto.getTitle());
+        activity.setTimeFrom(dto.getTimeFrom());
+        activity.setTimeTo(dto.getTimeTo());
+        activity.setDescription(dto.getDescription());
+
+        return saveAndFlush(activity);
+    }
+
+    @Transactional
+    public void delete(UUID id) {
+        var activity = getById(id);
+        if(activity == null) {
+            throw new ApplicationException(ApplicationError.ActivityNotFound);
+        }
+        securityFacade.checkAccess(Permission.ActivityEdit);
+        getService().deleteById(id);
     }
 }
