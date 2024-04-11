@@ -42,7 +42,7 @@ public class UserDisplayFacade extends EntityServiceFacade<UserDisplay, UserDisp
     @Transactional
     public UserDisplay create(UserDisplayDto dto) {
         var userDisplay = new UserDisplay();
-        var user = userService.findById(dto.getId());
+        var user = userService.findById(dto.getUser().getId());
         if(user == null) {
             throw new ApplicationException(ApplicationError.UserNotFound);
         }
