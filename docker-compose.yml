@@ -6,7 +6,7 @@ services:
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
     environment:
-      - SPRING_DATASOURCE_URL=$DATABASE_URL
+      - SPRING_DATASOURCE_URL=jdbc:postgres://os8448o:5432/rajdownik_dev
       - SPRING_DATASOURCE_USERNAME=$DATABASE_USER
       - SPRING_DATASOURCE_PASSWORD=$DATABASE_PASSWORD
     volumes:
