@@ -16,7 +16,7 @@ spring:
         show_sql: false
         format_sql: true
         default_schema: public
-        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
