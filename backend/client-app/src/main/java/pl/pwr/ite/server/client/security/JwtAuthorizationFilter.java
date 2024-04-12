@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+@Configuration
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
