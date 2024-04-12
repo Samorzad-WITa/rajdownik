@@ -9,6 +9,9 @@ export default async function handler(
   if (process.env.DEBUG) return res.status(200).json(generateItems());
 
   const result = await fetch(`${process.env.BACKEND_URL}/activity`, {
+    body: {
+      timestamp
+    },
     next: { revalidate: 600 },
   });
   const parsed = await result.json();
