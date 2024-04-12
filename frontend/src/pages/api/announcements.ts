@@ -5,12 +5,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<AnnouncementItem[]>,
 ) {
+  if (process.env.DEBUG) return res.status(200).json(items);
+
   const result = await fetch(`${process.env.BACKEND_URL}/announcement`, {
     next: { revalidate: 30 },
   });
   const parsed = await result.json();
-
-  return res.status(200).json(items);
 
   if (!result.ok) return res.status(500).json([]);
 

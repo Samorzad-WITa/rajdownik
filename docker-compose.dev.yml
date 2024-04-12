@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   backend:
+    depends_on:
+      - db
     build: ./backend
     restart: on-failure
     env_file: ./.env
@@ -15,3 +17,20 @@ services:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
+
+  db:
+    image: 'postgres:13.1-alpine'
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$DATABASE_USER
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_DB=$DATABASE_NAME
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgres
+
+volumes:
+  postgres:
+    driver: local

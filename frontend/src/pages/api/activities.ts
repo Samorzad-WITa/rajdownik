@@ -6,12 +6,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ActivityItem[]>,
 ) {
+  if (process.env.DEBUG) return res.status(200).json(generateItems());
+
   const result = await fetch(`${process.env.BACKEND_URL}/activity`, {
     next: { revalidate: 600 },
   });
   const parsed = await result.json();
-
-  return res.status(200).json(generateItems());
 
   if (!result.ok) return res.status(500).json([]);
 
