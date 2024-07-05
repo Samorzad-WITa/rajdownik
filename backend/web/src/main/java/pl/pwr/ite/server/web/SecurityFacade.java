@@ -54,6 +54,10 @@ public class SecurityFacade implements InitializingBean {
     }
 
     public User getAuthenticatedUser() {
+        return getAuthenticatedUser(true);
+    }
+
+    public User getAuthenticatedUser(boolean reference) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null) {
             throw new IllegalStateException("No authenticated user available.");
@@ -63,6 +67,8 @@ public class SecurityFacade implements InitializingBean {
             throw new IllegalStateException("Principal is not of type AuthenticatedUser.");
         }
         var userId = ((AuthenticatedUser) authentication.getPrincipal()).getUserId();
-        return userService.getReference(userId);
+        return reference
+                ? userService.getReference(userId)
+                : userService.findById(userId);
     }
 }

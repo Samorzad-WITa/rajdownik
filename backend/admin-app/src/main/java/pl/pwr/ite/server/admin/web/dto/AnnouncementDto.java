@@ -7,8 +7,7 @@ import pl.pwr.ite.server.mapping.MappingProperties;
 import java.util.UUID;
 
 @Data
-public class
-UserDto {
+public class AnnouncementDto {
 
     @Data
     @Accessors(chain = true)
@@ -17,13 +16,7 @@ UserDto {
 
     private UUID id;
 
-    private String email;
+    private String title;
 
-    private String phoneNumber;
-
-    private String indexNumber;
-
-    private String firstName;
-
-    private String lastName;
+    private String description;
 }

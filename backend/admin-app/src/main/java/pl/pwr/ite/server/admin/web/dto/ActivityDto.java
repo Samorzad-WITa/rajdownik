@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import pl.pwr.ite.server.mapping.MappingProperties;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public class ActivityDto {
@@ -12,10 +13,9 @@ public class ActivityDto {
     @Data
     @Accessors(chain = true)
     public static abstract class Properties implements MappingProperties {
-        private boolean includeEvent;
     }
 
-    private EventDto event;
+    private UUID id;
 
     private LocalDateTime timeFrom;
 

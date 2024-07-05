@@ -9,6 +9,7 @@ import pl.pwr.ite.server.service.EntityService;
 import pl.pwr.ite.server.service.MappingService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 public abstract class EntityServiceFacade<E extends EntityBase, S extends EntityService<E>, D, P extends MappingProperties, M extends Mapper<? super E, ? super D, P>> {
@@ -20,9 +21,12 @@ public abstract class EntityServiceFacade<E extends EntityBase, S extends Entity
     @Autowired
     private MappingService mappingService;
 
-    public EntityServiceFacade(S service, M mapper) {
+    protected final SecurityFacade securityFacade;
+
+    public EntityServiceFacade(S service, M mapper, SecurityFacade securityFacade) {
         this.service = service;
         this.mapper = mapper;
+        this.securityFacade = securityFacade;
         mappingPropertiesType = GenericHelper.getArgumentType(getClass(), "P");
     }
 
@@ -33,6 +37,14 @@ public abstract class EntityServiceFacade<E extends EntityBase, S extends Entity
     public E getById(UUID id) {
         var entity = service.findById(id);
         return entity;
+    }
+
+    public Collection<E> getList() {
+        return service.getAll();
+    }
+
+    public Collection<D> getList(MappingProperties properties) {
+        return (List<D>) mapper.map(getList(), properties);
     }
 
     public D getById(UUID id, MappingProperties properties) {

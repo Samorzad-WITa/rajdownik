@@ -1,0 +1,93 @@
+INSERT INTO public.event VALUES ('13bdc712-9014-4138-9f61-46eaa0929845', '2024-02-28 17:14:36.88712', '2024-02-28 17:14:36.88812', '2022-12-22 12:14:11.503843', '2022-12-22 12:14:11.503843', 'Test event title');
+
+
+--
+-- TOC entry 3384 (class 0 OID 139854)
+-- Dependencies: 214
+-- Data for Name: activity; Type: TABLE DATA; Schema: public; Owner: witta
+--
+
+-- INSERT INTO public.activity VALUES ('359f5d24-6b02-4533-9a2b-84b4615cf55a', '2024-02-28 17:19:25.376078', '2024-02-28 17:19:25.376078', 'Test activity description 2', '13bdc712-9014-4138-9f61-46eaa0929845', '2024-03-04 10:00:00.503843', '2024-03-05 09:00:00.503843', 'Ksjdknads', NULL);
+-- INSERT INTO public.activity VALUES ('293ca814-29f3-45f8-ab8c-28b61418adf3', '2024-02-28 17:19:25.376078', '2024-02-28 17:19:25.376078', 'Test activity description 2', '13bdc712-9014-4138-9f61-46eaa0929845', '2024-03-04 10:00:00.503843', '2024-03-04 17:00:00.503843', 'Ksjdknads', NULL);
+-- INSERT INTO public.activity VALUES ('3be7c8e1-098f-4415-94ad-d1670be052cb', '2024-02-28 17:19:25.376078', '2024-02-28 17:21:00.181655', 'Test activity description 2', '13bdc712-9014-4138-9f61-46eaa0929845', '2024-03-02 10:00:00.503843', '2024-03-02 16:00:00.503843', 'Test activity', NULL);
+--
+--
+-- --
+-- -- TOC entry 3394 (class 0 OID 148071)
+-- -- Dependencies: 224
+-- -- Data for Name: announcement; Type: TABLE DATA; Schema: public; Owner: witta
+-- --
+--
+--
+--
+-- --
+-- -- TOC entry 3389 (class 0 OID 139901)
+-- -- Dependencies: 219
+-- -- Data for Name: data; Type: TABLE DATA; Schema: public; Owner: witta
+-- --
+--
+-- INSERT INTO public.data VALUES ('264b2833-3030-4780-8387-ad6128493587', '2022-10-04 10:21:50.545635', '2022-10-04 10:21:50.545635', 'Tura autokaru');
+-- INSERT INTO public.data VALUES ('cfa2ae75-9f30-4290-8d5b-d6960f950dbe', '2022-10-04 10:21:50.545635', '2022-10-04 10:21:50.545635', 'Rozmiar koszulki');
+--
+--
+-- --
+-- -- TOC entry 3393 (class 0 OID 139947)
+-- -- Dependencies: 223
+-- -- Data for Name: oauth2_authorized_client; Type: TABLE DATA; Schema: public; Owner: postgres
+-- --
+--
+--
+--
+-- --
+-- -- TOC entry 3392 (class 0 OID 139931)
+-- -- Dependencies: 222
+-- -- Data for Name: oauth2_registered_client; Type: TABLE DATA; Schema: public; Owner: postgres
+-- --
+--
+--
+--
+-- --
+-- -- TOC entry 3387 (class 0 OID 139879)
+-- -- Dependencies: 217
+-- -- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: witta
+-- --
+--
+-- INSERT INTO public.role VALUES ('fd750e93-90d3-4a55-bb6d-2fa901a78500', '2022-10-04 10:21:50.545635', '2022-10-04 10:21:50.545635', 'coo', 'Coordinator', 'coordinator');
+--
+--
+-- --
+-- -- TOC entry 3386 (class 0 OID 139866)
+-- -- Dependencies: 216
+-- -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: witta
+-- --
+--
+-- INSERT INTO public."user" VALUES ('238bdf45-c2a0-4feb-811f-18572227c3b3', '2022-10-04 10:21:50.545635', '2024-04-01 00:00:49.588196', 'dominik.pokrzywa@gmail.com', 'Dominik', 'Pokrzywa', '$2a$10$sEaXLHx.TnqoFE5zjJ79SOSXQXs1FYon7A8u9xS7ossY/IMcCzx/6', '123456789', 'Organizer', '272953', NULL, NULL, NULL);
+--
+--
+-- --
+-- -- TOC entry 3390 (class 0 OID 139906)
+-- -- Dependencies: 220
+-- -- Data for Name: user_data; Type: TABLE DATA; Schema: public; Owner: witta
+-- --
+--
+-- INSERT INTO public.user_data VALUES ('8147687e-5e12-4f7b-b0e9-b844481b8cb6', '2022-10-04 10:21:50.545635', '2022-10-04 10:21:50.545635', '264b2833-3030-4780-8387-ad6128493587', '238bdf45-c2a0-4feb-811f-18572227c3b3', 'II');
+-- INSERT INTO public.user_data VALUES ('9defb098-d79e-4d8d-8b47-b2c5f9022826', '2022-10-04 10:21:50.545635', '2022-10-04 10:21:50.545635', 'cfa2ae75-9f30-4290-8d5b-d6960f950dbe', '238bdf45-c2a0-4feb-811f-18572227c3b3', 'M');
+--
+--
+-- --
+-- -- TOC entry 3391 (class 0 OID 139911)
+-- -- Dependencies: 221
+-- -- Data for Name: user_display; Type: TABLE DATA; Schema: public; Owner: witta
+-- --
+--
+-- INSERT INTO public.user_display VALUES ('180a98e8-487b-400f-a322-16e022f5614d', '2022-10-04 10:21:50.545635', '2022-10-04 10:21:50.545635', 'Koordynator główny', '2024-03-03 10:21:50.545635', NULL, '238bdf45-c2a0-4feb-811f-18572227c3b3');
+--
+--
+-- --
+-- -- TOC entry 3388 (class 0 OID 139886)
+-- -- Dependencies: 218
+-- -- Data for Name: user_role; Type: TABLE DATA; Schema: public; Owner: witta
+-- --
+--
+-- INSERT INTO public.user_role VALUES ('2653957d-ed0c-4698-a658-5a881e3c1e2c', '2022-10-04 10:21:50.545635', '2022-10-04 10:21:50.545635', 'fd750e93-90d3-4a55-bb6d-2fa901a78500', '238bdf45-c2a0-4feb-811f-18572227c3b3');
+--

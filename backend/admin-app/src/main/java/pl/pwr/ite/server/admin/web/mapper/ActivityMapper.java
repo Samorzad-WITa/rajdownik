@@ -14,15 +14,11 @@ public class ActivityMapper extends MapperBase<Activity, ActivityDto, ActivityDt
 
     @Override
     public void transform(Activity source, ActivityDto destination, ActivityDto.Properties properties) {
+        destination.setId(source.getId());
         destination.setTimeFrom(source.getTimeFrom());
         destination.setTimeTo(source.getTimeTo());
         destination.setTitle(source.getTitle());
         destination.setDescription(source.getDescription());
         destination.setLocation(source.getLocation());
-
-        if (properties.isIncludeEvent()) {
-            map(destination::setEvent, source.getEvent(), eventMapper, properties);
-        }
-
     }
 }

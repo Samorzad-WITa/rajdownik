@@ -9,6 +9,7 @@ import pl.pwr.ite.server.service.DataService;
 import pl.pwr.ite.server.service.UserDataService;
 import pl.pwr.ite.server.service.UserService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
+import pl.pwr.ite.server.web.SecurityFacade;
 import pl.pwr.ite.server.web.exception.ApplicationError;
 import pl.pwr.ite.server.web.exception.ApplicationException;
 
@@ -20,8 +21,8 @@ public class UserDataFacade extends EntityServiceFacade<UserData, UserDataServic
     private final UserService userService;
     private final DataService dataService;
 
-    public UserDataFacade(UserDataService service, UserDataMapper mapper, UserService userService, DataService dataService) {
-        super(service, mapper);
+    public UserDataFacade(UserDataService service, UserDataMapper mapper, UserService userService, DataService dataService, SecurityFacade securityFacade) {
+        super(service, mapper, securityFacade);
         this.userService = userService;
         this.dataService = dataService;
     }

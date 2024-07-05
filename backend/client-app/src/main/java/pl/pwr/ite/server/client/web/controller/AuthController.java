@@ -18,7 +18,7 @@ public class AuthController {
 
     private final UserFacade userFacade;
 
-    @PostMapping("/api/auth/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<JwtDto> login(@RequestBody CredentialsDto dto) {
         return ResponseEntity.ok(userFacade.authenticate(dto));
     }

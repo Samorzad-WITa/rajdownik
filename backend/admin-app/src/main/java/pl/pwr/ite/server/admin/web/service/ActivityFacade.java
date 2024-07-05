@@ -5,53 +5,57 @@ import org.springframework.stereotype.Component;
 import pl.pwr.ite.server.admin.web.dto.ActivityDto;
 import pl.pwr.ite.server.admin.web.mapper.ActivityMapper;
 import pl.pwr.ite.server.model.entity.Activity;
+import pl.pwr.ite.server.model.enums.Permission;
 import pl.pwr.ite.server.service.ActivityService;
-import pl.pwr.ite.server.service.EventService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
+import pl.pwr.ite.server.web.SecurityFacade;
+import pl.pwr.ite.server.web.exception.ApplicationError;
+import pl.pwr.ite.server.web.exception.ApplicationException;
 
 import java.util.UUID;
 
 @Component
 public class ActivityFacade extends EntityServiceFacade<Activity, ActivityService, ActivityDto, ActivityDto.Properties, ActivityMapper> {
-
-    private final EventService eventService;
-
-    public ActivityFacade(ActivityService service, ActivityMapper mapper, EventService eventService) {
-        super(service, mapper);
-        this.eventService = eventService;
+    public ActivityFacade(ActivityService service, ActivityMapper mapper, SecurityFacade securityFacade) {
+        super(service, mapper, securityFacade);
     }
 
     @Transactional
     public Activity create(ActivityDto dto) {
+        securityFacade.checkAccess(Permission.ActivityEdit);
+
         var activity = new Activity();
-
-        var eventId = dto.getEvent().getId();
-        var event = eventService.findById(eventId);
-        if(event == null) {
-            throw new IllegalArgumentException(String.format("Event with ID %s not found", eventId));
-        }
-
-        activity.setEvent(event);
+        activity.setTitle(dto.getTitle());
         activity.setTimeFrom(dto.getTimeFrom());
         activity.setTimeTo(dto.getTimeTo());
-        activity.setTitle(dto.getTitle());
         activity.setDescription(dto.getDescription());
 
         return saveAndFlush(activity);
     }
 
     @Transactional
-    public Activity update(UUID activityId, ActivityDto dto) {
-        var activity = getService().findById(activityId);
+    public Activity update(UUID id, ActivityDto dto) {
+        var activity = getById(id);
         if(activity == null) {
-            throw new IllegalArgumentException(String.format("Activity with ID %s not found.", activityId));
+            throw new ApplicationException(ApplicationError.ActivityNotFound);
         }
+        securityFacade.checkAccess(Permission.ActivityEdit);
 
+        activity.setTitle(dto.getTitle());
         activity.setTimeFrom(dto.getTimeFrom());
         activity.setTimeTo(dto.getTimeTo());
-        activity.setTitle(dto.getTitle());
         activity.setDescription(dto.getDescription());
 
         return saveAndFlush(activity);
+    }
+
+    @Transactional
+    public void delete(UUID id) {
+        var activity = getById(id);
+        if(activity == null) {
+            throw new ApplicationException(ApplicationError.ActivityNotFound);
+        }
+        securityFacade.checkAccess(Permission.ActivityEdit);
+        getService().deleteById(id);
     }
 }

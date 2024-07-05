@@ -1,8 +1,7 @@
-package pl.pwr.ite.server.client.web.mapper;
+package pl.pwr.ite.server.admin.web.mapper;
 
-import org.aspectj.weaver.AnnotationNameValuePair;
 import org.springframework.stereotype.Component;
-import pl.pwr.ite.server.client.web.dto.AnnouncementDto;
+import pl.pwr.ite.server.admin.web.dto.AnnouncementDto;
 import pl.pwr.ite.server.mapping.MapperBase;
 import pl.pwr.ite.server.model.entity.Announcement;
 
