@@ -1,13 +1,13 @@
-package pl.pwr.ite.server.client.web.controller;
+package pl.pwr.ite.server.admin.web.controller;
+
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.pwr.ite.server.client.web.dto.ActivityDto;
-import pl.pwr.ite.server.client.web.dto.AnnouncementDto;
-import pl.pwr.ite.server.client.web.service.AnnouncementFacade;
+import pl.pwr.ite.server.admin.web.dto.AnnouncementDto;
+import pl.pwr.ite.server.admin.web.service.AnnouncementFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
 import pl.pwr.ite.server.service.MappingService;
 
@@ -21,7 +21,6 @@ public class AnnouncementController implements InitializingBean {
 
     private final AnnouncementFacade announcementFacade;
     private final MappingService mappingService;
-
     private MappingProperties defaultListProperties;
     private MappingProperties defaultSingleProperties;
 
@@ -38,6 +37,22 @@ public class AnnouncementController implements InitializingBean {
 
     @GetMapping
     public ResponseEntity<Collection<AnnouncementDto>> getAll() {
-        return ResponseEntity.ok(announcementFacade.getList(defaultListProperties));
+        return ResponseEntity.ok(announcementFacade.map(announcementFacade.getService().getAll(), defaultListProperties));
+    }
+
+    @PostMapping
+    public ResponseEntity<AnnouncementDto> create(@RequestBody AnnouncementDto dto) {
+        return ResponseEntity.ok(announcementFacade.map(announcementFacade.create(dto), defaultSingleProperties));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AnnouncementDto> update(@PathVariable UUID id, @RequestBody AnnouncementDto dto) {
+        return ResponseEntity.ok(announcementFacade.map(announcementFacade.update(id, dto), defaultSingleProperties));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void delete(@PathVariable UUID id) {
+        announcementFacade.delete(id);
     }
 }

@@ -7,14 +7,15 @@ import pl.pwr.ite.server.admin.web.mapper.EventMapper;
 import pl.pwr.ite.server.model.entity.Event;
 import pl.pwr.ite.server.service.EventService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
+import pl.pwr.ite.server.web.SecurityFacade;
 
 import java.util.UUID;
 
 @Component
 public class EventFacade extends EntityServiceFacade<Event, EventService, EventDto, EventDto.Properties, EventMapper> {
 
-    public EventFacade(EventService service, EventMapper mapper) {
-        super(service, mapper);
+    public EventFacade(EventService service, EventMapper mapper, SecurityFacade securityFacade) {
+        super(service, mapper, securityFacade);
     }
 
     @Transactional

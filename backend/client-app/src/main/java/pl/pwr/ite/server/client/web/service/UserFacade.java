@@ -34,55 +34,19 @@ public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, 
 
     private final MailingService mailingService;
     private final ClockService clockService;
-    private final SecurityFacade securityFacade;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final UserImporter userImporter;
     private final UserTokenService userTokenService;
 
-    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserImporter userImporter, UserTokenService userTokenService) {
-        super(service, mapper);
+    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService) {
+        super(service, mapper, securityFacade);
         this.mailingService = mailingService;
         this.clockService = clockService;
-        this.securityFacade = securityFacade;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
-        this.userImporter = userImporter;
         this.userTokenService = userTokenService;
-    }
-
-    @Transactional
-    public User getAuthenticatedUser() {
-        var authenticatedUser = securityFacade.getAuthenticatedUser();
-        var user = getService().findById(authenticatedUser.getId());
-        return user;
-    }
-
-    @Transactional
-    public User create(UserDto dto) {
-        var user = new User();
-        securityFacade.checkAccess(Permission.UserEdit);
-        user.setType(UserType.Participant);
-        user.setPhoneNumber(dto.getPhoneNumber());
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-
-        return saveAndFlush(user);
-    }
-
-    @Transactional
-    public User update(UUID id, UserDto dto) {
-        var user = getById(id);
-        if(user == null) {
-            throw new ApplicationException(ApplicationError.UserNotFound);
-        }
-        user.setPhoneNumber(dto.getPhoneNumber());
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-
-        return saveAndFlush(user);
     }
 
     @Transactional
@@ -134,16 +98,5 @@ public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, 
         var encodedPassword = passwordEncoder.encode(dto.getNewPassword());
         user.setPasswordHash(encodedPassword);
         userTokenService.deleteById(userToken.getId());
-    }
-
-    @Transactional
-    public Collection<User> performImport(MultipartFile multipartFile) {
-        securityFacade.checkAccess(Permission.UserImport);
-        try(var inputStream = multipartFile.getInputStream()) {
-            return userImporter.performImport(inputStream);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
 }

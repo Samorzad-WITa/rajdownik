@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user-display")
 @RequiredArgsConstructor
 public class UserDisplayController implements InitializingBean {
 
@@ -42,21 +42,5 @@ public class UserDisplayController implements InitializingBean {
     @GetMapping("/api/user-display")
     public ResponseEntity<Collection<UserDisplayDto>> getAll() {
         return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.getAll(), defaultListProperties));
-    }
-
-    @PostMapping("/admin/user-display")
-    public ResponseEntity<UserDisplayDto> create(@RequestBody UserDisplayDto dto) {
-        return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.create(dto), defaultSingleProperties));
-    }
-
-    @PutMapping("/admin/user-display/{id}")
-    public ResponseEntity<UserDisplayDto> update(@PathVariable UUID id, @RequestBody UserDisplayDto dto) {
-        return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.update(id, dto), defaultSingleProperties));
-    }
-
-    @DeleteMapping("/admin/user-display/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void delete(@PathVariable UUID id) {
-        userDisplayFacade.delete(id);
     }
 }

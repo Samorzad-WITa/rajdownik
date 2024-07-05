@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController implements InitializingBean {
 
@@ -47,39 +47,13 @@ public class UserController implements InitializingBean {
                 .setIncludeUser(false);
     }
 
-    @GetMapping("/admin/user")
-    public ResponseEntity<UserDto> getAuthenticatedUser() {
-        return ResponseEntity.ok(userFacade.map(userFacade.getAuthenticatedUser(), defaultSingleProperties));
-    }
-
-    @GetMapping("/admin/user/all")
-    public ResponseEntity<Collection<UserDto>> getAll() {
-        return ResponseEntity.ok(userFacade.map(userFacade.getService().getAll(), defaultListProperties));
-    }
-
-    @PostMapping("/admin/user")
-    public ResponseEntity<UserDto> create(@RequestBody UserDto dto) {
-        return ResponseEntity.ok(userFacade.map(userFacade.create(dto), defaultSingleProperties));
-    }
-
-    @PutMapping("/admin/user/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable UUID id, @RequestBody UserDto dto) {
-        return ResponseEntity.ok(userFacade.map(userFacade.update(id, dto), defaultSingleProperties));
-    }
-
-    @PostMapping("/admin/user/import")
-    public ResponseEntity<Collection<UserDto>> importUsers(@RequestPart(name = "file") MultipartFile file) {
-        var users = userFacade.performImport(file);
-        return ResponseEntity.ok(userFacade.map(users, defaultListProperties));
-    }
-
-    @PostMapping("/admin/user/password-reset-init")
+    @PostMapping("/password-reset-init")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void initPasswordReset(@RequestBody UserDto dto) {
         userFacade.initPasswordReset(dto);
     }
 
-    @PostMapping("/admin/user/password-reset")
+    @PostMapping("/password-reset")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void resetPassword(@RequestBody PasswordResetDto dto) {
         userFacade.resetPassword(dto);
