@@ -1,0 +1,34 @@
+services:
+  backend:
+    depends_on:
+      - db
+    build: ./backend
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      - SPRING_DATASOURCE_URL=$DATABASE_URL
+      - SPRING_DATASOURCE_USERNAME=$DATABASE_USER
+      - SPRING_DATASOURCE_PASSWORD=$DATABASE_PASSWORD
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+
+  db:
+    image: 'postgres:13.1-alpine'
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$DATABASE_USER
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_DB=$DATABASE_NAME
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgres
+
+volumes:
+  postgres:
+    driver: local
