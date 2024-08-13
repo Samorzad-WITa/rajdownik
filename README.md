@@ -13,12 +13,12 @@
 cp .env.example .env
 cd frontend
 cp .env.example .env
-pnpm install
+npm install
 ```
 
 ## Development
 
 ```sh
 docker compose up -d
-pnpm dev
+npm dev
 ```
