@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+.container{
+  display: grid;
+  grid-template-columns: auto 1;
+}
 .navbar{
   height: 100%;
   width: 20%;
