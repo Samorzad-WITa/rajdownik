@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import pl.pwr.ite.server.model.entity.QUser;
 import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.entity.UserRole;
+import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.model.repository.UserRepository;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.security.permission.UserRolePermissionGranter;
@@ -21,7 +22,7 @@ import pl.pwr.ite.server.service.UserService;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl extends EntityServiceBase<User> implements UserService {
+public class UserServiceImpl extends FilterableEntityServiceBase<User, UserFilter> implements UserService {
 
     @PersistenceContext
     private EntityManager entityManager;

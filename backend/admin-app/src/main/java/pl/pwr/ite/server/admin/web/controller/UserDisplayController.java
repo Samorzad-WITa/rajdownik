@@ -9,6 +9,7 @@ import pl.pwr.ite.server.admin.web.dto.UserDisplayDto;
 import pl.pwr.ite.server.admin.web.dto.UserDto;
 import pl.pwr.ite.server.admin.web.service.UserDisplayFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
+import pl.pwr.ite.server.model.filter.UserDisplayFilter;
 import pl.pwr.ite.server.service.MappingService;
 
 import java.util.Collection;
@@ -40,8 +41,8 @@ public class UserDisplayController implements InitializingBean {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<UserDisplayDto>> getAll() {
-        return ResponseEntity.ok(userDisplayFacade.getList(defaultListProperties));
+    public ResponseEntity<Collection<UserDisplayDto>> getAll(UserDisplayFilter filter) {
+        return ResponseEntity.ok(userDisplayFacade.getList(filter, defaultListProperties));
     }
 
     @PostMapping

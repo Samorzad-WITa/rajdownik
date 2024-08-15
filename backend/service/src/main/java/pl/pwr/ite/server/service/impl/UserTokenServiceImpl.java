@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.pwr.ite.server.model.entity.QUserToken;
 import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.entity.UserToken;
+import pl.pwr.ite.server.model.filter.UserTokenFilter;
 import pl.pwr.ite.server.model.repository.UserTokenRepository;
 import pl.pwr.ite.server.service.UserTokenService;
 
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-public class UserTokenServiceImpl extends EntityServiceBase<UserToken> implements UserTokenService {
+public class UserTokenServiceImpl extends FilterableEntityServiceBase<UserToken, UserTokenFilter> implements UserTokenService {
 
     @PersistenceContext
     private EntityManager entityManager;

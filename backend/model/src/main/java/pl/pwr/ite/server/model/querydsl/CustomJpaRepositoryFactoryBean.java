@@ -7,11 +7,11 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import pl.pwr.ite.server.model.filter.binder.FilterBinderProvider;
 
-public class CustomJpaRepositoryBean<T extends Repository<S, I>, S, I> extends JpaRepositoryFactoryBean<T, S, I> {
+public class CustomJpaRepositoryFactoryBean<T extends Repository<S, I>, S, I> extends JpaRepositoryFactoryBean<T, S, I> {
 
     private FilterBinderProvider filterBinderProvider;
 
-    public CustomJpaRepositoryBean(Class<? extends T> repositoryInterface) {
+    public CustomJpaRepositoryFactoryBean(Class<? extends T> repositoryInterface) {
         super(repositoryInterface);
     }
 

@@ -9,6 +9,7 @@ import pl.pwr.ite.server.client.web.dto.ActivityDto;
 import pl.pwr.ite.server.client.web.dto.AnnouncementDto;
 import pl.pwr.ite.server.client.web.service.AnnouncementFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
+import pl.pwr.ite.server.model.filter.AnnouncementFilter;
 import pl.pwr.ite.server.service.MappingService;
 
 import java.util.Collection;
@@ -37,7 +38,7 @@ public class AnnouncementController implements InitializingBean {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<AnnouncementDto>> getAll() {
-        return ResponseEntity.ok(announcementFacade.getList(defaultListProperties));
+    public ResponseEntity<Collection<AnnouncementDto>> getAll(AnnouncementFilter filter) {
+        return ResponseEntity.ok(announcementFacade.getList(filter, defaultListProperties));
     }
 }

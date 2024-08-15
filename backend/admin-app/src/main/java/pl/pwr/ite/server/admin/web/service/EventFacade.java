@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.pwr.ite.server.admin.web.dto.EventDto;
 import pl.pwr.ite.server.admin.web.mapper.EventMapper;
 import pl.pwr.ite.server.model.entity.Event;
+import pl.pwr.ite.server.model.filter.EventFilter;
 import pl.pwr.ite.server.service.EventService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
 import pl.pwr.ite.server.web.SecurityFacade;
@@ -12,7 +13,7 @@ import pl.pwr.ite.server.web.SecurityFacade;
 import java.util.UUID;
 
 @Component
-public class EventFacade extends EntityServiceFacade<Event, EventService, EventDto, EventDto.Properties, EventMapper> {
+public class EventFacade extends EntityServiceFacade<Event, EventFilter, EventService, EventDto, EventDto.Properties, EventMapper> {
 
     public EventFacade(EventService service, EventMapper mapper, SecurityFacade securityFacade) {
         super(service, mapper, securityFacade);

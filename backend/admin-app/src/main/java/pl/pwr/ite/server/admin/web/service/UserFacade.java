@@ -13,6 +13,7 @@ import pl.pwr.ite.server.admin.web.dto.UserDto;
 import pl.pwr.ite.server.admin.web.mapper.UserMapper;
 import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.enums.Permission;
+import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.service.JwtService;
 import pl.pwr.ite.server.service.UserImporter;
@@ -27,7 +28,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Component
-public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, UserDto.Properties, UserMapper> {
+public class UserFacade extends EntityServiceFacade<User, UserFilter, UserService, UserDto, UserDto.Properties, UserMapper> {
 
     private final UserImporter userImporter;
     private final JwtService jwtService;

@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import pl.pwr.ite.server.model.entity.QUserDisplay;
 import pl.pwr.ite.server.model.entity.UserDisplay;
+import pl.pwr.ite.server.model.filter.UserDisplayFilter;
 import pl.pwr.ite.server.model.repository.UserDisplayRepository;
 import pl.pwr.ite.server.service.UserDisplayService;
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Service
-public class UserDisplayServiceImpl extends EntityServiceBase<UserDisplay> implements UserDisplayService {
+public class UserDisplayServiceImpl extends FilterableEntityServiceBase<UserDisplay, UserDisplayFilter> implements UserDisplayService {
 
     @PersistenceContext
     private EntityManager entityManager;

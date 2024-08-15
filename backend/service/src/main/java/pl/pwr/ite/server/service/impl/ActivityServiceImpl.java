@@ -8,6 +8,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import pl.pwr.ite.server.model.entity.Activity;
 import pl.pwr.ite.server.model.entity.QActivity;
+import pl.pwr.ite.server.model.filter.ActivityFilter;
 import pl.pwr.ite.server.model.repository.ActivityRepository;
 import pl.pwr.ite.server.service.ActivityService;
 
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Service
-public class ActivityServiceImpl extends EntityServiceBase<Activity> implements ActivityService {
+public class ActivityServiceImpl extends FilterableEntityServiceBase<Activity, ActivityFilter> implements ActivityService {
 
     @PersistenceContext
     private EntityManager entityManager;

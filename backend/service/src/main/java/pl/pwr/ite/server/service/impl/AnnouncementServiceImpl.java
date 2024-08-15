@@ -6,13 +6,14 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import pl.pwr.ite.server.model.entity.Announcement;
 import pl.pwr.ite.server.model.entity.QAnnouncement;
+import pl.pwr.ite.server.model.filter.AnnouncementFilter;
 import pl.pwr.ite.server.model.repository.AnnouncementRepository;
 import pl.pwr.ite.server.service.AnnouncementService;
 
 import java.util.Collection;
 
 @Service
-public class AnnouncementServiceImpl extends EntityServiceBase<Announcement> implements AnnouncementService {
+public class AnnouncementServiceImpl extends FilterableEntityServiceBase<Announcement, AnnouncementFilter> implements AnnouncementService {
 
     @PersistenceContext
     private EntityManager entityManager;

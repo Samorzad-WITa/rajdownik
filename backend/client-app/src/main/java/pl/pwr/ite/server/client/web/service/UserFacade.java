@@ -18,6 +18,7 @@ import pl.pwr.ite.server.model.entity.UserToken;
 import pl.pwr.ite.server.model.enums.Permission;
 import pl.pwr.ite.server.model.enums.UserTokenType;
 import pl.pwr.ite.server.model.enums.UserType;
+import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.service.*;
 import pl.pwr.ite.server.web.EntityServiceFacade;
@@ -30,7 +31,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Component
-public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, UserDto.Properties, UserMapper> {
+public class UserFacade extends EntityServiceFacade<User, UserFilter, UserService, UserDto, UserDto.Properties, UserMapper> {
 
     private final MailingService mailingService;
     private final ClockService clockService;
