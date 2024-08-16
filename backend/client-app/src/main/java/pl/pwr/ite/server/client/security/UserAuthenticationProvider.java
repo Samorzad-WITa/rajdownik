@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.pwr.ite.server.security.AuthenticatedUser;
+import pl.pwr.ite.server.security.MissingRoleException;
 import pl.pwr.ite.server.service.UserService;
 
 import java.util.HashSet;

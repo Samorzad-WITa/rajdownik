@@ -39,7 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String accessToken = resolveToken(request);
-        if(accessToken == null) {
+        if(accessToken == null || accessToken.equals("null")) {
             filterChain.doFilter(request, response);
             return;
         }

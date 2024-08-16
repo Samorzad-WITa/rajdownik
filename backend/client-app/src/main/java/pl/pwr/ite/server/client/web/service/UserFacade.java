@@ -67,6 +67,10 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
         }
     }
 
+    public User getAuthenticatedUser() {
+        return securityFacade.getAuthenticatedUser(false);
+    }
+
     @Transactional
     public void initPasswordReset(UserDto userDto) {
         var user  = getService().findByEmail(userDto.getEmail());

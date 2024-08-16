@@ -23,7 +23,7 @@ public class AuthController implements InitializingBean {
 
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@RequestBody CredentialsDto dto) {
         return ResponseEntity.ok(userFacade.authenticate(dto));
     }

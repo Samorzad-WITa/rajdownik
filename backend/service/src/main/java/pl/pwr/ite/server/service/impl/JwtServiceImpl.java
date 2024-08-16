@@ -13,6 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import pl.pwr.ite.server.model.entity.Data;
 import pl.pwr.ite.server.model.entity.User;
+import pl.pwr.ite.server.properties.AuthProperties;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.security.JwtGrantedAuthorityConverter;
 import pl.pwr.ite.server.service.ClockService;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 public class JwtServiceImpl implements JwtService, InitializingBean {
 
     private final JwtGrantedAuthorityConverter authorityConverter;
-    private final String secretKey = "688dc1754ba81961938cee3adb5b1b68167c1cf5531f6da17490b550b6465fb8";
+    private final AuthProperties authProperties;
     private final long accessTokenValidityTime = 3 * 24 * 60 * 60 * 1000;
 
     private final ClockService clockService;
@@ -108,7 +109,7 @@ public class JwtServiceImpl implements JwtService, InitializingBean {
 
 
     private Key getSignInKey() {
-        var keyBytes = Decoders.BASE64.decode(secretKey);
+        var keyBytes = Decoders.BASE64.decode(authProperties.getJwtSecret());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

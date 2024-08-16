@@ -47,6 +47,11 @@ public class UserController implements InitializingBean {
                 .setIncludeUser(false);
     }
 
+    @GetMapping("/authenticated")
+    public ResponseEntity<UserDto> getAuthenticatedUser() {
+        return ResponseEntity.ok(userFacade.map(userFacade.getAuthenticatedUser(), defaultSingleProperties));
+    }
+
     @PostMapping("/password-reset-init")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void initPasswordReset(@RequestBody UserDto dto) {

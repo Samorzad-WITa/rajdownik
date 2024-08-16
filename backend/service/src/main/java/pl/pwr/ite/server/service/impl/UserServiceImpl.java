@@ -1,6 +1,7 @@
 package pl.pwr.ite.server.service.impl;
 
 import com.google.common.base.CaseFormat;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -10,9 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.pwr.ite.server.model.entity.QUser;
-import pl.pwr.ite.server.model.entity.User;
-import pl.pwr.ite.server.model.entity.UserRole;
+import pl.pwr.ite.server.model.entity.*;
 import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.model.repository.UserRepository;
 import pl.pwr.ite.server.security.AuthenticatedUser;
@@ -20,6 +19,7 @@ import pl.pwr.ite.server.security.permission.UserRolePermissionGranter;
 import pl.pwr.ite.server.service.UserService;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl extends FilterableEntityServiceBase<User, UserFilter> implements UserService {
@@ -38,6 +38,32 @@ public class UserServiceImpl extends FilterableEntityServiceBase<User, UserFilte
     public User findByEmail(String email) {
         var path = QUser.user;
         return new JPAQuery<>(entityManager).select(path).from(path).where(path.email.eq(email)).fetchOne();
+    }
+
+    @Override
+    public boolean hasRoleByCodes(UUID userId, String... code) {
+        var userPath = QUser.user;
+        var userRolePath = QUserRole.userRole;
+        var rolePath = QRole.role;
+        return createQuery()
+                .from(userPath)
+                .leftJoin(userPath.roles, userRolePath)
+                .on(userRolePath.userId.eq(userId))
+                .leftJoin(userRolePath.role, rolePath)
+                .where(rolePath.code.in(code))
+                .fetchFirst() != null;
+    }
+
+    @Override
+    public boolean hasAdminPanelAccess(UUID userId) {
+        var userRolePath = QUserRole.userRole;
+        var rolePath = QRole.role;
+        return createQuery().from(userRolePath)
+                .leftJoin(userRolePath.role, rolePath)
+                .where(Expressions.allOf(
+                    userRolePath.userId.eq(userId),
+                    rolePath.adminPanelAccess.isTrue()
+                )).fetchFirst() != null;
     }
 
     @Override
