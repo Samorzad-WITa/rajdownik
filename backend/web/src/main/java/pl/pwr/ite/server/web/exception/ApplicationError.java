@@ -12,7 +12,9 @@ public enum ApplicationError implements ErrorDescriptor {
     UserTokenNotFound(HttpStatus.NOT_FOUND),
     ActivityNotFound(HttpStatus.NOT_FOUND),
     AnnouncementNotFound(HttpStatus.NOT_FOUND),
-    UserDisplayNotFound(HttpStatus.NOT_FOUND)
+    UserDisplayNotFound(HttpStatus.NOT_FOUND),
+    RegistrationNotFound(HttpStatus.NOT_FOUND),
+    RegistrationPartNotFound(HttpStatus.NOT_FOUND)
     ;
 
     private final HttpStatus defaultStatus;

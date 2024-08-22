@@ -7,5 +7,6 @@ public enum Permission {
     SystemView,
     AnnouncementEdit,
     UserDisplayEdit,
-    UserEdit
+    UserEdit,
+    RegistrationPartEdit
 }
