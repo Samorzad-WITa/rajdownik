@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import pl.pwr.ite.server.model.entity.EntityBase;
+import pl.pwr.ite.server.model.entity.User;
 
 import java.util.UUID;
 
@@ -21,6 +22,36 @@ public class RegistrationEntry extends EntityBase {
 
     @Column(insertable = false, updatable = false, nullable = false, name = "part_id")
     private UUID partId;
+
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
+
+    @Column(insertable = false, updatable = false, nullable = false, name = "user_id")
+    private UUID userId;
+
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "registered_by_id")
+    private User registeredBy;
+
+    @Column(insertable = false, updatable = false, nullable = false, name = "registered_by_id")
+    private UUID registeredById;
+
+    @Column(length = 100, nullable = false)
+    private String firstName;
+
+    @Column(length = 100, nullable = false)
+    private String lastName;
+
+    public void setUser(User user) {
+        this.user = user;
+        this.userId = user == null ? null : user.getId();
+    }
+
+    public void setRegisteredBy(User registeredBy) {
+        this.registeredBy = registeredBy;
+        this.registeredById = registeredBy == null ? null : registeredBy.getId();
+    }
 
     public void setPart(RegistrationPart part) {
         this.part = part;

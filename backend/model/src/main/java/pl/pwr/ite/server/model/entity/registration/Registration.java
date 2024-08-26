@@ -31,6 +31,9 @@ public class Registration extends EntityBase {
     @ColumnDefault("false")
     private Boolean active;
 
+    @Column(nullable = false)
+    private Long defaultPartLockDuration;
+
     @OneToMany(mappedBy = "registration")
     private Set<RegistrationPart> parts = new HashSet<>();
 }

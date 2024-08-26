@@ -55,6 +55,16 @@ public class UserServiceImpl extends FilterableEntityServiceBase<User, UserFilte
     }
 
     @Override
+    public User findByFirstAndLastName(String firstName, String lastName) {
+        var path = QUser.user;
+        return createQuery().select(path).from(path)
+                .where(Expressions.allOf(
+                        path.firstName.eq(firstName),
+                        path.lastName.eq(lastName)
+                )).fetchOne();
+    }
+
+    @Override
     public boolean hasAdminPanelAccess(UUID userId) {
         var userRolePath = QUserRole.userRole;
         var rolePath = QRole.role;

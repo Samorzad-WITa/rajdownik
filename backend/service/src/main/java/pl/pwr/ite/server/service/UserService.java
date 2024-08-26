@@ -16,4 +16,5 @@ public interface UserService extends UserDetailsService, FilterableEntityService
 
     boolean hasRoleByCodes(UUID userId, String... code);
     boolean hasAdminPanelAccess(UUID userId);
+    User findByFirstAndLastName(String firstName, String secondName);
 }

@@ -7,6 +7,7 @@ import lombok.ToString;
 import pl.pwr.ite.server.model.entity.EntityBase;
 import pl.pwr.ite.server.model.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +30,9 @@ public class RegistrationLock extends EntityBase {
 
     @Column(insertable = false, updatable = false, nullable = false, name = "owner_id")
     private UUID ownerId;
+
+    @Column(nullable = false)
+    private LocalDateTime expiresAt;
 
     public void setPart(RegistrationPart part) {
         this.part = part;

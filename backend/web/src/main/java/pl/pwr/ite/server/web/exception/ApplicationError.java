@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ApplicationError implements ErrorDescriptor {
+    NoAuthenticatedUser(HttpStatus.FORBIDDEN),
     UserNotFound(HttpStatus.NOT_FOUND),
     DataNotFound(HttpStatus.NOT_FOUND),
     UserDataNotFound(HttpStatus.NOT_FOUND),
