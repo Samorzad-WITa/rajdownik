@@ -1,5 +1,6 @@
 package pl.pwr.ite.server.admin.config;
 
+import com.google.common.collect.ImmutableList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(httpRequests -> httpRequests
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
@@ -44,7 +46,10 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         var configuration = new CorsConfiguration();
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedOrigins(ImmutableList.of("http://localhost:3000"));
+        configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
