@@ -7,6 +7,7 @@ import Schedule from './Components/schedule.js';
 import Staff from './Components/staff.js';
 import Settings from './Components/settings.js';
 import NotFound from './Components/notFound.js';
+import Test from './Components/test';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/staff" element={<Staff/>}/>
           <Route path="/settings" element={<Settings/>}/>
           <Route path='*' element={<NotFound />}/>
+          <Route path='/test' element={<Test/>}/>
         </Routes>
   </Router>        
 
