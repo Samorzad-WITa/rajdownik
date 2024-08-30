@@ -42,7 +42,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack gap={5}>
-        <BackButton to="/schedule" />
+        {/*<BackButton to="/schedule" />*/}
 
         <InfoCard item={activity} />
 

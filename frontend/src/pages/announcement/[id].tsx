@@ -5,7 +5,7 @@ import {
   PendingSpinner,
   SystemInformation,
 } from '@/components';
-import { fetchAnnouncements, useAnnouncements } from '@/hooks';
+import {fetchAnnouncements, useAnnouncement, useAnnouncements} from '@/hooks';
 import { nextItemExists, previousItemExists } from '@/utils';
 import { Link } from '@chakra-ui/next-js';
 import { Flex, Icon, VStack } from '@chakra-ui/react';
@@ -17,66 +17,63 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const router = useRouter();
 
-  const { data, isPending } = useAnnouncements();
+  const { id } = router.query;
+  if(id === undefined) {
+    return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
+  }
+
+  const {data, isPending} = useAnnouncement(id);
+
 
   if (isPending) return <PendingSpinner />;
 
-  if (data?.length === 0)
+  if (data === undefined)
     return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
-
-  let announcementIndex = 0;
-
-  const announcement = data?.find((item, index) => {
-    if (item.id === router.query.id) {
-      announcementIndex = index;
-      return true;
-    }
-  })!;
 
   return (
     <>
       <Head>
-        <title>Ogłoszenia</title>
+        <title>Szczegóły ogłoszenia</title>
         <meta name="description" content="Ogłoszenia" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack gap={5}>
-        <BackButton to="/" />
+        {/*<BackButton to="/" />*/}
 
-        <InfoCard item={announcement} />
+        <InfoCard item={data} />
 
-        <Flex width="100%" gap={2} justify="space-between">
-          <OutlineButton
-            leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={nextItemExists(announcementIndex, data?.length!)}
-          >
-            {nextItemExists(announcementIndex, data?.length!) ? (
-              <Link
-                href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}
-              >
-                Poprzednie
-              </Link>
-            ) : (
-              'Poprzednie'
-            )}
-          </OutlineButton>
+        {/*<Flex width="100%" gap={2} justify="space-between" overflow="visible">*/}
+        {/*  <OutlineButton*/}
+        {/*    leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}*/}
+        {/*    disabled={nextItemExists(announcementIndex, data?.length!)}*/}
+        {/*  >*/}
+        {/*    {nextItemExists(announcementIndex, data?.length!) ? (*/}
+        {/*      <Link*/}
+        {/*        href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}*/}
+        {/*      >*/}
+        {/*        Poprzednie*/}
+        {/*      </Link>*/}
+        {/*    ) : (*/}
+        {/*      'Poprzednie'*/}
+        {/*    )}*/}
+        {/*  </OutlineButton>*/}
 
-          <OutlineButton
-            rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={previousItemExists(announcementIndex)}
-          >
-            {previousItemExists(announcementIndex) ? (
-              <Link
-                href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}
-              >
-                Następne
-              </Link>
-            ) : (
-              'Następne'
-            )}
-          </OutlineButton>
-        </Flex>
+        {/*  <OutlineButton*/}
+        {/*    rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}*/}
+        {/*    disabled={previousItemExists(announcementIndex)}*/}
+        {/*  >*/}
+        {/*    {previousItemExists(announcementIndex) ? (*/}
+        {/*      <Link*/}
+        {/*        href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}*/}
+        {/*      >*/}
+        {/*        Następne*/}
+        {/*      </Link>*/}
+        {/*    ) : (*/}
+        {/*      'Następne'*/}
+        {/*    )}*/}
+        {/*  </OutlineButton>*/}
+        {/*</Flex>*/}
       </VStack>
     </>
   );

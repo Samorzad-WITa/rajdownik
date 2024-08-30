@@ -17,15 +17,23 @@ export const InfoCard = ({
   };
 }) => {
   return (
-    <Card width="90%" backgroundColor="#344756" borderRadius={20} px={5}>
+    <Card
+        width="90%"
+        minH="40vh"
+        backgroundColor="#1F3565"
+        borderRadius={20}
+        px={5}
+        overflowY="auto"
+        boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)"
+    >
       <CardHeader p={3}>
         <Flex justify="center">
-          <Heading size="md">{item.title}</Heading>
+          <Heading size="md" color="#FFFFFF" textAlign="center">{item.title}</Heading>
         </Flex>
       </CardHeader>
-      <Divider />
+      <Divider borderWidth={1.5} borderRadius={100} color="#FFFFFF"/>
       <CardBody px={0} pt={3}>
-        <Text>{item.description}</Text>
+        <Text color="#FFFFFF">{item.description}</Text>
       </CardBody>
     </Card>
   );

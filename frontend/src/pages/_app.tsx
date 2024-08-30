@@ -1,4 +1,4 @@
-import { Footer, Navbar } from '@/components';
+import {Footer, Navbar, ViewContext} from '@/components';
 import theme from '@/theme';
 import { ChakraProvider, Container, VStack } from '@chakra-ui/react';
 import {
@@ -17,14 +17,19 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <HydrationBoundary state={pageProps.dehydratedState}>
         <ChakraProvider theme={theme}>
-          <VStack minH="100vh" backgroundColor="#aeb5bb">
+          <VStack minH="100vh" maxH="100vh" backgroundColor="#E4E9F4">
             <Navbar />
+            <ViewContext label="Tytuł strony!" />
             <Container
-              maxW="container.xl"
+              overflowY="auto"
+              borderTopRightRadius={75}
+              borderTopLeftRadius={75}
+              bgColor="#FFFFFF"
               flex={1}
               display="flex"
               flexDir="column"
-              pt={6}
+              paddingTop={10}
+              paddingBottom={7}
             >
               <Component {...pageProps} />
             </Container>
