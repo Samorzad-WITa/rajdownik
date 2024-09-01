@@ -28,8 +28,9 @@ public class AnnouncementController implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        defaultListProperties = mappingService.createProperties(AnnouncementDto.Properties.class);
-        
+        defaultListProperties = mappingService.createProperties(AnnouncementDto.Properties.class)
+                .setIncludeDescription(true);
+
         defaultSingleProperties = mappingService.createProperties(AnnouncementDto.Properties.class)
                 .setIncludeDescription(true);
     }

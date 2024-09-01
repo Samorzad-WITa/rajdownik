@@ -1,9 +1,9 @@
 import { Button, ButtonOptions } from '@chakra-ui/react';
 import React from "react";
 
-export const OutlineButton = (props: {
+export const ActivityNavigationButton = (props: {
   children: React.ReactNode;
-  disabled?: boolean;
+  disabled: boolean;
   leftIcon?: ButtonOptions['leftIcon'];
   rightIcon?: ButtonOptions['rightIcon'];
 }) => {
@@ -20,7 +20,7 @@ export const OutlineButton = (props: {
       textTransform="uppercase"
       pl={props.leftIcon ? 0 : undefined}
       pr={props.rightIcon ? 0 : undefined}
-      disabled={props.disabled}
+      isDisabled={props.disabled}
       leftIcon={props.leftIcon ?? undefined}
       rightIcon={props.rightIcon ?? undefined}
     >

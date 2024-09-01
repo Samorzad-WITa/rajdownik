@@ -7,6 +7,7 @@ export const Navbar = () => {
     <Box
       w="100%"
       p={4}
+      pb={0}
       backgroundColor="#E4E9F4"
     >
       <Flex align="center" justify="space-between">

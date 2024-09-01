@@ -21,8 +21,4 @@ public class UserDisplayDto {
     private UserDto user;
 
     private String label;
-
-    private LocalDateTime timeFrom;
-
-    private LocalDateTime timeTo;
 }

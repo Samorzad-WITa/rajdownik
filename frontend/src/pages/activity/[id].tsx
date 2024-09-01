@@ -4,20 +4,22 @@ import {
   OutlineButton,
   PendingSpinner,
   SystemInformation,
+  ActivityNavigationButton
 } from '@/components';
 import { fetchActivities, useActivities } from '@/hooks';
-import { nextItemExists, previousItemExists } from '@/utils';
+import {nextItemExists, previousItemExists, getPolishWeekday, capitalize} from '@/utils';
 import { Link } from '@chakra-ui/next-js';
-import { Flex, Icon, VStack } from '@chakra-ui/react';
+import { Flex, Icon, VStack, Text } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { format, isPast, parseISO } from 'date-fns';
 
 export default function Home() {
   const router = useRouter();
 
-  const { data, isPending } = useActivities();
+  const { data, isPending } = useActivities('2024-04-13T11:00:00');
 
   if (isPending) return <PendingSpinner />;
 
@@ -41,37 +43,44 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <VStack gap={5}>
-        {/*<BackButton to="/schedule" />*/}
-
+      <VStack gap={2} color="#1F3565" >
+        <VStack gap={0}>
+          <Text fontSize={25} fontWeight={'bold'}>
+            {/*{activity.location}*/}
+            Marina
+          </Text>
+          <Text fontWeight={'bold'} fontSize={12}>
+            {capitalize(getPolishWeekday(activity.timeFrom))} | {format(parseISO(activity.timeFrom), 'HH:mm')} - {format(parseISO(activity.timeTo), 'HH:mm')}
+          </Text>
+        </VStack>
         <InfoCard item={activity} />
 
         <Flex width="100%" gap={2} justify="space-between">
-          <OutlineButton
-            leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={nextItemExists(activityIndex, data?.length!)}
+          <ActivityNavigationButton
+            leftIcon={<Icon color="#1F3565" fontSize={30} as={ChevronLeft} />}
+            disabled={!previousItemExists(activityIndex)}
           >
-            {nextItemExists(activityIndex, data?.length!) ? (
-              <Link href={`/activity/${data?.at(activityIndex + 1)?.id}`}>
+            {previousItemExists(activityIndex) ? (
+              <Link href={`/activity/${data?.at(activityIndex - 1)?.id}`}>
                 Poprzednie
               </Link>
             ) : (
               'Poprzednie'
             )}
-          </OutlineButton>
+          </ActivityNavigationButton>
 
-          <OutlineButton
-            rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={previousItemExists(activityIndex)}
+          <ActivityNavigationButton
+            rightIcon={<Icon color="#1F3565" fontSize={30} as={ChevronRight} />}
+            disabled={!nextItemExists(activityIndex, data?.length!)}
           >
-            {previousItemExists(activityIndex) ? (
-              <Link href={`/activity/${data?.at(activityIndex - 1)?.id}`}>
+            {nextItemExists(activityIndex, data?.length!) ? (
+              <Link href={`/activity/${data?.at(activityIndex + 1)?.id}`}>
                 Następne
               </Link>
             ) : (
               'Następne'
             )}
-          </OutlineButton>
+          </ActivityNavigationButton>
         </Flex>
       </VStack>
     </>
@@ -83,7 +92,7 @@ export const getServerSideProps = async () => {
 
   await queryClient.prefetchQuery({
     queryKey: ['activities'],
-    queryFn: () => fetchActivities(),
+    queryFn: () => fetchActivities(''),
   });
 
   return {

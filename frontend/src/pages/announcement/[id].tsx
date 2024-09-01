@@ -17,18 +17,29 @@ import { useRouter } from 'next/router';
 export default function Home() {
   const router = useRouter();
 
-  const { id } = router.query;
-  if(id === undefined) {
-    return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
-  }
+  // const { id } = router.query;
+  // if(id === undefined) {
+  //   return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
+  // }
+  //
+  // const {data, isPending} = useAnnouncement(id);
 
-  const {data, isPending} = useAnnouncement(id);
+  const {data, isPending} = useAnnouncements();
 
 
   if (isPending) return <PendingSpinner />;
 
-  if (data === undefined)
+  if (data?.length === 0)
     return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
+
+  let announcementIndex = 0;
+
+  const announcement = data?.find((item, index) => {
+    if (item.id === router.query.id) {
+      announcementIndex = index;
+      return true;
+    }
+  })!;
 
   return (
     <>
@@ -41,39 +52,39 @@ export default function Home() {
       <VStack gap={5}>
         {/*<BackButton to="/" />*/}
 
-        <InfoCard item={data} />
+        <InfoCard item={announcement} />
 
-        {/*<Flex width="100%" gap={2} justify="space-between" overflow="visible">*/}
-        {/*  <OutlineButton*/}
-        {/*    leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}*/}
-        {/*    disabled={nextItemExists(announcementIndex, data?.length!)}*/}
-        {/*  >*/}
-        {/*    {nextItemExists(announcementIndex, data?.length!) ? (*/}
-        {/*      <Link*/}
-        {/*        href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}*/}
-        {/*      >*/}
-        {/*        Poprzednie*/}
-        {/*      </Link>*/}
-        {/*    ) : (*/}
-        {/*      'Poprzednie'*/}
-        {/*    )}*/}
-        {/*  </OutlineButton>*/}
+        <Flex width="100%" gap={2} justify="space-between" overflow="visible">
+          <OutlineButton
+            leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
+            disabled={nextItemExists(announcementIndex, data?.length!)}
+          >
+            {nextItemExists(announcementIndex, data?.length!) ? (
+              <Link
+                href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}
+              >
+                Poprzednie
+              </Link>
+            ) : (
+              'Poprzednie'
+            )}
+          </OutlineButton>
 
-        {/*  <OutlineButton*/}
-        {/*    rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}*/}
-        {/*    disabled={previousItemExists(announcementIndex)}*/}
-        {/*  >*/}
-        {/*    {previousItemExists(announcementIndex) ? (*/}
-        {/*      <Link*/}
-        {/*        href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}*/}
-        {/*      >*/}
-        {/*        Następne*/}
-        {/*      </Link>*/}
-        {/*    ) : (*/}
-        {/*      'Następne'*/}
-        {/*    )}*/}
-        {/*  </OutlineButton>*/}
-        {/*</Flex>*/}
+          <OutlineButton
+            rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
+            disabled={previousItemExists(announcementIndex)}
+          >
+            {previousItemExists(announcementIndex) ? (
+              <Link
+                href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}
+              >
+                Następne
+              </Link>
+            ) : (
+              'Następne'
+            )}
+          </OutlineButton>
+        </Flex>
       </VStack>
     </>
   );

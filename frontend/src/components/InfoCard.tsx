@@ -22,6 +22,7 @@ export const InfoCard = ({
         minH="40vh"
         backgroundColor="#1F3565"
         borderRadius={20}
+        marginBottom={5}
         px={5}
         overflowY="auto"
         boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)"

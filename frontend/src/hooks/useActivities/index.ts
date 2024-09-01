@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 
 export type ActivityItem = {
   id: string;
@@ -9,17 +9,18 @@ export type ActivityItem = {
   timeTo: string;
 };
 
-const fetchActivities = async () => {
-  const res = await fetch('/api/activities');
+const fetchActivities = async (referenceDate: string) => {
+
+  const res = await fetch(`/api/activities?date=${referenceDate}`);
   const parsed = await res.json();
 
   return parsed as ActivityItem[];
 };
 
-const useActivities = () => {
+const useActivities = (date: string) => {
   return useQuery({
-    queryKey: ['activities'],
-    queryFn: () => fetchActivities(),
+    queryKey: ['activities', date],
+    queryFn: () => fetchActivities(date),
   });
 };
 

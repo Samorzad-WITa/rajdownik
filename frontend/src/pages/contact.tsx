@@ -3,8 +3,18 @@ import { fetchContact } from '@/hooks';
 import { chakra } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import Head from 'next/head';
+import {useAppContext} from "@/features/context/AppContext";
+import {useEffect} from "react";
 
 export default function Page() {
+  const { setAppProps } = useAppContext();
+  useEffect(() => {
+    setAppProps((prevProps) => ({
+      ...prevProps,
+      pageTitle: 'Kontakt'
+    }));
+  }, []);
+
   return (
     <>
       <Head>
@@ -19,18 +29,3 @@ export default function Page() {
     </>
   );
 }
-
-export const getServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ['contact'],
-    queryFn: () => fetchContact(),
-  });
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};

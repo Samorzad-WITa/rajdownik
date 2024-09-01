@@ -5,9 +5,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ContactItem[]>,
 ) {
-  if (process.env.DEBUG) return res.status(200).json(items);
+  if (process.env.DEBUG) return res.status(200).json([]);
 
-  const result = await fetch(`${process.env.BACKEND_URL}/contact`, {
+  const result = await fetch(`${process.env.BACKEND_URL}/user-display`, {
     next: { revalidate: 600 },
   });
   const parsed = await result.json();

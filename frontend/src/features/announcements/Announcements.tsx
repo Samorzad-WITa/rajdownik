@@ -3,6 +3,8 @@ import { useAnnouncements } from '@/hooks';
 import { Link } from '@chakra-ui/next-js';
 import {Box, Flex, Icon, Text} from '@chakra-ui/react';
 import { ChevronRight } from 'lucide-react';
+import {useAppContext} from "@/features/context/AppContext";
+import {useEffect} from "react";
 
 export const Announcements = () => {
   const { data, isPending } = useAnnouncements();

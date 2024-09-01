@@ -24,7 +24,7 @@ export const Footer = () => {
               <Link key={item.href} href={item.href} width={55}>
                 {isHome ? (
                     <Circle size="60px" bg="#1F3565" marginBottom={3}>
-                      <Image width={30} src={item.iconInactive} alt={item.label}/>
+                      <Image width={25} src={item.iconInactive} alt={item.label}/>
                     </Circle>
                 ) : (
                     <VStack paddingY={5}>
@@ -45,7 +45,7 @@ export const Footer = () => {
 
 const navItems = [
   {
-    href: '/announcement',
+    href: '/announcements',
     label: 'Ogłoszenia',
     iconActive: '/images/announcement-icon-active-new.png',
     iconInactive: '/images/announcement-icon-inactive-new.png'
