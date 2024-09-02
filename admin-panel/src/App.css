@@ -69,18 +69,21 @@
 }
 .App {
   text-align: center;
+  overflow-x: hidden;
 }
 .container{
   display: grid;
-  grid-template-columns: auto 1;
+  grid-template-columns: 20% 1fr;
+  height: 100vh;
 }
+
 .navbar{
   height: 100%;
   width: 20%;
   position: fixed;
   background-color:#bebebe;
   transition: .5s ease;
-  overflow-x: hidden;
+
   padding-top: 4rem;
   display: flex;
   flex-direction: column;
@@ -95,6 +98,15 @@
 h1{
   font-size: 3rem;
 }
-.participants{
-  padding-left: 20% ;
+.switch{
+  margin-left:4rem;
+}
+
+@media only screen and (max-width:720px){
+  .nav-button{
+    font-size: 1rem;
+  }
+  .participants{
+    width: auto;
+  }
 }

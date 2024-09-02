@@ -7,15 +7,19 @@ import Schedule from './Components/schedule.js';
 import Staff from './Components/staff.js';
 import Settings from './Components/settings.js';
 import NotFound from './Components/notFound.js';
-import Test from './Components/test';
+import Test from './Components/test'
+
 
 function App() {
   return (
     <div className="App">
       <div className='container'>
+    <div className='navPlaceHolder'>    {/*wygląda to komicznie, ale bez tego strona się rozjeżdża  */}
+      <Navbar/>
+      </div>
 
-        <Navbar/>
-<Router>
+        <div className='content'>
+        <Router>
 <Routes>
           <Route path="/" element={<Participants/>}/>
           <Route path="/announcements" element={<Announcements/>}/>
@@ -23,10 +27,13 @@ function App() {
           <Route path="/schedule" element={<Schedule/>}/>
           <Route path="/staff" element={<Staff/>}/>
           <Route path="/settings" element={<Settings/>}/>
+           <Route path="/test" element={<Test/>}/> 
           <Route path='*' element={<NotFound />}/>
-          <Route path='/test' element={<Test/>}/>
+
         </Routes>
   </Router>        
+        </div>
+
 
       </div>
     </div>
