@@ -6,13 +6,16 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ApplicationError implements ErrorDescriptor {
+    NoAuthenticatedUser(HttpStatus.FORBIDDEN),
     UserNotFound(HttpStatus.NOT_FOUND),
     DataNotFound(HttpStatus.NOT_FOUND),
     UserDataNotFound(HttpStatus.NOT_FOUND),
     UserTokenNotFound(HttpStatus.NOT_FOUND),
     ActivityNotFound(HttpStatus.NOT_FOUND),
     AnnouncementNotFound(HttpStatus.NOT_FOUND),
-    UserDisplayNotFound(HttpStatus.NOT_FOUND)
+    UserDisplayNotFound(HttpStatus.NOT_FOUND),
+    RegistrationNotFound(HttpStatus.NOT_FOUND),
+    RegistrationPartNotFound(HttpStatus.NOT_FOUND)
     ;
 
     private final HttpStatus defaultStatus;

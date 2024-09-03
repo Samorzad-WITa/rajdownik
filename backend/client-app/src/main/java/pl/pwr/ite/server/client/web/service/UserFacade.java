@@ -68,7 +68,7 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
     }
 
     public User getAuthenticatedUser() {
-        return securityFacade.getAuthenticatedUser(false);
+        return securityFacade.getAuthenticatedUser();
     }
 
     @Transactional
