@@ -101,6 +101,82 @@ h1{
 .switch{
   margin-left:4rem;
 }
+.schedule{
+  width: 67.5rem;
+height: 120rem;
+flex-shrink: 0;
+background: #E4E9F4;
+}
+.scheduleCard{
+  display: flex;
+  height: 9.375rem;
+  padding: 2.75rem 1.75rem;
+  align-items: flex-start;
+  gap: 0.625rem;
+  align-self: stretch;
+  border-radius: 3.125rem;
+background: #E4E9F4;
+
+/* StronaGlowna */
+box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25);
+}
+.scheduleTime{
+  display: flex;
+  width: 12.4375rem;
+  height: 3.875rem;
+  flex-direction: column;
+  justify-content: center;
+  color: #1D335C;
+font-family: AvertaStd-Bold;
+font-size: 1.5rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.scheduleContent{
+  color: #1D335C;
+font-family: AvertaStd-Bold;
+font-size: 3rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.scheduleButton{
+  width: 0.0625rem;
+height: 0rem;
+margin-left: auto;
+margin-right: 1rem;
+right: 2.6875rem;
+top: 4.6875rem;
+stroke-width: 6px;
+stroke: #1D335C;
+}
+.scheduleBG{
+  width: 67.5rem;
+  height: 104.9375rem;
+  flex-shrink: 0;
+  border-radius: 7.8125rem 7.8125rem 0rem 0rem;
+background: #FFF;
+}
+.scheduleButtons{
+  display: inline-flex;
+align-items: center;
+gap: 2.4375rem;
+}
+.dayButtonMid{
+  display: flex;
+width: 26.5rem;
+height: 9.375rem;
+padding: 2.75rem 1.75rem;
+justify-content: center;
+align-items: center;
+gap: 0.625rem;
+border-radius: 3.125rem;
+background: #1F3565;
+
+/* StronaGlowna */
+box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25);
+}
 
 @media only screen and (max-width:720px){
   .nav-button{
@@ -109,4 +185,22 @@ h1{
   .participants{
     width: auto;
   }
+  .schedule{
+    width: 100%;
+  }
+  
+.scheduleCard{
+  display: flex;
+  width: 100%;
+  height: 4rem;
+  padding: 2.75rem 1.75rem;
+  align-items: flex-start;
+  gap: 0.625rem;
+  align-self: stretch;
+  border-radius: 3.125rem;
+background: #E4E9F4;
+
+/* StronaGlowna */
+box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25);
+}
 }
