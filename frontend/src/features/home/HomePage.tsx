@@ -2,9 +2,9 @@ import { HomeCard } from "@/components/HomeCard";
 import {Box, Flex, Grid, SimpleGrid, Link} from "@chakra-ui/react";
 import {useAppContext} from "@/features/context/AppContext";
 import {useEffect} from "react";
+import {useAuth} from "@/features/context/AuthProvider";
 
 export const HomePage = () => {
-
     return (
       <Flex
           width="100%"
@@ -32,7 +32,7 @@ export const HomePage = () => {
             spacing={5}
           >
               {cards.map((card) => (
-                  <HomeCard title={card.title} href={card.href} isExternal={card.isExternal} />
+                  <HomeCard key={card.title} title={card.title} href={card.href} isExternal={card.isExternal} />
               ))}
           </SimpleGrid>
       </Flex>

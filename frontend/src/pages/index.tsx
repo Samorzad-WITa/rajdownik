@@ -12,7 +12,9 @@ export default function Home() {
   useEffect(() => {
     setAppProps((prevProps) => ({
       ...prevProps,
-      pageTitle: 'Strona główna'
+      pageTitle: 'Strona główna',
+      shouldRenderNavbar: true,
+      shouldRenderFooter: true
     }));
   }, []);
 

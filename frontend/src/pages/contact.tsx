@@ -11,9 +11,11 @@ export default function Page() {
   useEffect(() => {
     setAppProps((prevProps) => ({
       ...prevProps,
-      pageTitle: 'Kontakt'
+      pageTitle: 'Kontakt',
+      shouldRenderNavbar: true,
+      shouldRenderFooter: true
     }));
-  }, []);
+  }, [setAppProps]);
 
   return (
     <>

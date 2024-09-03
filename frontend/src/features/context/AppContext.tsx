@@ -2,10 +2,12 @@ import React, {createContext, ReactNode, useContext, useState} from "react";
 
 export type ExtendedAppProps = {
     pageTitle: string;
+    shouldRenderNavbar: boolean;
+    shouldRenderFooter: boolean
 };
 
 const AppContext = createContext<{
-    props: ExtendedAppProps;
+    appProps: ExtendedAppProps;
     setProps: React.Dispatch<React.SetStateAction<ExtendedAppProps>>
 } | undefined>(undefined);
 

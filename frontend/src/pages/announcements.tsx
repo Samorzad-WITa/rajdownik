@@ -9,7 +9,9 @@ export default function Page() {
     useEffect(() => {
         setAppProps((prevProps) => ({
             ...prevProps,
-            pageTitle: 'Ogłoszenia'
+            pageTitle: 'Ogłoszenia',
+            shouldRenderNavbar: true,
+            shouldRenderFooter: true,
         }));
     }, []);
 

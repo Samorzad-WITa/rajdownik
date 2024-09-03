@@ -3,6 +3,7 @@ import { Box, Flex, Image } from '@chakra-ui/react';
 import {BackButton} from "@/components/BackButton";
 
 export const Navbar = () => {
+
   return (
     <Box
       w="100%"

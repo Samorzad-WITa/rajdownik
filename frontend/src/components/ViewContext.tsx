@@ -6,6 +6,7 @@ export const ViewContext = () => {
     return (
         <Flex alignItems="left" width="100%" paddingLeft={45}>
             <Text
+                color="#1E3364"
                 fontSize={22}
                 fontWeight={'bold'}
             >

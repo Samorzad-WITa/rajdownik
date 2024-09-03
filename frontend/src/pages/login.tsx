@@ -1,9 +1,6 @@
-import { Contact } from '@/features';
-import { fetchContact } from '@/hooks';
+import { LoginPage } from '@/features/login';
 import { chakra } from '@chakra-ui/react';
-import { QueryClient, dehydrate } from '@tanstack/react-query';
 import Head from 'next/head';
-import {Links} from "@/features/links/Links";
 import {useAppContext} from "@/features/context/AppContext";
 import {useEffect} from "react";
 
@@ -12,22 +9,22 @@ export default function Page() {
     useEffect(() => {
         setAppProps((prevProps) => ({
             ...prevProps,
-            pageTitle: 'Przydatne linki',
+            pageTitle: 'Logowanie',
             shouldRenderNavbar: true,
-            shouldRenderFooter: true
+            shouldRenderFooter: false
         }));
-    }, []);
+    }, [setAppProps]);
 
     return (
         <>
             <Head>
-                <title>Przydatne linki</title>
-                <meta name="description" content="Przydatne linki" />
+                <title>Logowanie</title>
+                <meta name="description" content="Logowanie" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <chakra.main>
-                <Links />
+                <LoginPage />
             </chakra.main>
         </>
     );

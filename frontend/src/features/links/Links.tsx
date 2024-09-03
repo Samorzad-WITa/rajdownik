@@ -7,7 +7,7 @@ export const Links = () => {
 
     return (
       <Flex
-        paddignX={2}
+        paddingX={2}
         fontSize="13px"
         fontWeight={'bold'}
         gap={2}
@@ -15,12 +15,12 @@ export const Links = () => {
 
       >
           {groups.map((linkGroup) => (
-              <VStack paddingBottom={5}>
+              <VStack key={linkGroup.groupLabel} paddingBottom={5}>
                   <Text fontSize="20px">
                       {linkGroup.groupLabel}
                   </Text>
                   { linkGroup.groupLinks.map((link) => (
-                      <Link width="100%" isExternal href={link.href}>
+                      <Link key={link.href} width="100%" isExternal href={link.href}>
                           <Flex
                               width="100%"
                               bgColor="#E4E9F4"

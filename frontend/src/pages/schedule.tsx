@@ -33,7 +33,9 @@ export default function Page() {
   useEffect(() => {
     setAppProps((prevProps) => ({
       ...prevProps,
-      pageTitle: 'Harmonogram'
+      pageTitle: 'Harmonogram',
+      shouldRenderNavbar: true,
+      shouldRenderFooter: true
     }));
   }, []);
 
