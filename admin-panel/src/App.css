@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilitie
+@tailwind utilitie;
+
+@import url(https://db.onlinewebfonts.com/c/aef2da2daa6e15be44ff1a2706cc61a1?family=AvertaStd-Semibold); 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 @layer base {
   :root {
@@ -70,31 +73,73 @@
 .App {
   text-align: center;
   overflow-x: hidden;
+  background: #B9CFE4;
 }
 .container{
   display: grid;
-  grid-template-columns: 20% 1fr;
+  grid-template-columns: 18% 1fr;
   height: 100vh;
 }
+.navPlaceHolder{
+  left:0;
 
+}
 .navbar{
-  height: 100%;
-  width: 20%;
-  position: fixed;
-  background-color:#bebebe;
-  transition: .5s ease;
-
-  padding-top: 4rem;
+  position: absolute;
+  left:0;
   display: flex;
+  width: 20%;
+  height: 100%;
+  padding-top: 5.125rem;
   flex-direction: column;
-  align-items: center; 
-  left:0px;
+  align-items: center;
+  gap: 1.75rem;
+  align-self: stretch;
+  flex-shrink: 0;
+  background: #B9CFE4;
 }
 .nav-button{
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  font-size: 2rem;
+  display: flex;
+  padding: 0.9375rem 0.875rem 0.9375rem 1.5625rem;
+  align-items: center;
+  gap: 0.9375rem;
+  margin-left: 5%;
+  align-self: stretch;
+  border-radius: 1.25rem 0rem 0rem 1.25rem;
+  background: #FFF;
+color: #000;
+
+/* Button */
+font-family: AvertaStd-Semibold;
+font-size: 1.1875rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 }
+.navUser{
+
+align-self: stretch;
+color: #000;
+text-align: center;
+font-family: AvertaStd-Regular;
+font-size: 1.0625rem;
+font-style: normal;
+font-weight: 400;
+line-height: 0%; /* 0rem */
+margin-top: auto;
+}
+.navEmail{
+  height: 2.4375rem;
+align-self: stretch;
+color: #000;
+text-align: center;
+font-family: AvertaStd-Regular;
+font-size: 0.9375rem;
+font-style: normal;
+font-weight: 400;
+line-height: 0%; /* 0rem */
+}
+
 h1{
   font-size: 3rem;
 }
@@ -102,81 +147,23 @@ h1{
   margin-left:4rem;
 }
 .schedule{
-  width: 67.5rem;
-height: 120rem;
-flex-shrink: 0;
-background: #E4E9F4;
-}
-.scheduleCard{
-  display: flex;
-  height: 9.375rem;
-  padding: 2.75rem 1.75rem;
-  align-items: flex-start;
-  gap: 0.625rem;
-  align-self: stretch;
-  border-radius: 3.125rem;
-background: #E4E9F4;
-
-/* StronaGlowna */
-box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25);
-}
-.scheduleTime{
-  display: flex;
-  width: 12.4375rem;
-  height: 3.875rem;
-  flex-direction: column;
-  justify-content: center;
-  color: #1D335C;
-font-family: AvertaStd-Bold;
-font-size: 1.5rem;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-}
-.scheduleContent{
-  color: #1D335C;
-font-family: AvertaStd-Bold;
-font-size: 3rem;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-}
-.scheduleButton{
-  width: 0.0625rem;
-height: 0rem;
-margin-left: auto;
-margin-right: 1rem;
-right: 2.6875rem;
-top: 4.6875rem;
-stroke-width: 6px;
-stroke: #1D335C;
-}
-.scheduleBG{
-  width: 67.5rem;
-  height: 104.9375rem;
+  width: 100%;
+  height: 100%;
   flex-shrink: 0;
-  border-radius: 7.8125rem 7.8125rem 0rem 0rem;
+  border-radius: 2.5rem;
 background: #FFF;
+left:0;
 }
-.scheduleButtons{
-  display: inline-flex;
-align-items: center;
-gap: 2.4375rem;
+.scheduleTable{
+  margin-left: 5%;
+  margin-top: 5%;
+  width: 30.125rem;
+height: 45.625rem;
+flex-shrink: 0;
+border-radius: 1.25rem;
+border: 1.5px solid #000;
 }
-.dayButtonMid{
-  display: flex;
-width: 26.5rem;
-height: 9.375rem;
-padding: 2.75rem 1.75rem;
-justify-content: center;
-align-items: center;
-gap: 0.625rem;
-border-radius: 3.125rem;
-background: #1F3565;
 
-/* StronaGlowna */
-box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.25);
-}
 
 @media only screen and (max-width:720px){
   .nav-button{
