@@ -79,7 +79,7 @@ export const LoginPage = () => {
                           <Image
                               width="30px"
                               src="/images/user-profile-icon.png"
-                              label="profile"
+                              alt="profile"
                           />
                       </Center>
                       <Input
