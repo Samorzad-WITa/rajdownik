@@ -5,16 +5,16 @@ import {useAppContext} from "@/features/context/AppContext";
 import {useEffect} from "react";
 
 export default function Page() {
-    const { setAppProps } = useAppContext();
+    const { setProps } = useAppContext();
     useEffect(() => {
-        setAppProps((prevProps) => ({
+        setProps((prevProps) => ({
             ...prevProps,
             pageTitle: 'Ogłoszenia',
             shouldRenderNavbar: true,
             shouldRenderFooter: true,
             shouldRenderBackButton: false,
         }));
-    }, [setAppProps]);
+    }, [setProps]);
 
     return (
         <>

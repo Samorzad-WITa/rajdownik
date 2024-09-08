@@ -23,13 +23,13 @@ export const Registration = () => {
         seconds: 0
     });
 
-    const isActive = !isPending && (time > new Date(data.startTime));
+    const isActive = !isPending && data?.startTime && (time > new Date(data.startTime));
 
     useEffect(() => {
         if(!isPending && !isActive) {
             const timer = setInterval(() => {
                 const currentTime = new Date();
-                const dateDiff = Math.abs(new Date(data.startTime) - currentTime);
+                const dateDiff = data ? Math.abs(new Date(data.startTime).getTime() - currentTime.getTime()) : 0;
                 setTimeDifference({
                     days: Math.floor(dateDiff / (1000 * 60 * 60 * 24)),
                     hours: Math.floor((dateDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
@@ -60,7 +60,7 @@ export const Registration = () => {
                 paddingX={3}
                 paddingBottom={5}
             >
-                { data.title }
+                { data ? data.title : 'Błąd' }
             </Text>
         { isActive ? (
                 <Flex

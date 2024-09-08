@@ -16,7 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const [extendedProps] = useState<ExtendedAppProps>({
     pageTitle: 'Strona główna',
     shouldRenderNavbar: true,
-    shouldRenderFooter: true
+    shouldRenderFooter: true,
+    shouldRenderBackButton: false,
+    backButtonPath: ''
   });
 
   return (

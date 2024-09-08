@@ -21,16 +21,16 @@ import {useEffect} from "react";
 export default function Home() {
   const router = useRouter();
   const { id, date } = router.query;
-  const { data, isPending } = useActivities(date);
-  const { setAppProps } = useAppContext();
+  const { data, isPending } = useActivities(date as string);
+  const { setProps } = useAppContext();
 
   useEffect(() => {
-    setAppProps((prevProps) => ({
+    setProps((prevProps) => ({
       ...prevProps,
       shouldRenderBackButton: true,
       backButtonPath: '/schedule'
     }));
-  }, [setAppProps]);
+  }, [setProps]);
 
   if (isPending) return <PendingSpinner />;
 

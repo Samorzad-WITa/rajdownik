@@ -52,7 +52,7 @@ export const LoginPage = () => {
         }
     };
 
-    const handleShowPassword = (e: React.MouseEventHandler<HTMLButtonElement>) => {
+    const handleShowPassword = () => {
         setShowPassword((oldShowPassword) => !oldShowPassword);
     };
 
@@ -130,7 +130,7 @@ export const LoginPage = () => {
                                 src="/images/eye-outline-icon.png"
                                 alt="padlock"
                             />}
-                            onClick={handleShowPassword}
+                            onClick={() => handleShowPassword()}
                         />
 
                     </Center>

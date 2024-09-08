@@ -6,12 +6,18 @@ export default async function handler(
     res: NextApiResponse<RegistrationEntryItem>
 ){
     const { id } = req.query;
+
+    const authorizationHeader = req.headers['authorization'] as string | undefined;
+
+    const headers: HeadersInit = {};
+    headers['Content-Type'] = 'application/json';
+    if(authorizationHeader) {
+        headers['Authorization'] = authorizationHeader;
+    }
+
     const result = await fetch(`${process.env.BACKEND_URL}/registration/register-entry/${id}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': req.headers['authorization']
-        },
+        headers,
         body: JSON.stringify(req.body),
         next: { revalidate: 30 },
     });

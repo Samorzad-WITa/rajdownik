@@ -7,10 +7,15 @@ export default async function handler(
 ){
     if(process.env.DEBUG) return res.status(200).json(userMock);
 
+    const authorizationHeader = req.headers['authorization'] as string | undefined;
+
+    const headers: HeadersInit = {};
+    if(authorizationHeader) {
+        headers['Authorization'] = authorizationHeader;
+    }
+
     const result = await fetch(`${process.env.BACKEND_URL}/user/authenticated`, {
-        headers: {
-            Authorization: req.headers['authorization'],
-        },
+        headers,
         next: {
             revalidate: 30
         },

@@ -5,9 +5,9 @@ import {useAppContext} from "@/features/context/AppContext";
 import {useEffect} from "react";
 
 export default function Page() {
-    const { setAppProps } = useAppContext();
+    const { setProps } = useAppContext();
     useEffect(() => {
-        setAppProps((prevProps) => ({
+        setProps((prevProps) => ({
             ...prevProps,
             pageTitle: 'Rejestracja na domki',
             shouldRenderNavbar: true,
@@ -15,7 +15,7 @@ export default function Page() {
             shouldRenderBackButton: true,
             backButtonPath: '/'
         }));
-    }, [setAppProps]);
+    }, [setProps]);
 
     return (
         <>

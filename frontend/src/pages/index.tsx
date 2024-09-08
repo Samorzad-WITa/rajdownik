@@ -8,16 +8,16 @@ import {useAppContext} from "@/features/context/AppContext";
 import {useEffect} from "react";
 
 export default function Home() {
-  const { setAppProps } = useAppContext();
+  const { setProps } = useAppContext();
   useEffect(() => {
-    setAppProps((prevProps) => ({
+    setProps((prevProps) => ({
       ...prevProps,
       pageTitle: 'Strona główna',
       shouldRenderNavbar: true,
       shouldRenderFooter: true,
       shouldRenderBackButton: false,
     }));
-  }, [setAppProps]);
+  }, [setProps]);
 
   return (
     <>

@@ -59,7 +59,7 @@ export const UserProfile = () => {
                           fontWeight={'bold'}
                           boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
                       >
-                          { data[item.field] || 'Brak danych' }
+                          { (data as Record<string, any>)[item.field] || 'Brak danych' }
                       </Text>
                   </Stack>
               ))}

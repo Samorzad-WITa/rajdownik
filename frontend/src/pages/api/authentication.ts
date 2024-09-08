@@ -6,6 +6,12 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<AuthenticationItem>,
 ) {
+
+    const authorizationHeader = req.headers['authorization'] as string | undefined;
+
+    const headers: HeadersInit = {};
+    headers['Content-Type'] = 'application/json';
+
     if (process.env.DEBUG) return res.status(200).json(items);
     console.log(req.body);
     const result = await fetch(`${process.env.BACKEND_URL}/auth/login`, {

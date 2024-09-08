@@ -6,10 +6,16 @@ export default async function handler(
     res: NextApiResponse<RegistrationPartItem>
 ) {
     const { id } = req.query;
+
+    const authorizationHeader = req.headers['authorization'] as string | undefined;
+
+    const headers: HeadersInit = {};
+    if(authorizationHeader) {
+        headers['Authorization'] = authorizationHeader;
+    }
+
     const result = await fetch(`${process.env.BACKEND_URL}/registration-part/${id}`, {
-        headers: {
-            'Authorization': req.headers['authorization']
-        },
+        headers,
         next: { revalidate: 30 },
     });
     const parsed = await result.json();
@@ -17,10 +23,14 @@ export default async function handler(
     if(!result.ok) {
         return res.status(500).json({
             id: '',
+            lock: {
+                expiresAt: ''
+            },
+            ownsLock: false,
             title: '',
-            entryLimit: '',
-            isLocked: '',
-            entryAmount: '',
+            entryLimit: 0,
+            locked: false,
+            entryAmount: 0,
             entries: []
         });
     }

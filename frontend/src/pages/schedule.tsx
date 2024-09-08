@@ -28,17 +28,17 @@ const dates = [
 
 export default function Page() {
   const [dayIndex, setDayIndex] = useState(1);
-  const { setAppProps } = useAppContext();
+  const { setProps } = useAppContext();
 
   useEffect(() => {
-    setAppProps((prevProps) => ({
+    setProps((prevProps) => ({
       ...prevProps,
       pageTitle: 'Harmonogram',
       shouldRenderNavbar: true,
       shouldRenderFooter: true,
       shouldRenderBackButton: false,
     }));
-  }, [setAppProps]);
+  }, [setProps]);
 
   const handleDateChange = (index: number) => {
     setDayIndex(index);
@@ -77,10 +77,10 @@ export default function Page() {
             alignItems="center"
           >
             <Text as="b" fontSize="large" color="#FFFFFF">
-              {currentDay.label}
+              {currentDay ? currentDay.label : 'Błąd'}
             </Text>
             <Text as="b" fontSize="xx-small" color="#FFFFFF">
-              { currentDay.dateLabel }
+              { currentDay ? currentDay.dateLabel : 'Błąd' }
             </Text>
           </Box>
 
@@ -94,7 +94,7 @@ export default function Page() {
           </ScheduleDateButton>
         </HStack>
 
-        <Schedule date={currentDay.date} />
+        <Schedule date={currentDay ? currentDay.date : ''} />
       </VStack>
     </>
   );

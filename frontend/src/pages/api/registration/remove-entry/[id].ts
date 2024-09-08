@@ -6,11 +6,17 @@ export default async function handler(
     res: NextApiResponse<string>
 ){
     const { id } = req.query;
+
+    const authorizationHeader = req.headers['authorization'] as string | undefined;
+
+    const headers: HeadersInit = {};
+    if(authorizationHeader) {
+        headers['Authorization'] = authorizationHeader;
+    }
+
     const result = await fetch(`${process.env.BACKEND_URL}/registration/remove-entry/${id}`, {
         method: 'DELETE',
-        headers: {
-            'Authorization': req.headers['authorization']
-        },
+        headers,
         next: { revalidate: 30 },
     });
 

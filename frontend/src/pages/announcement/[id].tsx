@@ -18,15 +18,15 @@ import {useAppContext} from "@/features/context/AppContext";
 
 export default function Home() {
   const router = useRouter();
-  const { setAppProps } = useAppContext();
+  const { setProps } = useAppContext();
 
   useEffect(() => {
-    setAppProps((prevProps) => ({
+    setProps((prevProps) => ({
       ...prevProps,
       shouldRenderBackButton: true,
       backButtonPath: '/announcements'
     }));
-  }, [setAppProps]);
+  }, [setProps]);
 
   const {data, isPending} = useAnnouncements();
 
