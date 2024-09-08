@@ -22,6 +22,15 @@ export default function Home() {
   const router = useRouter();
   const { id, date } = router.query;
   const { data, isPending } = useActivities(date);
+  const { setAppProps } = useAppContext();
+
+  useEffect(() => {
+    setAppProps((prevProps) => ({
+      ...prevProps,
+      shouldRenderBackButton: true,
+      backButtonPath: '/schedule'
+    }));
+  }, [setAppProps]);
 
   if (isPending) return <PendingSpinner />;
 

@@ -1,8 +1,10 @@
 import { Link } from '@chakra-ui/next-js';
 import { Box, Flex, Image } from '@chakra-ui/react';
 import {BackButton} from "@/components/BackButton";
+import {useAppContext} from "@/features/context/AppContext";
 
 export const Navbar = () => {
+  const { appProps } = useAppContext();
 
   return (
     <Box
@@ -13,7 +15,7 @@ export const Navbar = () => {
     >
       <Flex align="center" justify="space-between">
         <Flex justify="start" gap={3}>
-          {/*<BackButton to={'/'} />*/}
+          {appProps.shouldRenderBackButton && appProps.backButtonPath && <BackButton to={appProps.backButtonPath}/>}
         </Flex>
         <Flex justify="end">
           <Box>

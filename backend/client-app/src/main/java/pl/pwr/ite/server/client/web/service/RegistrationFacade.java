@@ -49,20 +49,27 @@ public class RegistrationFacade extends EntityServiceFacade<Registration, Regist
             throw new ApplicationException(ApplicationError.RegistrationPartNotFound);
         }
         if(part.getEntries().size() >= part.getEntryLimit()) {
-            throw new IllegalArgumentException("Registration part is already full.");
+            throw new ApplicationException(ApplicationError.RegistrationFull);
         }
 
         var authenticatedUser = securityFacade.getAuthenticatedUserReference();
         var lock = registrationLockService.findByPartId(part.getId());
         if(lock != null && !lock.getOwnerId().equals(authenticatedUser.getId())) {
-            throw new IllegalArgumentException(String.format("Registration part with ID '%s' is locked by another user.", partId));
+            throw new ApplicationException(ApplicationError.RegistrationPartLocked);
         }
 
-        var userFirstName = dto.getFirstName();
-        var userLastName = dto.getLastName();
-        var userToRegister = userService.findByFirstAndLastName(userFirstName, userLastName);
+        // User is owner of lock, refresh lock before any further action
+        if(lock == null) {
+            lock = createRegistrationLock(userService.findById(authenticatedUser.getId()), part);
+        } else {
+            refreshLock(lock, part);
+        }
+        lock = registrationLockService.saveAndFlush(lock);
+
+        var userCode = dto.getUserCode();
+        var userToRegister = userService.findByCode(userCode);
         if(userToRegister == null) {
-            throw new IllegalArgumentException(String.format("User '%s %s' doesn't exist.", userFirstName, userLastName));
+            throw new ApplicationException(ApplicationError.UserWithCodeNotFound);
         }
 
         var entry = registrationEntryService.findByUserId(userToRegister.getId());
@@ -73,15 +80,13 @@ public class RegistrationFacade extends EntityServiceFacade<Registration, Regist
             entry.setRegisteredBy(userToRegister);
             return registrationEntryService.saveAndFlush(entry);
         } else if (entry != null) {
-            throw new IllegalArgumentException("This user is already registered.");
+            throw new ApplicationException(ApplicationError.UserAlreadyRegistered);
         }
 
         entry = new RegistrationEntry();
         entry.setPart(part);
         entry.setUser(userToRegister);
         entry.setRegisteredBy(userService.findById(authenticatedUser.getId()));
-        entry.setFirstName(userFirstName);
-        entry.setLastName(userLastName);
 
         return registrationEntryService.saveAndFlush(entry);
     }
@@ -95,12 +100,48 @@ public class RegistrationFacade extends EntityServiceFacade<Registration, Regist
     }
 
     @Transactional
+    public void removeEntry(UUID entryId) {
+        var entry = registrationEntryService.findById(entryId);
+        if(entry == null) {
+            throw new ApplicationException(ApplicationError.RegistrationPartNotFound);
+        }
+        var authenticatedUserId = securityFacade.getAuthenticatedUserReference().getId();
+        var lock = entry.getPart().getLock();
+        if(lock != null && !lock.getOwnerId().equals(authenticatedUserId)) {
+            throw new ApplicationException(ApplicationError.RegistrationPartLocked);
+        }
+        if(!(entry.getRegisteredById().equals(authenticatedUserId) || entry.getUserId().equals(authenticatedUserId))) {
+            throw new IllegalArgumentException(String.format("Entry with ID '%s' can't be removed by this user.", entryId));
+        }
+
+        registrationEntryService.delete(entry);
+    }
+
+    @Transactional
+    public void releaseLock(UUID partId) {
+        var lock = registrationLockService.findByPartId(partId);
+        if(lock == null) {
+            return;
+        }
+        var authenticatedUser = securityFacade.getAuthenticatedUserReference();
+        if(!lock.getOwnerId().equals(authenticatedUser.getId())) {
+            throw new IllegalArgumentException(String.format("Can't release lock with ID '%s', because it doesn't belong to authenticated user", lock.getId()));
+        }
+
+        registrationLockService.delete(lock);
+    }
+
+    @Transactional
     public RegistrationLock createLock(UUID partId) {
         var authenticatedUser = securityFacade.getAuthenticatedUserReference();
 
+        var userLock = registrationLockService.findByOwnerId(authenticatedUser.getId());
+        if(userLock != null && !userLock.getPartId().equals(partId)) {
+            throw new ApplicationException(ApplicationError.UserAlreadyOwnsALock);
+        }
         var lock = registrationLockService.findByPartId(partId);
         if(lock != null && !lock.getOwnerId().equals(authenticatedUser.getId())) {
-            throw new IllegalArgumentException("User already owns a lock.");
+            throw new ApplicationException(ApplicationError.RegistrationPartLocked);
         }
         var part = registrationPartService.findById(partId);
         if(part == null) {

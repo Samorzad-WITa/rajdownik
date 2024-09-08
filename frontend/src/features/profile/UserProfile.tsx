@@ -3,18 +3,14 @@ import {useAuth} from "@/features/context/AuthProvider";
 import {useRouter} from "next/router";
 import {useAuthenticatedUser} from "@/hooks/useUser";
 import {PendingSpinner} from "@/components";
+import {useEffect, useState} from "react";
 
 export const UserProfile = () => {
     const router = useRouter();
-    const { token } = useAuth();
-    if(token === null) {
-        router.push('/login');
-        return;
-    }
+    const { token } = useAuth(true);
+    const { data, isPending } = useAuthenticatedUser(token!);
 
-    let { data, isPending } = useAuthenticatedUser(token);
-
-    if(isPending) { return <PendingSpinner></PendingSpinner> }
+    if(!token || isPending) { return <PendingSpinner></PendingSpinner> }
 
     if(!data) {
         return <Text width="100%" fontWeight={'bold'} fontSize={'large'} textAlign="center">Nie udało się wczytać profilu użytkownika</Text>

@@ -13,16 +13,20 @@ import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import {useEffect} from "react";
+import {useAppContext} from "@/features/context/AppContext";
 
 export default function Home() {
   const router = useRouter();
+  const { setAppProps } = useAppContext();
 
-  // const { id } = router.query;
-  // if(id === undefined) {
-  //   return <SystemInformation>Nie znaleziono ogłoszenia</SystemInformation>;
-  // }
-  //
-  // const {data, isPending} = useAnnouncement(id);
+  useEffect(() => {
+    setAppProps((prevProps) => ({
+      ...prevProps,
+      shouldRenderBackButton: true,
+      backButtonPath: '/announcements'
+    }));
+  }, [setAppProps]);
 
   const {data, isPending} = useAnnouncements();
 

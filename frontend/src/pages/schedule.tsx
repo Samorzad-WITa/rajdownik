@@ -35,7 +35,8 @@ export default function Page() {
       ...prevProps,
       pageTitle: 'Harmonogram',
       shouldRenderNavbar: true,
-      shouldRenderFooter: true
+      shouldRenderFooter: true,
+      shouldRenderBackButton: false,
     }));
   }, []);
 
@@ -75,10 +76,9 @@ export default function Page() {
             flexDir="column"
             alignItems="center"
           >
-            <Text as="b" fontSize="large" color="#FFFFFF" boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)">
+            <Text as="b" fontSize="large" color="#FFFFFF">
               {currentDay.label}
             </Text>
-            <br />
             <Text as="b" fontSize="xx-small" color="#FFFFFF">
               { currentDay.dateLabel }
             </Text>

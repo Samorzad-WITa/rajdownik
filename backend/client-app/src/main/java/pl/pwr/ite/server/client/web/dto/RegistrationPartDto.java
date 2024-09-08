@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import pl.pwr.ite.server.mapping.MappingProperties;
 
+import java.util.UUID;
+
 @Data
 public class RegistrationPartDto {
 
@@ -15,9 +17,17 @@ public class RegistrationPartDto {
         private boolean includeEntries;
     }
 
+    private UUID id;
+
     private String title;
 
     private Integer entryLimit;
+
+    private boolean isLocked;
+
+    private boolean ownsLock;
+
+    private Integer entryAmount;
 
     private RegistrationEntryDto[] entries;
 

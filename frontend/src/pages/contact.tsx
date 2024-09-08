@@ -13,7 +13,8 @@ export default function Page() {
       ...prevProps,
       pageTitle: 'Kontakt',
       shouldRenderNavbar: true,
-      shouldRenderFooter: true
+      shouldRenderFooter: true,
+      shouldRenderBackButton: false,
     }));
   }, [setAppProps]);
 

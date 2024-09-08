@@ -11,7 +11,8 @@ export default function Page() {
             ...prevProps,
             pageTitle: 'Profil użytkownika',
             shouldRenderNavbar: true,
-            shouldRenderFooter: true
+            shouldRenderFooter: true,
+            shouldRenderBackButton: false,
         }));
     }, [setAppProps]);
 

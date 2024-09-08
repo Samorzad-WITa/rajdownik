@@ -65,6 +65,15 @@ public class UserServiceImpl extends FilterableEntityServiceBase<User, UserFilte
     }
 
     @Override
+    public User findByCode(String userCode) {
+        var path = QUser.user;
+        return createQuery().select(path)
+                .from(path)
+                .where(path.code.eq(userCode))
+                .fetchOne();
+    }
+
+    @Override
     public boolean hasAdminPanelAccess(UUID userId) {
         var userRolePath = QUserRole.userRole;
         var rolePath = QRole.role;

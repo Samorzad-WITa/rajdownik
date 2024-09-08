@@ -1,42 +1,38 @@
-import { Button, Icon } from '@chakra-ui/react';
+import {Button, Icon, IconButton, Image} from '@chakra-ui/react';
 import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/router';
 
-export const BackButton = () => {
+export const BackButton = ({
+  to,
+}:{
+  to: string;
+}) => {
   const router = useRouter();
 
-  const pathName = router.pathname;
-  const currentPath = pathName.slice(0, pathName.lastIndexOf('/'));
-
-  const redirect = backPaths.find((item, index) => {
-    if(item.redirectFrom === currentPath) {
-      return true;
-    }
-  });
-
-  if(redirect === undefined) {
-    console.log('Path found!');
-    return;
-  }
-
-  console.log('Path found!');
-
   return (
-    <Button
-      alignSelf="flex-start"
-      size="xs"
-      fontSize={15}
-      fontWeight="bold"
-      textTransform="uppercase"
-      pl={0}
-      py={3}
-      variant="outline"
-      backgroundColor="#E4E9F4"
-      leftIcon={<Icon fontSize={30} as={ChevronLeft} />}
-      onClick={() => router.push(redirect?.redirectTo)}
-    >
-      POWRÓT
-    </Button>
+        <IconButton
+          icon={<Image width="30px" src="/images/back-button-icon.png" alt="back"/>}
+          aria-label={'back'}
+          onClick={() => router.push(to)}
+          // bgColor="#E4E9F4"
+          bgColor="#FFFFFF"
+          borderRadius="30px"
+        />
+    // <Button
+    //   alignSelf="flex-start"
+    //   size="xs"
+    //   fontSize={15}
+    //   fontWeight="bold"
+    //   textTransform="uppercase"
+    //   pl={0}
+    //   py={3}
+    //   variant="outline"
+    //   backgroundColor="#E4E9F4"
+    //   leftIcon={<Icon fontSize={30} as={ChevronLeft} />}
+    //   onClick={() => router.push(to)}
+    // >
+    //   POWRÓT
+    // </Button>
   );
 };
 

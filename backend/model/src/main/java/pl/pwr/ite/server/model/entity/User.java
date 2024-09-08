@@ -35,6 +35,9 @@ public class User extends EntityBase {
     @Column(length = 100)
     private String lastName;
 
+    @Column(length = 5)
+    private String code;
+
     @Column(length = 64)
     private String passwordHash;
 

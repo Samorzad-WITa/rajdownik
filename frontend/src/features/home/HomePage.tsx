@@ -46,6 +46,11 @@ const cards = [
         isExternal: false
     },
     {
+        title: 'Rejestracja na domki',
+        href: '/registration',
+        isExternal: false
+    },
+    {
         title: 'Regulamin',
         href: 'https://drive.google.com/file/d/1vnCX1rHCBf8q9UWamHVeKvTetP0duA34/view?usp=sharing',
         isExternal: true

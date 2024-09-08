@@ -7,9 +7,6 @@ export default async function handler(
 ){
     if(process.env.DEBUG) return res.status(200).json(userMock);
 
-    console.log(req.headers['authorization']);
-    console.log(req.headers['Authorization']);
-
     const result = await fetch(`${process.env.BACKEND_URL}/user/authenticated`, {
         headers: {
             Authorization: req.headers['authorization'],

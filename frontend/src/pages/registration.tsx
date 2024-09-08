@@ -1,4 +1,4 @@
-import { LoginPage } from '@/features/login';
+import { Registration } from '@/features';
 import { chakra } from '@chakra-ui/react';
 import Head from 'next/head';
 import {useAppContext} from "@/features/context/AppContext";
@@ -9,23 +9,24 @@ export default function Page() {
     useEffect(() => {
         setAppProps((prevProps) => ({
             ...prevProps,
-            pageTitle: 'Logowanie',
+            pageTitle: 'Rejestracja na domki',
             shouldRenderNavbar: true,
-            shouldRenderFooter: false,
-            shouldRenderBackButton: false,
+            shouldRenderFooter: true,
+            shouldRenderBackButton: true,
+            backButtonPath: '/'
         }));
     }, [setAppProps]);
 
     return (
         <>
             <Head>
-                <title>Logowanie</title>
-                <meta name="description" content="Logowanie" />
+                <title>Rejestracja na domki</title>
+                <meta name="description" content="Rejestracja na domki" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <chakra.main>
-                <LoginPage />
+                <Registration />
             </chakra.main>
         </>
     );

@@ -3,7 +3,9 @@ import React, {createContext, ReactNode, useContext, useState} from "react";
 export type ExtendedAppProps = {
     pageTitle: string;
     shouldRenderNavbar: boolean;
-    shouldRenderFooter: boolean
+    shouldRenderFooter: boolean;
+    shouldRenderBackButton: boolean;
+    backButtonPath: string;
 };
 
 const AppContext = createContext<{

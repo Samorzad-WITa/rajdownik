@@ -13,10 +13,8 @@ export const Footer = () => {
       <Flex
           width="100%"
           backgroundColor="#E4E9F4"
-          borderRadius="50px"
           paddingX={5}
           justify="space-between"
-          // gap={20}
       >
         {navItems.map((item) => {
           const isHome = item.href === '/';

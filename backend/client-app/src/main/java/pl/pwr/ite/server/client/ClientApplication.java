@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import pl.pwr.ite.server.client.properties.ClientProperties;
 import pl.pwr.ite.server.model.querydsl.CustomJpaRepositoryFactoryBean;
 
@@ -14,6 +15,7 @@ import pl.pwr.ite.server.model.querydsl.CustomJpaRepositoryFactoryBean;
 @EntityScan(basePackages = "pl.pwr.ite.server")
 @EnableJpaRepositories(basePackages = "pl.pwr.ite.server", repositoryFactoryBeanClass = CustomJpaRepositoryFactoryBean.class)
 @EnableConfigurationProperties(ClientProperties.class)
+@EnableScheduling
 public class ClientApplication {
 
     private static final String APP_ID = "client-app";

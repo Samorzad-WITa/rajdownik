@@ -14,7 +14,8 @@ export default function Home() {
       ...prevProps,
       pageTitle: 'Strona główna',
       shouldRenderNavbar: true,
-      shouldRenderFooter: true
+      shouldRenderFooter: true,
+      shouldRenderBackButton: false,
     }));
   }, []);
 

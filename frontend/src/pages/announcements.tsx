@@ -12,6 +12,7 @@ export default function Page() {
             pageTitle: 'Ogłoszenia',
             shouldRenderNavbar: true,
             shouldRenderFooter: true,
+            shouldRenderBackButton: false,
         }));
     }, []);
 

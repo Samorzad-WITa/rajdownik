@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import pl.pwr.ite.server.mapping.MappingProperties;
 
+import java.util.UUID;
+
 @Data
 public class RegistrationEntryDto {
 
@@ -14,11 +16,17 @@ public class RegistrationEntryDto {
         private boolean includeUser;
     }
 
+    private UUID id;
+
     private UserDto user;
 
     private String firstName;
 
     private String lastName;
+
+    private String userCode;
+
+    private boolean canDelete;
 
     private RegistrationPartDto part;
 }

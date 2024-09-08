@@ -8,3 +8,4 @@ export * from './SystemInformation';
 export * from './ViewContext';
 export * from './ScheduleDateButton';
 export * from './ActivityNavigationButton'
+export * from './RegistrationPart'

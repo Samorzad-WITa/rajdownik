@@ -37,12 +37,6 @@ public class RegistrationEntry extends EntityBase {
     @Column(insertable = false, updatable = false, nullable = false, name = "registered_by_id")
     private UUID registeredById;
 
-    @Column(length = 100, nullable = false)
-    private String firstName;
-
-    @Column(length = 100, nullable = false)
-    private String lastName;
-
     public void setUser(User user) {
         this.user = user;
         this.userId = user == null ? null : user.getId();

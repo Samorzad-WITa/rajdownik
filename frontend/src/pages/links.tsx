@@ -14,7 +14,9 @@ export default function Page() {
             ...prevProps,
             pageTitle: 'Przydatne linki',
             shouldRenderNavbar: true,
-            shouldRenderFooter: true
+            shouldRenderFooter: true,
+            shouldRenderBackButton: true,
+            backButtonPath: '/'
         }));
     }, []);
 

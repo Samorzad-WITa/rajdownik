@@ -2,6 +2,7 @@ package pl.pwr.ite.server.client.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.ite.server.client.web.dto.RegistrationDto;
@@ -49,8 +50,20 @@ public class RegistrationController implements InitializingBean {
         return ResponseEntity.ok(registrationLockFacade.map(registrationFacade.createLock(partId), defaultLockProperties));
     }
 
+    @PostMapping("/release-part/{partId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void releaseLock(@PathVariable UUID partId) {
+        registrationFacade.releaseLock(partId);
+    }
+
     @PostMapping("/register-entry/{partId}")
     public ResponseEntity<RegistrationEntryDto> registerEntry(@PathVariable UUID partId, @RequestBody RegistrationEntryDto entryDto) {
         return ResponseEntity.ok(registrationEntryFacade.map(registrationFacade.registerEntry(partId, entryDto), defaultSingleProperties));
+    }
+
+    @DeleteMapping("/remove-entry/{entryId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteEntry(@PathVariable UUID entryId) {
+        registrationFacade.removeEntry(entryId);
     }
 }
