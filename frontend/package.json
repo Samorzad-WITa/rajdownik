@@ -6,7 +6,6 @@
     "dev": "next dev",
     "format": "prettier --ignore-unknown --write src",
     "format:check": "prettier --ignore-unknown --check src",
-    "lint": "next lint",
     "start": "DISABLE_ESLINT_PLUGIN=true next start",
     "build": "DISABLE_ESLINT_PLUGIN=true next build",
     "test": "DISABLE_ESLINT_PLUGIN=true next test"
