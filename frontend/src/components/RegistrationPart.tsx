@@ -38,9 +38,9 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             refreshLock();
             setUnfolded(true);
             refetchRegistrationMethod(part.id);
-        } catch (error) {
-            console.log(error);
-            if(error) {
+        } catch (error: any) {
+            console.log(error.response);
+            if(error.response) {
                 toast({
                     title: error.response.data,
                     position: 'top-left',
@@ -70,9 +70,9 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             })
             refreshLock();
             refetchRegistrationMethod(part.id);
-        } catch (error) {
-            console.log(error);
-            if(error) {
+        } catch (error: any) {
+            console.log(error.response);
+            if(error.response) {
                 toast({
                     title: error.response.data,
                     position: 'top-left',
@@ -92,9 +92,9 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             });
             setUnfolded(false);
             refetchRegistrationMethod(part.id);
-        } catch (error) {
-            console.log(error);
-            if(error) {
+        } catch (error: any) {
+            console.log(error.response);
+            if(error.response) {
                 toast({
                     title: error.response.data,
                     position: 'top-left',
@@ -122,9 +122,9 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
                 isClosable: true
             });
             refreshLock();
-        } catch (error) {
-            console.log(error);
-            if(error) {
+        } catch (error: any) {
+            console.log(error.response);
+            if(error.response) {
                 toast({
                     title: error.response.data,
                     position: 'top-left',
