@@ -17,7 +17,7 @@ export default function Home() {
       shouldRenderFooter: true,
       shouldRenderBackButton: false,
     }));
-  }, []);
+  }, [setAppProps]);
 
   return (
     <>

@@ -14,7 +14,7 @@ export default function Page() {
             shouldRenderFooter: true,
             shouldRenderBackButton: false,
         }));
-    }, []);
+    }, [setAppProps]);
 
     return (
         <>

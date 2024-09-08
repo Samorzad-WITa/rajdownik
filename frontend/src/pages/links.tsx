@@ -18,7 +18,7 @@ export default function Page() {
             shouldRenderBackButton: true,
             backButtonPath: '/'
         }));
-    }, []);
+    }, [setAppProps]);
 
     return (
         <>

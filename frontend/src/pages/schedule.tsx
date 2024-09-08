@@ -38,7 +38,7 @@ export default function Page() {
       shouldRenderFooter: true,
       shouldRenderBackButton: false,
     }));
-  }, []);
+  }, [setAppProps]);
 
   const handleDateChange = (index: number) => {
     setDayIndex(index);
