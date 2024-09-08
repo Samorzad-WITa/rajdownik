@@ -11,7 +11,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:postgresql://localhost:54321/rajdownik_dev
+    url: jdbc:postgresql://185.238.75.202:54321/rajdownik_dev
     username: witta
     password: witta
   jpa:
