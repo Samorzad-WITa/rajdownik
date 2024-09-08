@@ -35,7 +35,7 @@ export const LoginPage = () => {
         setFormData(prevData => ({...prevData, [name]: value}));
     };
 
-    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.MouseEventHandler<HTMLFormElement>) => {
         e.preventDefault();
         setErrorMessage('');
         try {
@@ -52,7 +52,7 @@ export const LoginPage = () => {
         }
     };
 
-    const handleShowPassword = (e: React.ChangeEvent<HTMLButtonElement>) => {
+    const handleShowPassword = (e: React.MouseEventHandler<HTMLButtonElement>) => {
         setShowPassword((oldShowPassword) => !oldShowPassword);
     };
 
