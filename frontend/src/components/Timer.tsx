@@ -25,14 +25,14 @@ export const Timer = ({
                 setSeconds(prevSeconds => prevSeconds - 1);
             }, 1000);
         } else if(seconds <= 0) {
-            clearInterval(interval);
+            clearInterval(interval!);
             timeoutCallback();
         } else if(!active && seconds !== 0) {
-            clearInterval(interval);
+            clearInterval(interval!);
         }
 
         return () => {
-            if(interval) clearInterval(interval);
+            if(interval) clearInterval(interval!);
         }
     }, [active, seconds]);
 
