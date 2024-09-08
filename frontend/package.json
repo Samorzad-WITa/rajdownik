@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
     "dev": "next dev",
-    "start": "next start",
     "format": "prettier --ignore-unknown --write src",
     "format:check": "prettier --ignore-unknown --check src",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test"
   },
   "browserslist": [
     ">0.3%",
