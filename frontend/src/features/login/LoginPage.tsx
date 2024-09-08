@@ -35,7 +35,7 @@ export const LoginPage = () => {
         setFormData(prevData => ({...prevData, [name]: value}));
     };
 
-    const handleSubmit = async (e: React.MouseEventHandler<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         setErrorMessage('');
         try {
