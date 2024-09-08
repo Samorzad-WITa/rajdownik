@@ -40,12 +40,14 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             refetchRegistrationMethod(part.id);
         } catch (error) {
             console.log(error);
-            toast({
-                title: error.response.data,
-                position: 'top-left',
-                status: 'error',
-                isClosable: true
-            });
+            if(error) {
+                toast({
+                    title: error.response.data,
+                    position: 'top-left',
+                    status: 'error',
+                    isClosable: true
+                });
+            }
         }
     }
 
@@ -70,12 +72,14 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             refetchRegistrationMethod(part.id);
         } catch (error) {
             console.log(error);
-            toast({
-                title: error.response.data,
-                position: 'top-left',
-                status: 'error',
-                isClosable: true
-            });
+            if(error) {
+                toast({
+                    title: error.response.data,
+                    position: 'top-left',
+                    status: 'error',
+                    isClosable: true
+                });
+            }
         }
     }
 
@@ -90,12 +94,14 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             refetchRegistrationMethod(part.id);
         } catch (error) {
             console.log(error);
-            toast({
-                title: error.response.data,
-                position: 'top-left',
-                status: 'error',
-                isClosable: true
-            });
+            if(error) {
+                toast({
+                    title: error.response.data,
+                    position: 'top-left',
+                    status: 'error',
+                    isClosable: true
+                });
+            }
         }
     }
 
@@ -118,12 +124,14 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             refreshLock();
         } catch (error) {
             console.log(error);
-            toast({
-                title: error.response.data,
-                position: 'top-left',
-                status: 'error',
-                isClosable: true
-            });
+            if(error) {
+                toast({
+                    title: error.response.data,
+                    position: 'top-left',
+                    status: 'error',
+                    isClosable: true
+                });
+            }
         }
     }
 
