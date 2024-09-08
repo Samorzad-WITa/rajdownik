@@ -14,10 +14,10 @@ const AppContext = createContext<{
 } | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: ReactNode; initialProps: ExtendedAppProps}> = ({ children, initialProps}) => {
-    const [appProps, setAppProps] = useState(initialProps);
+    const [appProps, setProps] = useState(initialProps);
 
     return (
-        <AppContext.Provider value={{ appProps, setAppProps }}>
+        <AppContext.Provider value={{ appProps, setProps }}>
             { children }
         </AppContext.Provider>
     );
