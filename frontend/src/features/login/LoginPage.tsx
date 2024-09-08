@@ -109,7 +109,7 @@ export const LoginPage = () => {
                         <Image
                             width="30px"
                             src="/images/padlock-icon.png"
-                            label="padlock"
+                            alt="padlock"
                         />
                     </Center>
                     <Input
@@ -128,7 +128,7 @@ export const LoginPage = () => {
                             icon={<Image
                                 width="25px"
                                 src="/images/eye-outline-icon.png"
-                                label="padlock"
+                                alt="padlock"
                             />}
                             onClick={handleShowPassword}
                         />
