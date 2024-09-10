@@ -25,8 +25,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username:
-    password:
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -37,4 +37,4 @@ spring:
 rajdownik:
   auth:
     jwtSecret: 688dc1754ba81961938cee3adb5b1b68167c1cf5531f6da17490b550b6465fb8
-  frontend-url:
+  frontend-url: ${RAJDOWNIK_FRONTEND_URL}

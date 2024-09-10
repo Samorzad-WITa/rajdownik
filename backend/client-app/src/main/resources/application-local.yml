@@ -37,4 +37,4 @@ spring:
 rajdownik:
   auth:
     jwtSecret: 688dc1754ba81961938cee3adb5b1b68167c1cf5531f6da17490b550b6465fb8
-  frontend-url:
+  frontend-url: http://localhost:3000/
