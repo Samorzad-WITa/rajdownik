@@ -8,6 +8,7 @@ import Staff from './Components/staff.js';
 import Settings from './Components/settings.js';
 import NotFound from './Components/notFound.js';
 import Test from './Components/test'
+import Login from './Components/login';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/staff" element={<Staff/>}/>
           <Route path="/settings" element={<Settings/>}/>
            <Route path="/test" element={<Test/>}/> 
+           <Route path="/login" element={<Login/>}/> 
           <Route path='*' element={<NotFound />}/>
 
         </Routes>
