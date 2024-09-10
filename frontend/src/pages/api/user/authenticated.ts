@@ -32,6 +32,7 @@ const userMock = {
     id: '238bdf45-c2a0-4feb-811f-18572227c3b3',
     email: 'dominik.pokrzywa@gmail.com',
     firstName: 'Dominik',
+    code: 'DP97',
     lastName: 'Pokrzywa',
     roomNumber: '12',
     dietType: 'Mięsna',
@@ -46,4 +47,5 @@ const emptyUser = {
     roomNumber: '',
     dietType: '',
     busNumber: '',
+    code: ''
 }

@@ -24,7 +24,7 @@ export const HomePage = () => {
             border='2px'
             boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
           >
-            Witamy na Rajdzie Jesiennym W2xW4xW6!
+            Witamy na Rajdzie Jesiennym W1xW4xW6!
           </Flex>
           <SimpleGrid
             width="100%"

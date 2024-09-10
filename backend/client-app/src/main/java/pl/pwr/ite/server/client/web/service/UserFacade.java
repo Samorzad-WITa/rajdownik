@@ -7,7 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
+import pl.pwr.ite.server.client.properties.ClientProperties;
 import pl.pwr.ite.server.client.web.dto.CredentialsDto;
 import pl.pwr.ite.server.client.web.dto.JwtDto;
 import pl.pwr.ite.server.client.web.dto.PasswordResetDto;
@@ -15,9 +15,7 @@ import pl.pwr.ite.server.client.web.dto.UserDto;
 import pl.pwr.ite.server.client.web.mapper.UserMapper;
 import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.entity.UserToken;
-import pl.pwr.ite.server.model.enums.Permission;
 import pl.pwr.ite.server.model.enums.UserTokenType;
-import pl.pwr.ite.server.model.enums.UserType;
 import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.service.*;
@@ -26,24 +24,22 @@ import pl.pwr.ite.server.web.SecurityFacade;
 import pl.pwr.ite.server.web.exception.ApplicationError;
 import pl.pwr.ite.server.web.exception.ApplicationException;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.UUID;
-
 @Component
 public class UserFacade extends EntityServiceFacade<User, UserFilter, UserService, UserDto, UserDto.Properties, UserMapper> {
 
     private final MailingService mailingService;
+    private final ClientProperties clientProperties;
     private final ClockService clockService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserTokenService userTokenService;
 
-    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService) {
+    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, ClientProperties clientProperties, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService) {
         super(service, mapper, securityFacade);
         this.mailingService = mailingService;
         this.clockService = clockService;
+        this.clientProperties = clientProperties;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
@@ -89,7 +85,7 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
 
     private void sendPasswordResetMail(UserToken userToken) {
         var subject = "Zmiana hasła do aplikacji rajdownik.";
-        var content = "Link do zmiany hasła w aplikacji Rajdownik\n\n http://localhost:1144/user/password-reset?token=" + userToken.getToken();
+        var content = "Link do zmiany hasła w aplikacji Rajdownik\n\n " + clientProperties.getFrontendUrl() + "user/password-reset?token=" + userToken.getToken();
         mailingService.send(subject, content, userToken.getUser());
     }
 

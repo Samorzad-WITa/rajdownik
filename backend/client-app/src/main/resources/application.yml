@@ -22,7 +22,19 @@ spring:
         default_schema: public
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 rajdownik:
   auth:
     jwtSecret: 688dc1754ba81961938cee3adb5b1b68167c1cf5531f6da17490b550b6465fb8
+  frontend-url:

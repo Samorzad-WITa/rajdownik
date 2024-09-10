@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 export type UserItem = {
     id: string;
     email: string;
+    code: string;
     firstName: string;
     lastName: string;
     roomNumber: string;

@@ -1,4 +1,4 @@
-import { LoginPage } from '@/features/login';
+import { PasswordResetInitPage } from '@/features';
 import { chakra } from '@chakra-ui/react';
 import Head from 'next/head';
 import {useAppContext} from "@/features/context/AppContext";
@@ -9,24 +9,24 @@ export default function Page() {
     useEffect(() => {
         setProps((prevProps) => ({
             ...prevProps,
-            pageTitle: 'Logowanie',
+            pageTitle: 'Zmiana hasła',
             shouldRenderNavbar: true,
             shouldRenderFooter: false,
             shouldRenderBackButton: true,
-            backButtonPath: '/'
+            backButtonPath: '/login'
         }));
     }, [setProps]);
 
     return (
         <>
             <Head>
-                <title>Logowanie</title>
-                <meta name="description" content="Logowanie" />
+                <title>Zmiana hasła</title>
+                <meta name="description" content="Zmiana hasła" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <chakra.main>
-                <LoginPage />
+                <PasswordResetInitPage />
             </chakra.main>
         </>
     );

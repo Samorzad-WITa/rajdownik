@@ -1,6 +1,7 @@
 package pl.pwr.ite.server.client.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,14 +54,14 @@ public class UserController implements InitializingBean {
     }
 
     @PostMapping("/password-reset-init")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void initPasswordReset(@RequestBody UserDto dto) {
+    public ResponseEntity<Void> initPasswordReset(@RequestBody UserDto dto) {
         userFacade.initPasswordReset(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/password-reset")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void resetPassword(@RequestBody PasswordResetDto dto) {
+    public ResponseEntity<Void> resetPassword(@RequestBody PasswordResetDto dto) {
         userFacade.resetPassword(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

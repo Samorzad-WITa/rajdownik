@@ -37,7 +37,7 @@ public class UserServiceImpl extends FilterableEntityServiceBase<User, UserFilte
     @Override
     public User findByEmail(String email) {
         var path = QUser.user;
-        return new JPAQuery<>(entityManager).select(path).from(path).where(path.email.eq(email)).fetchOne();
+        return new JPAQuery<>(entityManager).select(path).from(path).where(path.email.equalsIgnoreCase(email)).fetchOne();
     }
 
     @Override
@@ -95,6 +95,20 @@ public class UserServiceImpl extends FilterableEntityServiceBase<User, UserFilte
         var userId = tuple.get(path.id);
         var type = tuple.get(path.type);
         return AuthenticatedUser.builder().userId(userId).email(username).userType(type).build();
+    }
+
+    @Override
+    public String generateCode(User user) {
+        String code;
+        int i = 1;
+        do {
+            var sb = new StringBuilder();
+            sb.append(user.getFirstName().charAt(0));
+            sb.append(user.getLastName().charAt(0));
+            sb.append(String.format("%02d", i++));
+            code = sb.toString();
+        } while (findByCode(code) != null);
+        return code;
     }
 
     @Override

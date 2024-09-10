@@ -42,6 +42,21 @@ export const UserProfile = () => {
                   { data.email }
               </Text>
           </VStack>
+          <Stack gap={0} marginTop="2vh">
+              <Text fontSize={13} marginLeft={4}>Kod użytkownika</Text>
+              <Text
+                  width="100%"
+                  bgColor="#E4E9F4"
+                  borderRadius={30}
+                  padding={2}
+                  fontSize={12}
+                  paddingLeft={4}
+                  fontWeight={'bold'}
+                  boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
+              >
+                  { data.code || 'Brak danych' }
+              </Text>
+          </Stack>
           <Text fontWeight={'bold'} fontSize={20} marginTop="5vh" color="#1F3565" marginBottom={3}>
               Podstawowe dane
           </Text>

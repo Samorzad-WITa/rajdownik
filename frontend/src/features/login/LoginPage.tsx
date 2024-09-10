@@ -40,7 +40,7 @@ export const LoginPage = () => {
         setErrorMessage('');
         try {
             const response = await axios.post('/api/authentication', {
-                email: formData.email,
+                email: formData.email.toLowerCase(),
                 password: formData.password
             })
             const token = response.data.token;
@@ -132,7 +132,6 @@ export const LoginPage = () => {
                             />}
                             onClick={() => handleShowPassword()}
                         />
-
                     </Center>
                 </HStack>
                 <FormErrorMessage>
@@ -145,17 +144,6 @@ export const LoginPage = () => {
                 borderRadius={100}
                 boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
             >
-                {/*<Button*/}
-                {/*    color="#FFFFFF"*/}
-                {/*    fontWeight={ "bold" }*/}
-                {/*    width="100%"*/}
-                {/*    fontSize="13px"*/}
-                {/*    bgColor="#1F3565"*/}
-                {/*    padding="3px"*/}
-                {/*    onClick={handleSubmit}*/}
-                {/*>*/}
-                {/*    Zaloguj się*/}
-                {/*</Button>*/}
                 <button
                     style={{
                         color: "#FFFFFF",
@@ -176,7 +164,8 @@ export const LoginPage = () => {
               </Text>
               <Link
                   color="#1F3565"
-                    fontWeight={'bold'}
+                  fontWeight={'bold'}
+                  onClick={() => router.push('/user/password-reset-init')}
               >
                   Zresetuj hasło
               </Link>
