@@ -153,6 +153,8 @@ h1{
   border-radius: 2.5rem;
 background: #FFF;
 left:0;
+display: grid;
+grid-template-columns: 1fr 1fr;
 }
 .scheduleTable{
   margin-left: 5%;
@@ -161,6 +163,13 @@ left:0;
 height: 45.625rem;
 flex-shrink: 0;
 border-radius: 1.25rem;
+border: 1.5px solid #000;
+}
+.details-panel{
+  width: 30.375rem;
+height: 45.625rem;
+flex-shrink: 0;
+  border-radius: 1.25rem;
 border: 1.5px solid #000;
 }
 
