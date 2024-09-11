@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import arrow from "./assets/Kafelki/Arrow 1.svg"
 
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
-    TableHead,
     TableHeader,
     TableRow,
 } from "./ui/table"
@@ -15,6 +12,8 @@ import {
 function Schedule({ token }) { // Otrzymujemy token jako prop
     const [activities, setActivities] = useState([]);
     const [selectedActivity, setSelectedActivity] = useState(null);
+    const [updatedActivity, setUpdatedActivity] = useState({}); // State for updated activity
+    const [error, setError] = useState(""); // State for error messages
 
     // Get activities function
     const getActivities = async (token) => {
@@ -25,7 +24,7 @@ function Schedule({ token }) { // Otrzymujemy token jako prop
         };
         try {
             const response = await axios.get('http://localhost:1133/activity', config);
-            setActivities(response.data); 
+            setActivities(response.data.sort((a, b) => new Date(a.timeFrom) - new Date(b.timeFrom))); // Sort activities by timeFrom
         } catch (error) {
             console.error('Błąd podczas uzyskiwania atrakcji:', error.response ? error.response.data : error.message);
         }
@@ -47,17 +46,39 @@ function Schedule({ token }) { // Otrzymujemy token jako prop
     // Function to handle row click and show details
     const handleRowClick = (activity) => {
         setSelectedActivity(activity);
+        setUpdatedActivity(activity); // Set updated activity to the selected activity
     };
 
-    // Function to handle removing the selected activity
-    const handleRemove = () => {
-        setSelectedActivity(null);
+    // Function to handle input changes
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUpdatedActivity(prev => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    // Function to handle updating the selected activity
+    const handleUpdate = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                },
+            };
+            await axios.put(`http://localhost:1133/activity/${selectedActivity.id}`, updatedActivity, config);
+            // Refresh activities after updating
+            getActivities(token);
+            setSelectedActivity(updatedActivity); // Update the selected activity
+            setError(""); // Clear any existing errors
+        } catch (error) {
+            setError("Błąd podczas aktualizacji: " + (error.response ? error.response.data : error.message));
+        }
     };
 
     return (
         <div className="schedule-container" style={{ display: 'flex' }}>
             <div className="schedule" style={{ flex: 1 }}>
-              
                 <Table className='scheduleTable'>
                     <TableHeader>
                         <TableRow>
@@ -78,35 +99,59 @@ function Schedule({ token }) { // Otrzymujemy token jako prop
                         ))}
                     </TableBody>
                 </Table>
-                {selectedActivity && (
-                <div className="details-panel" style={{ flex: 1, marginLeft: '20px' }}>
-                    <h2>Szczegóły aktywności</h2>
-                    <div>
-                        <label>Nazwa:</label>
-                        <p>{selectedActivity.title}</p>
-                    </div>
-                    <div>
-                        <label>Data i godzina rozpoczęcia:</label>
-                        <p>{new Date(selectedActivity.timeFrom).toLocaleString()}</p>
-                    </div>
-                    <div>
-                        <label>Data i godzina zakończenia:</label>
-                        <p>{new Date(selectedActivity.timeTo).toLocaleString()}</p>
-                    </div>
-                    <div>
-                        <label>Opis:</label>
-                        <p>{selectedActivity.description}</p>
-                    </div>
-                    <div>
-                        <label>Miejsce:</label>
-                        <p>{selectedActivity.location}</p>
-                    </div>
-                    <button onClick={handleRemove}>Usuń</button>
-                </div>
-            )}
-            </div>
 
-          
+                {selectedActivity && (
+                    <div className="details-panel" style={{ flex: 1, marginLeft: '20px' }}>
+                        <h2>Szczegóły aktywności</h2>
+                        {error && <p className="error">{error}</p>}
+                        <div>
+                            <label>Nazwa:</label>
+                            <input
+                                type="text"
+                                name="title"
+                                value={updatedActivity.title}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Data i godzina rozpoczęcia:</label>
+                            <input
+                                type="datetime-local"
+                                name="timeFrom"
+                                value={new Date(updatedActivity.timeFrom).toISOString().slice(0, 16)}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Data i godzina zakończenia:</label>
+                            <input
+                                type="datetime-local"
+                                name="timeTo"
+                                value={new Date(updatedActivity.timeTo).toISOString().slice(0, 16)}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Opis:</label>
+                            <textarea
+                                name="description"
+                                value={updatedActivity.description}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Miejsce:</label>
+                            <input
+                                type="text"
+                                name="location"
+                                value={updatedActivity.location}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <button onClick={handleUpdate}>Zaktualizuj</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
