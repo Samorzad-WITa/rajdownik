@@ -12,3 +12,5 @@ mvn -pl client-app -am spring-boot:run
 ```
 http://localhost:1144/swagger-ui/index.html
 ```
+
+mvn -pl admin-app -am spring-boot:run
