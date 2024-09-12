@@ -31,7 +31,7 @@ function AppContent({ setToken, token }) { // Dodaj setToken i token jako props
           <Routes>
             {/* Używamy ProtectedRoute dla zabezpieczenia tras */}
             <Route path="/" element={<ProtectedRoute token={token}><Participants /></ProtectedRoute>} />
-            <Route path="/announcements" element={<ProtectedRoute token={token}><Announcements /></ProtectedRoute>} />
+            <Route path="/announcements" element={<ProtectedRoute token={token}><Announcements token={token}/></ProtectedRoute>} />
             <Route path="/participants" element={<ProtectedRoute token={token}><Participants /></ProtectedRoute>} />
             <Route path="/schedule" element={<ProtectedRoute token={token}><Schedule token={token} /></ProtectedRoute>} /> {/* Przekazujemy token */}
             <Route path="/staff" element={<ProtectedRoute token={token}><Staff /></ProtectedRoute>} />
