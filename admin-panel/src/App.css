@@ -261,7 +261,7 @@ left:0;
 .announcementDiv{
   display: flex;
 width: 80%;
-height: 10rem;
+height: 20%;
 margin: 3rem;
 padding: 2rem;
 flex-direction: column;
@@ -329,6 +329,31 @@ line-height: normal;
 
 .modal button:last-of-type {
   background-color: #6c757d;
+}
+
+.announcement-card {
+  position: relative;
+
+
+
+  border-radius: 5px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 1rem;
+  right: 5rem;
+  background-color: #1F3565;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: darkred;
 }
 
 

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import './styles/announcements.css'; 
 
 function Announcements({ token }) {
     const [announcements, setAnnouncements] = useState([]);
     const [error, setError] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Stan dla modal
-    const [newAnnouncement, setNewAnnouncement] = useState({ id: '', title: '', description: '' }); // Stan dla nowego ogłoszenia
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // Stan dla modal usunięcia
-    const [announcementToDelete, setAnnouncementToDelete] = useState(null); // Ogłoszenie do usunięcia
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newAnnouncement, setNewAnnouncement] = useState({ id: '', title: '', description: '' });
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [announcementToDelete, setAnnouncementToDelete] = useState(null);
 
-    // Funkcja do pozyskiwania ogłoszeń
     const getAnnouncements = async (token) => {
         let config = {
             headers: {
@@ -19,14 +18,13 @@ function Announcements({ token }) {
         };
         try {
             const response = await axios.get('http://localhost:1133/announcement', config);
-            setAnnouncements(response.data); // Ustawiamy ogłoszenia w stanie
+            setAnnouncements(response.data);
             console.log(JSON.stringify(response.data))
         } catch (error) {
             setError('Błąd podczas uzyskiwania ogłoszeń: ' + (error.response ? error.response.data : error.message));
         }
     };
 
-    // Funkcja do dodawania lub edytowania ogłoszenia
     const saveAnnouncement = async () => {
         let config = {
             headers: {
@@ -36,21 +34,18 @@ function Announcements({ token }) {
         
         try {
             if (newAnnouncement.id) {
-                // Jeśli id istnieje, edytujemy ogłoszenie
                 await axios.put(`http://localhost:1133/announcement/${newAnnouncement.id}`, newAnnouncement, config);
             } else {
-                // W przeciwnym razie dodajemy nowe ogłoszenie
                 await axios.post('http://localhost:1133/announcement', newAnnouncement, config);
             }
-            getAnnouncements(token); // Odświeżamy listę ogłoszeń po dodaniu lub edytowaniu
-            setIsModalOpen(false); // Zamykamy modal
-            setNewAnnouncement({ id: '', title: '', description: '' }); // Czyścimy formularz
+            getAnnouncements(token);
+            setIsModalOpen(false);
+            setNewAnnouncement({ id: '', title: '', description: '' });
         } catch (error) {
             setError('Błąd podczas zapisywania ogłoszenia: ' + (error.response ? error.response.data : error.message));
         }
     };
 
-    // Funkcja do usuwania ogłoszenia
     const deleteAnnouncement = async () => {
         let config = {
             headers: {
@@ -60,28 +55,25 @@ function Announcements({ token }) {
         
         try {
             await axios.delete(`http://localhost:1133/announcement/${announcementToDelete}`, config);
-            getAnnouncements(token); // Odświeżamy listę ogłoszeń po usunięciu
-            setIsDeleteModalOpen(false); // Zamykamy modal
-            setAnnouncementToDelete(null); // Resetujemy ogłoszenie do usunięcia
+            getAnnouncements(token);
+            setIsDeleteModalOpen(false);
+            setAnnouncementToDelete(null);
         } catch (error) {
             setError('Błąd podczas usuwania ogłoszenia: ' + (error.response ? error.response.data : error.message));
         }
     };
 
-    // Używamy useEffect, aby pobrać ogłoszenia po załadowaniu komponentu
     useEffect(() => {
         if (token) {
             getAnnouncements(token);
         }
     }, [token]);
 
-    // Funkcja do otwierania modal z danymi ogłoszenia do edycji
     const openEditModal = (announcement) => {
         setNewAnnouncement(announcement);
         setIsModalOpen(true);
     };
 
-    // Funkcja do otwierania modal do potwierdzenia usunięcia
     const openDeleteModal = (id) => {
         setAnnouncementToDelete(id);
         setIsDeleteModalOpen(true);
@@ -89,26 +81,20 @@ function Announcements({ token }) {
 
     return (
         <div className="announcements">
-            <h1>Ogłoszenia są tutaj!</h1>
-
-            {/* Przycisk do otwarcia panelu */}
-            <button onClick={() => setIsModalOpen(true)}>Dodaj ogłoszenie</button>
-
-            {/* Lista ogłoszeń */}
+         
             <ul>
+            <button className="add-announcement-button" onClick={() => setIsModalOpen(true)}>Dodaj ogłoszenie</button>
                 {announcements.map((announcement) => (
-                    <li key={announcement.id}>
+                    <li key={announcement.id} className="announcement-card">
                         <div className='announcementDiv' onClick={() => openEditModal(announcement)}>
                             <h2>{announcement.title}</h2>
                             <p>{announcement.description}</p>
-                            <button className="deleteAnouncementButton" onClick={(e) => { e.stopPropagation(); openDeleteModal(announcement.id); }} className="delete-button">X</button>
                         </div>
-                      
+                        <button className="delete-button" onClick={(e) => { e.stopPropagation(); openDeleteModal(announcement.id); }}>X</button>
                     </li>
                 ))}
             </ul>
 
-            {/* Panel modal do dodawania lub edytowania ogłoszenia */}
             {isModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal">
@@ -132,7 +118,6 @@ function Announcements({ token }) {
                 </div>
             )}
 
-            {/* Panel modal do potwierdzenia usunięcia ogłoszenia */}
             {isDeleteModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal">

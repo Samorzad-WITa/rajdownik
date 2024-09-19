@@ -7,25 +7,10 @@ import staff from "./assets/icons/staff.svg";
 import setting from "./assets/icons/settings.svg";
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function Navbar() {
-  const [token, setToken] = useState(null);
+function Navbar({ token }) {
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const getlogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:1133/auth/login', {
-        email: 'dominik.pokrzywa@gmail.com',
-        password: '123'
-      });
-      const token = response.data.token;
-      setToken(token);
-      return token;
-    } catch (error) {
-      console.error('Błąd podczas logowania:', error.response ? error.response.data : error.message);
-    }
-  };
 
   const getUser = async (token) => {
     let config = {
@@ -42,18 +27,13 @@ function Navbar() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const token = await getlogin();
-      if (token) {
-        await getUser(token);
-      }
-    };
-    fetchData();
-  }, []);
+    if (token) {
+      getUser(token);
+    }
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setToken(null);
     navigate('/login');
   };
 

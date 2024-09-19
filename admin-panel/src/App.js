@@ -1,4 +1,5 @@
 import './App.css';
+import './Components/styles/announcements.css'
 import Announcements from './Components/announcements.js';
 import Navbar from './Components/navbar.js';
 import Participants from './Components/participants.js';
@@ -23,7 +24,7 @@ function AppContent({ setToken, token }) { // Dodaj setToken i token jako props
         {/* Wyświetlamy Navbar tylko, jeśli aktualna ścieżka nie jest /login */}
         {location.pathname !== '/login' && (
           <div className='navPlaceHolder'>
-            <Navbar />
+            <Navbar token={token} /> {/* Przekazujemy token */}
           </div>
         )}
 
