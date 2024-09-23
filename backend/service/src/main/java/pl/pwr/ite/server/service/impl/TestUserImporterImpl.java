@@ -50,6 +50,9 @@ public class TestUserImporterImpl implements UserImporter {
             user.setFirstName(csvUser.getFirstName());
             user.setLastName(csvUser.getLastName());
             user.setEmail(csvUser.getEmail());
+            user.setCode(userService.generateCode(user));
+            user.setDietType("Mięsna");
+            user.setBusNumber(1);
             user = userService.saveAndFlush(user);
             importedUsers.add(user);
         }
