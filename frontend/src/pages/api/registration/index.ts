@@ -1,10 +1,11 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {RegistrationItem} from "@/hooks/useRegistration";
 import {RegistrationPartItem} from "@/hooks/useRegistrationPart";
+import {ErrorItem, isApiErrorItem, resolveApiError} from "@/hooks";
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<RegistrationItem>
+    res: NextApiResponse<RegistrationItem | {message: string}>
 ) {
 
     const authorizationHeader = req.headers['authorization'] as string | undefined;
@@ -18,13 +19,15 @@ export default async function handler(
         headers,
         next: { revalidate: 30 },
     });
-
     const parsed = await result.json();
-    if(!result.ok) return res.status(500).json({
-        title: '',
-        startTime: '',
-        parts: []
-    });
+
+    if(!result.ok) {
+        resolveApiError(parsed, errorCodes, res);
+    }
 
     res.status(200).json(parsed);
 }
+
+const errorCodes: ErrorItem[] = [
+
+]

@@ -47,8 +47,8 @@ export const LoginPage = () => {
             setToken(token);
 
             await router.push('/profile');
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            setErrorMessage(error.response.data.message);
         }
     };
 
@@ -92,11 +92,8 @@ export const LoginPage = () => {
                           onChange={handleChange}
                       />
                   </HStack>
-                  <FormErrorMessage>
-                      { errorMessage }
-                  </FormErrorMessage>
               </FormControl>
-            <FormControl isInvalid={false}>
+            <FormControl isInvalid={!!errorMessage}>
                 <HStack
                     width="100%"
                     bgColor="#EDEDED"
@@ -127,7 +124,7 @@ export const LoginPage = () => {
                             aria-label='Pokaż hasło'
                             icon={<Image
                                 width="25px"
-                                src="/images/eye-outline-icon.png"
+                                src={isShowPassword ? "/images/eye-outline-icon.png" : "/images/eye-icon.png"}
                                 alt="padlock"
                             />}
                             onClick={() => handleShowPassword()}

@@ -1,12 +1,12 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {UserItem} from "@/hooks/useUser";
+import {ApiErrorItem, ErrorItem, resolveApiError} from "@/hooks";
+import {ApiError} from "next/dist/server/api-utils";
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<UserItem>
+    res: NextApiResponse<UserItem | {message: string}>
 ){
-    if(process.env.DEBUG) return res.status(200).json(userMock);
-
     const authorizationHeader = req.headers['authorization'] as string | undefined;
 
     const headers: HeadersInit = {};
@@ -20,32 +20,15 @@ export default async function handler(
             revalidate: 30
         },
     });
-
     const parsed = await result.json();
 
-    if(!result.ok) return res.status(500).json(emptyUser);
+    if(!result.ok) {
+        resolveApiError(parsed, errorCodes, res);
+    }
 
     res.status(200).json(parsed);
 }
 
-const userMock = {
-    id: '238bdf45-c2a0-4feb-811f-18572227c3b3',
-    email: 'dominik.pokrzywa@gmail.com',
-    firstName: 'Dominik',
-    code: 'DP97',
-    lastName: 'Pokrzywa',
-    roomNumber: '12',
-    dietType: 'Mięsna',
-    busNumber: 'Tura I',
-}
+const errorCodes: ErrorItem[] = [
 
-const emptyUser = {
-    id: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    roomNumber: '',
-    dietType: '',
-    busNumber: '',
-    code: ''
-}
+]

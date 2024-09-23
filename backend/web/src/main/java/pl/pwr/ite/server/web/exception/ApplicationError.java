@@ -17,12 +17,17 @@ public enum ApplicationError implements ErrorDescriptor {
     RegistrationNotFound(HttpStatus.NOT_FOUND),
     RegistrationPartNotFound(HttpStatus.NOT_FOUND),
 
+    //LOGIN
+    PasswordHashNotPresent(HttpStatus.FORBIDDEN),
+    WrongPassword(HttpStatus.FORBIDDEN),
+    InvalidJwtToken(HttpStatus.FORBIDDEN),
+
     //REGISTRATION PROCESS
-    RegistrationFull(HttpStatus.FORBIDDEN, "Domek jest już pełen."),
-    RegistrationPartLocked(HttpStatus.FORBIDDEN, "Domek jest zablokowany."),
-    UserAlreadyRegistered(HttpStatus.FORBIDDEN, "Uzytkownik jest już wpisany."),
-    UserWithCodeNotFound(HttpStatus.NOT_FOUND, "Nie znaleziono użytkownika"),
-    UserAlreadyOwnsALock(HttpStatus.FORBIDDEN, "Blokujesz już inny domek")
+    RegistrationFull(HttpStatus.FORBIDDEN),
+    RegistrationPartLocked(HttpStatus.FORBIDDEN),
+    UserAlreadyRegistered(HttpStatus.FORBIDDEN),
+    UserWithCodeNotFound(HttpStatus.NOT_FOUND),
+    UserAlreadyOwnsALock(HttpStatus.FORBIDDEN)
     ;
 
     private final HttpStatus defaultStatus;

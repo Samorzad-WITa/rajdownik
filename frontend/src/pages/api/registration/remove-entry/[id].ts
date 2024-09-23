@@ -1,9 +1,16 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {RegistrationEntryItem, RegistrationLockItem, RegistrationPartItem} from "@/hooks";
+import {
+    ErrorItem,
+    isApiErrorItem,
+    RegistrationEntryItem,
+    RegistrationLockItem,
+    RegistrationPartItem,
+    resolveApiError
+} from "@/hooks";
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<string>
+    res: NextApiResponse<{ message: string }>
 ){
     const { id } = req.query;
 
@@ -20,10 +27,15 @@ export default async function handler(
         next: { revalidate: 30 },
     });
 
+    const parsed = await result.json();
+
     if(!result.ok) {
-        const parsed = await result.json();
-        return res.status(500).send(parsed.message);
+        resolveApiError(parsed, errorCodes, res);
     }
 
-    res.status(200).send("");
+    res.status(200).send({message: 'OK'});
 }
+
+const errorCodes: ErrorItem[] = [
+
+]

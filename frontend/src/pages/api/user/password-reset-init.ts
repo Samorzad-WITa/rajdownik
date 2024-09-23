@@ -1,9 +1,9 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {RegistrationEntryItem, RegistrationPartItem} from "@/hooks";
+import {ErrorItem, isApiErrorItem, RegistrationEntryItem, RegistrationPartItem, resolveApiError} from "@/hooks";
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<string>
+    res: NextApiResponse<{message: string}>
 ){
     const headers: HeadersInit = {};
     headers['Content-Type'] = 'application/json';
@@ -17,8 +17,12 @@ export default async function handler(
     const parsed = await result.json().catch(() => ({}));
 
     if(!result.ok) {
-        return res.status(500).send(parsed.message);
+        resolveApiError(parsed, errorCodes, res);
     }
 
-    res.status(204).end();
+    res.status(200).json({message: "Widomość wysłana"});
 }
+
+const errorCodes: ErrorItem[] = [
+
+]

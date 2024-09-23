@@ -1,4 +1,16 @@
-import {Button, Center, Flex, HStack, IconButton, Input, Spacer, Text, useToast, VStack} from "@chakra-ui/react";
+import {
+    AlertStatus,
+    Button,
+    Center,
+    Flex,
+    HStack,
+    IconButton,
+    Input,
+    Spacer,
+    Text,
+    useToast,
+    VStack
+} from "@chakra-ui/react";
 import {AddIcon, CloseIcon, EditIcon, LockIcon} from "@chakra-ui/icons";
 import {RegistrationPartItem, useRegistrationPart } from "@/hooks/useRegistrationPart";
 import React, {useEffect, useState} from "react";
@@ -21,11 +33,19 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
 
     const timeout = () => {
         setUnfolded(false);
-        console.log("Timeout");
     }
 
     const refreshLock = () => {
         setTimerKey(prevKey => prevKey + 1);
+    }
+
+    const showToast = (message: React.ReactNode, status: AlertStatus) => {
+        toast({
+            title: message,
+            position: 'top-left',
+            status: status,
+            isClosable: true
+        });
     }
 
     const unfold = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,15 +59,7 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             setUnfolded(true);
             refetchRegistrationMethod(part.id);
         } catch (error: any) {
-            console.log(error.response);
-            if(error.response) {
-                toast({
-                    title: error.response.data,
-                    position: 'top-left',
-                    status: 'error',
-                    isClosable: true
-                });
-            }
+            showToast(error.response.data.message, 'error');
         }
     }
 
@@ -62,24 +74,11 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
                     Authorization: 'Bearer ' + token,
                 }
             });
-            toast({
-                title: 'Użytkownik wypisany!',
-                position: 'top-left',
-                status: 'success',
-                isClosable: true
-            })
+            showToast('Użytkownik wypisany!', 'success');
             refreshLock();
             refetchRegistrationMethod(part.id);
         } catch (error: any) {
-            console.log(error.response);
-            if(error.response) {
-                toast({
-                    title: error.response.data,
-                    position: 'top-left',
-                    status: 'error',
-                    isClosable: true
-                });
-            }
+            showToast(error.response.data.message, 'error');
         }
     }
 
@@ -93,15 +92,7 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
             setUnfolded(false);
             refetchRegistrationMethod(part.id);
         } catch (error: any) {
-            console.log(error.response);
-            if(error.response) {
-                toast({
-                    title: error.response.data,
-                    position: 'top-left',
-                    status: 'error',
-                    isClosable: true
-                });
-            }
+            showToast(error.response.data.message, 'error');
         }
     }
 
@@ -115,23 +106,10 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
                 }
             });
             setUserCode('');
-            toast({
-                title: 'Użytkownik wpisany!',
-                position: 'top-left',
-                status: 'success',
-                isClosable: true
-            });
+            showToast('Użytkownik wpisany!', 'success');
             refreshLock();
         } catch (error: any) {
-            console.log(error.response);
-            if(error.response) {
-                toast({
-                    title: error.response.data,
-                    position: 'top-left',
-                    status: 'error',
-                    isClosable: true
-                });
-            }
+            showToast(error.response.data.message, 'error');
         }
     }
 

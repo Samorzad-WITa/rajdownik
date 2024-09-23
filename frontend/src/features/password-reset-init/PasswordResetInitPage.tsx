@@ -13,6 +13,7 @@ import React, {useState} from "react";
 import {useRouter} from "next/router";
 import axios from "axios";
 import {EmailIcon} from "@chakra-ui/icons";
+import {PendingSpinner} from "@/components";
 
 interface PasswordResetInitForm {
     email: string
@@ -36,18 +37,25 @@ export const PasswordResetInitPage = () => {
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         setErrorMessage('');
+        if(formData.email === '') {
+            setErrorMessage('Adres email nie może być pusty');
+            return;
+        }
         try {
             setButtonEnabled(false);
-            const response = await axios.post('/api/user/password-reset-init', {
+            /*const response = await */axios.post('/api/user/password-reset-init', {
                 email: formData.email.toLowerCase()
             });
+
             setSent(true);
-        } catch (error) {
+        } catch (error: any) {
             setButtonEnabled(true);
-            console.log(error);
+            setErrorMessage(error.response.data.message);
         }
     };
-
+    if(!buttonEnabled && !sent) {
+        return <PendingSpinner />
+    }
     if(sent)
         return (
             <Flex

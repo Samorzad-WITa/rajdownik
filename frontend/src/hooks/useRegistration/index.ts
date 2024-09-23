@@ -1,6 +1,7 @@
 import {RegistrationPartItem} from "@/hooks/useRegistrationPart";
 import axios from "axios";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, UseQueryOptions} from "@tanstack/react-query";
+import {useRouter} from "next/router";
 
 export type RegistrationItem = {
     title: string;
@@ -14,17 +15,28 @@ const fetchRegistration = async (token: string) => {
             Authorization: 'Bearer ' + token
         }
     });
-    const parsed = await res.json();
+    if(res.status === 403) {
+        throw new Error('403');
+    }
 
+    const parsed = await res.json();
     return parsed as RegistrationItem;
 }
 
 const useRegistration = (token: string) => {
-    return useQuery({
+    const router = useRouter();
+    const query = useQuery<RegistrationItem, Error>({
         queryKey: ['registration'],
         queryFn: () => fetchRegistration(token),
-        refetchInterval: 1000
-    });
+        refetchInterval: 1000,
+        retry: 0
+    } as UseQueryOptions<RegistrationItem, Error>);
+
+    if(query.isError && (query.error as Error).message === '403') {
+        void router.push('/login');
+    }
+
+    return query;
 }
 
 export { fetchRegistration, useRegistration };

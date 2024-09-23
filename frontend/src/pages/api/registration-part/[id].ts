@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {RegistrationPartItem} from "@/hooks/useRegistrationPart";
+import {ErrorItem, isApiErrorItem, resolveApiError} from "@/hooks";
 
 export default async function handler(
     req: NextApiRequest,
@@ -21,19 +22,12 @@ export default async function handler(
     const parsed = await result.json();
 
     if(!result.ok) {
-        return res.status(500).json({
-            id: '',
-            lock: {
-                expiresAt: ''
-            },
-            ownsLock: false,
-            title: '',
-            entryLimit: 0,
-            locked: false,
-            entryAmount: 0,
-            entries: []
-        });
+        resolveApiError(parsed, errorCodes, res);
     }
 
     res.status(200).json(parsed);
 }
+
+const errorCodes: ErrorItem[] = [
+
+]

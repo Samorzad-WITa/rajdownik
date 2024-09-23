@@ -1,12 +1,14 @@
 package pl.pwr.ite.server.client.web.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 import pl.pwr.ite.server.client.properties.ClientProperties;
 import pl.pwr.ite.server.client.web.dto.CredentialsDto;
 import pl.pwr.ite.server.client.web.dto.JwtDto;
@@ -15,6 +17,7 @@ import pl.pwr.ite.server.client.web.dto.UserDto;
 import pl.pwr.ite.server.client.web.mapper.UserMapper;
 import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.entity.UserToken;
+import pl.pwr.ite.server.model.enums.Permission;
 import pl.pwr.ite.server.model.enums.UserTokenType;
 import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.security.AuthenticatedUser;
@@ -23,6 +26,9 @@ import pl.pwr.ite.server.web.EntityServiceFacade;
 import pl.pwr.ite.server.web.SecurityFacade;
 import pl.pwr.ite.server.web.exception.ApplicationError;
 import pl.pwr.ite.server.web.exception.ApplicationException;
+
+import java.io.IOException;
+import java.util.Collection;
 
 @Component
 public class UserFacade extends EntityServiceFacade<User, UserFilter, UserService, UserDto, UserDto.Properties, UserMapper> {
@@ -34,8 +40,9 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserTokenService userTokenService;
+    private final UserImporter userImporter;
 
-    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, ClientProperties clientProperties, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService) {
+    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, ClientProperties clientProperties, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService, @Qualifier("testUserImporterImpl") UserImporter userImporter) {
         super(service, mapper, securityFacade);
         this.mailingService = mailingService;
         this.clockService = clockService;
@@ -44,6 +51,7 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userTokenService = userTokenService;
+        this.userImporter = userImporter;
     }
 
     @Transactional
@@ -99,5 +107,16 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
         var encodedPassword = passwordEncoder.encode(dto.getNewPassword());
         user.setPasswordHash(encodedPassword);
         userTokenService.deleteById(userToken.getId());
+    }
+
+    @Transactional
+    public Collection<User> performImport(MultipartFile multipartFile) {
+        securityFacade.checkAccess(Permission.UserImport);
+        try(var inputStream = multipartFile.getInputStream()) {
+            return userImporter.performImport(inputStream);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

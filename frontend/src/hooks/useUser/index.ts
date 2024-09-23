@@ -1,4 +1,5 @@
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, UseQueryOptions} from "@tanstack/react-query";
+import {useRouter} from "next/router";
 
 
 export type UserItem = {
@@ -18,16 +19,26 @@ const fetchAuthenticatedUser = async (token: string) => {
             Authorization: 'Bearer ' + token,
         }
     });
+    if(res.status === 403) {
+        throw new Error('403');
+    }
     const parsed = await res.json();
-    console.log(parsed);
     return parsed as UserItem;
 }
 
 const useAuthenticatedUser = (token: string) => {
-    return useQuery({
+    const router = useRouter();
+    const query = useQuery<UserItem, Error>({
         queryKey: ['authenticatedUser'],
-        queryFn: () => fetchAuthenticatedUser(token)
-    });
+        queryFn: () => fetchAuthenticatedUser(token),
+        retry: 0,
+    } as UseQueryOptions<UserItem, Error>);
+
+    if(query.isError && (query.error as Error).message === '403') {
+        void router.push('/login');
+    }
+
+    return query;
 };
 
 export { useAuthenticatedUser };

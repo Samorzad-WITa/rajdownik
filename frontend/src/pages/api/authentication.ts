@@ -1,10 +1,10 @@
-import { AnnouncementItem } from '@/hooks';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {AuthenticationItem} from "@/hooks/useAuthentication";
+import {ApiErrorItem, ErrorItem, isApiErrorItem, resolveApiError} from "@/hooks";
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<AuthenticationItem>,
+    res: NextApiResponse<AuthenticationItem | {message: string}>,
 ) {
 
     const authorizationHeader = req.headers['authorization'] as string | undefined;
@@ -12,28 +12,34 @@ export default async function handler(
     const headers: HeadersInit = {};
     headers['Content-Type'] = 'application/json';
 
-    if (process.env.DEBUG) return res.status(200).json(items);
-    console.log(req.body);
     const result = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        // body: JSON.stringify(req.body),
         body: JSON.stringify(req.body),
         next: { revalidate: 30 },
     });
     const parsed = await result.json();
 
-    if (!result.ok) return res.status(500).json({
-        token: 'test token',
-        expiresIn: 1234
-    });
+    if(!result.ok) {
+        resolveApiError(parsed, errorCodes, res);
+    }
 
     res.status(200).json(parsed);
 }
 
-const items = {
-    token: 'test token',
-    expiresIn: 12314
-};
+const errorCodes: ErrorItem[] = [
+    {
+        apiCode: 'password_hash_not_present',
+        message: 'Konto nieaktywne. Zarejestruj się za pomocą funkcji odzyskiwania hasła'
+    },
+    {
+        apiCode: 'user_not_found',
+        message: 'Błędny email lub hasło'
+    },
+    {
+        apiCode: 'wrong_password',
+        message: 'Błędny email lub hasło'
+    }
+]

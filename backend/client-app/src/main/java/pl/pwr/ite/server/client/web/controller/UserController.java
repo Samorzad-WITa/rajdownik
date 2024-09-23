@@ -64,4 +64,10 @@ public class UserController implements InitializingBean {
         userFacade.resetPassword(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/import")
+    public ResponseEntity<Collection<UserDto>> importUsers(@RequestPart(name = "file") MultipartFile file) {
+        var users = userFacade.performImport(file);
+        return ResponseEntity.ok(userFacade.map(users, defaultListProperties));
+    }
 }

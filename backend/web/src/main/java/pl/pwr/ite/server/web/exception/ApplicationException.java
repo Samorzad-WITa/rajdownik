@@ -27,27 +27,27 @@ public class ApplicationException extends RuntimeException {
     }
 
     public ApplicationException(ErrorDescriptor descriptor) {
-        this(descriptor, null, getMessage(null, descriptor), null, Collections.EMPTY_MAP, null, null);
+        this(descriptor, descriptor.getDefaultStatus(), getMessage(null, descriptor), descriptor.getCode(), Collections.EMPTY_MAP, null, null);
     }
 
     public ApplicationException(ErrorDescriptor descriptor, Throwable cause) {
-        this(descriptor, null, getMessage(null, descriptor), null, Collections.EMPTY_MAP, null, cause);
+        this(descriptor, descriptor.getDefaultStatus(), getMessage(null, descriptor), descriptor.getCode(), Collections.EMPTY_MAP, null, cause);
     }
 
     public ApplicationException(ErrorDescriptor descriptor, String message) {
-        this(descriptor, null, getMessage(message, descriptor), null, Collections.EMPTY_MAP, null, null);
+        this(descriptor, descriptor.getDefaultStatus(), getMessage(message, descriptor), descriptor.getCode(), Collections.EMPTY_MAP, null, null);
     }
 
     public ApplicationException(ErrorDescriptor descriptor, String message, Throwable cause) {
-        this(descriptor, null, getMessage(message, descriptor), null, Collections.EMPTY_MAP, null, cause);
+        this(descriptor, descriptor.getDefaultStatus(), getMessage(message, descriptor), descriptor.getCode(), Collections.EMPTY_MAP, null, cause);
     }
 
     public ApplicationException(ErrorDescriptor descriptor, String message, Map<String, Object> additionalInfo, Throwable cause) {
-        this(descriptor, null, getMessage(message, descriptor), null, additionalInfo, null, cause);
+        this(descriptor, descriptor.getDefaultStatus(), getMessage(message, descriptor), descriptor.getCode(), additionalInfo, null, cause);
     }
 
     public ApplicationException(ErrorDescriptor descriptor, String message, BindingResult bindingResult) {
-        this(descriptor, null, getMessage(message, descriptor), null, Collections.EMPTY_MAP, bindingResult, null);
+        this(descriptor, descriptor.getDefaultStatus(), getMessage(message, descriptor), descriptor.getCode(), Collections.EMPTY_MAP, bindingResult, null);
     }
 
     protected static String getMessage(String message, ErrorDescriptor error) {
