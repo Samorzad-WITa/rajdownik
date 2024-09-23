@@ -36,5 +36,5 @@ spring:
 
 rajdownik:
   auth:
-    jwtSecret: 688dc1754ba81961938cee3adb5b1b68167c1cf5531f6da17490b550b6465fb8
+    jwtSecret: ${JWT_SECRET}
   frontend-url: ${RAJDOWNIK_FRONTEND_URL}

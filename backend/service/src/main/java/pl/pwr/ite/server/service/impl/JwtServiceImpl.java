@@ -33,8 +33,8 @@ public class JwtServiceImpl implements JwtService, InitializingBean {
 
     private final JwtGrantedAuthorityConverter authorityConverter;
     private final AuthProperties authProperties;
-//    private final long accessTokenValidityTime = 3 * 24 * 60 * 60 * 1000;
-    private final long accessTokenValidityTime = 1 * 1 * 1 * 30 * 1000;
+    private final long accessTokenValidityTime = 3 * 24 * 60 * 60 * 1000;
+//    private final long accessTokenValidityTime = 1 * 1 * 1 * 30 * 1000;
 
     private final ClockService clockService;
 

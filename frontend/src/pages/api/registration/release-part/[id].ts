@@ -20,9 +20,8 @@ export default async function handler(
         next: { revalidate: 30 },
     });
 
-    const parsed = await result.json();
-
     if(!result.ok) {
+        const parsed = await result.json();
         resolveApiError(parsed, errorCodes, res);
     }
 
