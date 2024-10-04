@@ -178,7 +178,7 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
                                 />}
                             </HStack>
                         )) }
-                        <Button onClick={handleSavePart}>Zapisz</Button>
+                        <Button onClick={handleSavePart}>Zapisz domek</Button>
                     </Flex>
                 )
             }

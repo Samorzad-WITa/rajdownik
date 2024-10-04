@@ -15,17 +15,21 @@ export const Links = () => {
 
       >
           {groups.map((linkGroup) => (
-              <VStack key={linkGroup.groupLabel} paddingBottom={5}>
+              <VStack key={linkGroup.groupLabel} paddingBottom={10} gap={4}>
                   <Text fontSize="20px">
                       {linkGroup.groupLabel}
                   </Text>
                   { linkGroup.groupLinks.map((link) => (
-                      <Link key={link.href} width="100%" isExternal href={link.href}>
-                          <Flex
-                              width="100%"
-                              bgColor="#E4E9F4"
-                              borderRadius={15}
-                          >
+                      <Link
+                          key={link.href}
+                          width="100%"
+                          isExternal
+                          href={link.href}
+                          bgColor="#E4E9F4"
+                          borderRadius={15}
+                          boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)"
+                      >
+                          <Flex>
                               <Center padding={2} paddingLeft={4}>
                                   { link.icon }
                                   <Text
@@ -48,8 +52,8 @@ const groups = [
         groupLabel: 'Media społecznościowe',
         groupLinks: [
             {
-                label: 'Facebook - Samorząd WBLiW (W2)',
-                href: 'https://www.facebook.com/Samorzad.WBLiW?locale=pl_PL',
+                label: 'Facebook - Samorząd SSWArch (W1)',
+                href: 'https://www.facebook.com/SSWArch?locale=pl_PL',
                 icon: <LinkIcon />
             },
             {
@@ -69,19 +73,13 @@ const groups = [
         groupLabel: 'Sklepy i restauracje',
         groupLinks: [
             {
-                label: 'Facebook - Samorząd WBLiW (W2)',
-                href: 'https://www.facebook.com/Samorzad.WBLiW?locale=pl_PL',
+                label: 'Sklep Livio',
+                href: 'https://maps.app.goo.gl/6nD8P2XW4e51XuKs6',
                 icon: <LinkIcon />
             },
             {
-                label: 'Facebook - Samorząd WITa (W4)',
-                href: 'https://www.facebook.com/samorzad.wita?locale=pl_PL',
-                icon: <LinkIcon />
-            },
-
-            {
-                label: 'Facebook - Samorząd WGGiG (W6)',
-                href: 'https://www.facebook.com/samorzadw6?locale=pl_PL',
+                label: 'Pizzeria-Kręgielnia „Dziupla”',
+                href: 'https://maps.app.goo.gl/5P3WAwwk5yoq3SZ38',
                 icon: <LinkIcon />
             },
         ]

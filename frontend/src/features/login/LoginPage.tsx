@@ -38,6 +38,10 @@ export const LoginPage = () => {
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         setErrorMessage('');
+        if(formData.password === '' || formData.email === '') {
+            setErrorMessage('Pola nie mogą być puste');
+            return;
+        }
         try {
             const response = await axios.post('/api/authentication', {
                 email: formData.email.toLowerCase(),
