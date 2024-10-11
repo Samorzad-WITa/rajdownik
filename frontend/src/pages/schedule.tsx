@@ -11,17 +11,17 @@ import {useAppContext} from "@/features/context/AppContext";
 const dates = [
   {
     label: 'PIĄTEK',
-    date: "2024-04-12T12:00:00",
+    date: "2024-10-18T12:00:00",
     dateLabel: '12 kwietnia 2024'
   },
   {
     label: 'SOBOTA',
-    date: "2024-04-13T12:00:00",
+    date: "2024-10-19T12:00:00",
     dateLabel: '13 kwietnia 2024'
   },
   {
     label: 'NIEDZIELA',
-    date: "2024-04-14T12:00:00",
+    date: "2024-10-20T12:00:00",
     dateLabel: '14 kwietnia 2024'
   },
 ]

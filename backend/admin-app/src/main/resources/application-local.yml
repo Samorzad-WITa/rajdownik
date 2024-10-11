@@ -22,3 +22,14 @@ spring:
         default_schema: public
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rajd.jesienny.2024@gmail.com
+    password: xvpclycsnibzcvbz
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

@@ -30,6 +30,7 @@ public class ActivityFacade extends EntityServiceFacade<Activity, ActivityFilter
         activity.setTimeFrom(dto.getTimeFrom());
         activity.setTimeTo(dto.getTimeTo());
         activity.setDescription(dto.getDescription());
+        activity.setLocation(dto.getLocation());
 
         return saveAndFlush(activity);
     }

@@ -1,13 +1,14 @@
-import {Center, Circle, Flex, Image, Stack, Text, VStack} from "@chakra-ui/react";
+import {Button, Center, Circle, Flex, Image, Stack, Text, VStack} from "@chakra-ui/react";
 import {useAuth} from "@/features/context/AuthProvider";
 import {useRouter} from "next/router";
 import {useAuthenticatedUser} from "@/hooks/useUser";
 import {PendingSpinner} from "@/components";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 export const UserProfile = () => {
     const router = useRouter();
-    const { token } = useAuth(true);
+    const [ isLoggingOut, setIsLoggingOut] = useState(false);
+    const { token , setToken } = useAuth(!isLoggingOut);
     const { data, isPending } = useAuthenticatedUser(token!);
 
     if(!token || isPending) { return <PendingSpinner></PendingSpinner> }
@@ -16,23 +17,24 @@ export const UserProfile = () => {
         return <Text width="100%" fontWeight={'bold'} fontSize={'large'} textAlign="center">Nie udało się wczytać profilu użytkownika</Text>
     }
 
+    const logoutButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        setIsLoggingOut(false);
+        setToken(null);
+        await router.push('/');
+    }
+
     return (
       <Flex
         flexDirection="column"
         width="100%"
         padding={2}
+        color="#1F3565"
       >
           <Center>
-              <Circle
-                border="2px"
-                padding={4}
-                borderColor='#1F3565'
-              >
-                  <Image
-                    width="70px"
-                    src="/images/user-profile-page-icon.png"
-                  />
-              </Circle>
+              <Image
+                  width={600}
+                  src="/images/user-frame.png"
+              />
           </Center>
           <VStack marginTop={5} gap={0}>
               <Text fontWeight={'bold'} fontSize={25}>
@@ -49,7 +51,7 @@ export const UserProfile = () => {
                   bgColor="#E4E9F4"
                   borderRadius={30}
                   padding={2}
-                  fontSize={12}
+                  fontSize={13}
                   paddingLeft={4}
                   fontWeight={'bold'}
                   boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
@@ -69,7 +71,7 @@ export const UserProfile = () => {
                           bgColor="#E4E9F4"
                           borderRadius={30}
                           padding={2}
-                          fontSize={12}
+                          fontSize={14}
                           paddingLeft={4}
                           fontWeight={'bold'}
                           boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
@@ -79,6 +81,19 @@ export const UserProfile = () => {
                   </Stack>
               ))}
           </Flex>
+          <Button
+            bgColor="#1F3565"
+            borderRadius={100}
+            boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
+            width="100%"
+            color="#FFFFFF"
+            fontWeight={'bold'}
+            marginTop={50}
+            onClick={logoutButtonClick}
+            leftIcon={<Image src="/images/logout-icon.png" width={4}/>}
+          >
+              <Center>Wyloguj się</Center>
+          </Button>
       </Flex>
     );
 }

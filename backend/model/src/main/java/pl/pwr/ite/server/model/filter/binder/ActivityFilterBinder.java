@@ -22,4 +22,12 @@ public class ActivityFilterBinder extends FilterBinderBase<Activity, ActivityFil
                                 .eq(LocalDate.from(p.getDate())))
                 .build();
     }
+
+    @Override
+    protected SortDetails bindSort(QActivity path, String sortSchema) {
+        return switch (sortSchema) {
+            case "timeFrom" -> SortDetails.builder().path(path.timeFrom).build();
+            default -> throwNotSupportedSortSchemaException(sortSchema);
+        };
+    }
 }

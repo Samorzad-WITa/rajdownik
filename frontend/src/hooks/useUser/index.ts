@@ -8,7 +8,9 @@ export type UserItem = {
     code: string;
     firstName: string;
     lastName: string;
+    phoneNumber: string;
     roomNumber: string;
+    profileUrl: string;
     dietType: string;
     busNumber: string;
 }

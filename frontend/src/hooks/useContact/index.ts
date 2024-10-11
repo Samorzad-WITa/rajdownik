@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
+import {UserItem} from "@/hooks/useUser";
 
 export type ContactItem = {
   id: string,
-  user: {
-    phoneNumber: string,
-    firstName: string,
-    lastName: string
-  },
+  user: UserItem,
   label: string,
+  groupName: string,
+  contactType: string,
 };
 
 const fetchContact = async () => {

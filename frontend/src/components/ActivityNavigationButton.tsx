@@ -11,13 +11,15 @@ export const ActivityNavigationButton = (props: {
     <Button
       color="#1F3565"
       fontSize={12}
-      padding={3}
+      padding={4}
       minWidth={105}
       fontWeight="bold"
-      outlineColor="#1F3565"
+      // outlineColor="#1F3565"
+      boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)"
       borderRadius={50}
       size="xs"
       textTransform="uppercase"
+      visibility={props.disabled ? "hidden" : "visible"}
       pl={props.leftIcon ? 0 : undefined}
       pr={props.rightIcon ? 0 : undefined}
       isDisabled={props.disabled}

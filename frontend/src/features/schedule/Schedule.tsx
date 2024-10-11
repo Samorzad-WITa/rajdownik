@@ -24,7 +24,13 @@ export const Schedule = (props: {
       gap={5}
     >
       {data?.map((item) => (
-        <Link key={item.id} href={`/activity/${item.id}?date=${item.timeFrom}`}>
+        <Link
+            key={item.id}
+            href={`/activity/${item.id}?date=${item.timeFrom}`}
+            textDecoration="none"
+            _hover={{ textDecoration: "none" }}
+            _focus={{ boxShadow: "none" }}
+        >
           <HStack
             // color={isPast(parseISO(item.timeTo)) ? '#616f7b' : '#1F3565'}
             color="#1F3565"

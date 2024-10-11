@@ -28,11 +28,14 @@ public class ActivityController implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         defaultSingleProperties = mappingService.createProperties(ActivityDto.Properties.class);
-        defaultListProperties = mappingService.createProperties(ActivityDto.Properties.class);
+        defaultListProperties = mappingService.createProperties(ActivityDto.Properties.class)
+                .setIncludeActivityRegistration(true);
     }
 
     @GetMapping
     public ResponseEntity<Collection<ActivityDto>> getAll(ActivityFilter filter) {
+        filter.setSortSchema("timeFrom");
+        filter.setSortDirection("DESC");
         return ResponseEntity.ok(activityFacade.getList(filter, defaultListProperties));
     }
 

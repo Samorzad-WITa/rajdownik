@@ -19,6 +19,7 @@ export const ScheduleDateButton = (props: {
       outlineColor="#1F3565"
       borderRadius={50}
       size="xs"
+      visibility={props.disabled ? "hidden" : "visible"}
       textTransform="uppercase"
       pl={props.leftIcon ? 0 : undefined}
       pr={props.rightIcon ? 0 : undefined}

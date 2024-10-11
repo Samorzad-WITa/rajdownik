@@ -25,6 +25,7 @@ export const InfoCard = ({
         marginBottom={5}
         px={5}
         overflowY="auto"
+        overflowX="none"
         boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)"
     >
       <CardHeader p={3}>

@@ -21,7 +21,7 @@ export const Footer = () => {
           return (
               <Link key={item.href} href={item.href} width={55}>
                 {isHome ? (
-                    <Circle size="60px" bg="#1F3565" marginBottom={3}>
+                    <Circle size="60px" bg="#1F3565" marginBottom={0}>
                       <Image width={25} src={item.iconInactive} alt={item.label}/>
                     </Circle>
                 ) : (

@@ -85,7 +85,7 @@ export const PasswordResetInitPage = () => {
                 </Text>
                 <VStack gap={0} marginTop="auto">
                     <Text fontSize={10}>Stworzone przez</Text>
-                    <Text fontWeight={'bold'} color="#1F3565">Samorząd WITa</Text>
+                    <Text fontWeight={'bold'} color="#1F3565"><Link isExternal href="https://www.facebook.com/samorzad.wita">Samorząd WITa</Link></Text>
                 </VStack>
             </Flex>
         );
@@ -98,6 +98,12 @@ export const PasswordResetInitPage = () => {
                 justifyContent="space-between"
                 padding={2}
             >
+                <Center marginBottom={30}>
+                    <Image
+                        width={600}
+                        src="/images/user-frame.png"
+                    />
+                </Center>
                 <Text fontWeight={'bold'} color="#1F3565" fontSize="16px">
                     Wpisz adres mailowy podany podczas zapisów
                 </Text>
@@ -164,13 +170,14 @@ export const PasswordResetInitPage = () => {
                     <Link
                         color="#1F3565"
                         fontWeight={'bold'}
+                        href={`mailto:rajd.jesienny.2024@gmail.com?subject=Aplikacja Rajdownik`}
                     >
                         Napisz do nas
                     </Link>
                 </Center>
                 <VStack gap={0} marginTop="auto">
                     <Text fontSize={10}>Stworzone przez</Text>
-                    <Text fontWeight={'bold'} color="#1F3565">Samorząd WITa</Text>
+                    <Text fontWeight={'bold'} color="#1F3565"><Link isExternal href="https://www.facebook.com/samorzad.wita">Samorząd WITa</Link></Text>
                 </VStack>
             </Flex>
         );

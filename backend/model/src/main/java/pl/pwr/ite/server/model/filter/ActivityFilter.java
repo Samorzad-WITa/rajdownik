@@ -8,4 +8,5 @@ import java.time.LocalDateTime;
 public class ActivityFilter extends Filter {
 
     private LocalDateTime date;
+
 }

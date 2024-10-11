@@ -68,6 +68,12 @@ export const LoginPage = () => {
         justifyContent="space-between"
         padding={2}
       >
+          <Center>
+              <Image
+                  width={600}
+                  src="/images/user-frame.png"
+              />
+          </Center>
           <form onSubmit={handleSubmit}>
               <FormControl isInvalid={!!errorMessage}>
                   <HStack
@@ -108,7 +114,7 @@ export const LoginPage = () => {
                 >
                     <Center>
                         <Image
-                            width="30px"
+                            width="40px"
                             src="/images/padlock-icon.png"
                             alt="padlock"
                         />
@@ -150,7 +156,7 @@ export const LoginPage = () => {
                         color: "#FFFFFF",
                         fontWeight: "bold",
                         width: "100%",
-                        fontSize: "13px",
+                        fontSize: "15px",
                         padding: "3px"
                     }}
                     type="submit"
@@ -173,7 +179,7 @@ export const LoginPage = () => {
           </Center>
           <VStack gap={0} marginTop="auto">
               <Text fontSize={10}>Stworzone przez</Text>
-              <Text fontWeight={'bold'} color="#1F3565">Samorząd WITa</Text>
+              <Text fontWeight={'bold'} color="#1F3565"><Link isExternal href="https://www.facebook.com/samorzad.wita">Samorząd WITa</Link></Text>
           </VStack>
       </Flex>
     );

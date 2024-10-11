@@ -27,6 +27,9 @@ export const Links = () => {
                           href={link.href}
                           bgColor="#E4E9F4"
                           borderRadius={15}
+                          textDecoration="none"
+                          _hover={{ textDecoration: "none" }}
+                          _focus={{ boxShadow: "none" }}
                           boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)"
                       >
                           <Flex>

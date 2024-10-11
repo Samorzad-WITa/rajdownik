@@ -15,6 +15,7 @@ import pl.pwr.ite.server.service.ActivityService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ActivityServiceImpl extends FilterableEntityServiceBase<Activity, ActivityFilter> implements ActivityService {
@@ -24,6 +25,16 @@ public class ActivityServiceImpl extends FilterableEntityServiceBase<Activity, A
 
     public ActivityServiceImpl(ActivityRepository repository) {
         super(repository);
+    }
+
+    @Override
+    public List<Activity> getList(ActivityFilter filter) {
+        var path = QActivity.activity;
+        return createQuery().select(path).from(path)
+                .where(Expressions.allOf(
+                        Expressions.dateTimeOperation(LocalDate.class, Ops.DateTimeOps.DATE, path.timeFrom)
+                                .eq(LocalDate.from(filter.getDate()))
+                )).orderBy(path.timeFrom.asc()).fetch();
     }
 
     @Override

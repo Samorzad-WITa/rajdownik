@@ -10,6 +10,8 @@ import pl.pwr.ite.server.model.entity.Activity;
 @RequiredArgsConstructor
 public class ActivityMapper extends MapperBase<Activity, ActivityDto, ActivityDto.Properties> {
 
+    private final ActivityRegistrationMapper activityRegistrationMapper;
+
     @Override
     public void transform(Activity source, ActivityDto destination, ActivityDto.Properties properties) {
         destination.setTimeFrom(source.getTimeFrom());
@@ -18,5 +20,9 @@ public class ActivityMapper extends MapperBase<Activity, ActivityDto, ActivityDt
         destination.setLocation(source.getLocation());
         destination.setId(source.getId());
         destination.setDescription(source.getDescription());
+
+        if(properties.isIncludeActivityRegistration()) {
+            map(destination::setActivityRegistration, source.getActivityRegistration(), activityRegistrationMapper, properties);
+        }
     }
 }

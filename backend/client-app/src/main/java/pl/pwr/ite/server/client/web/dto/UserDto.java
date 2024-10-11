@@ -26,6 +26,8 @@ public class UserDto {
 
     private String indexNumber;
 
+    private String profileUrl;
+
     private String firstName;
 
     private String lastName;

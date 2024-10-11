@@ -23,6 +23,9 @@ public class User extends EntityBase {
     @Column(/*nullable = false, */length = 100, unique = true)
     private String email;
 
+    @Column
+    private String profileUrl;
+
     @Column(/*nullable = false, */length = 15)
     private String phoneNumber;
 

@@ -15,6 +15,8 @@ public class UserDisplayMapper extends MapperBase<UserDisplay, UserDisplayDto, U
     @Override
     public void transform(UserDisplay source, UserDisplayDto destination, UserDisplayDto.Properties properties) {
         destination.setLabel(source.getLabel());
+        destination.setGroup(source.getGroupName());
+        destination.setContactType(source.getContactType());
 
         if(properties.isIncludeUser()) {
             map(destination::setUser, source.getUser(), userMapper, properties);

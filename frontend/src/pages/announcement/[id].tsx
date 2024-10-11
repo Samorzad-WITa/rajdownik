@@ -61,10 +61,13 @@ export default function Home() {
         <Flex width="100%" gap={2} justify="space-between" overflow="visible">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={nextItemExists(announcementIndex, data?.length!)}
+            disabled={!nextItemExists(announcementIndex, data?.length!)}
           >
             {nextItemExists(announcementIndex, data?.length!) ? (
               <Link
+                textDecoration="none"
+                _hover={{ textDecoration: "none" }}
+                _focus={{ boxShadow: "none" }}
                 href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}
               >
                 Poprzednie
@@ -76,10 +79,13 @@ export default function Home() {
 
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={previousItemExists(announcementIndex)}
+            disabled={!previousItemExists(announcementIndex)}
           >
             {previousItemExists(announcementIndex) ? (
               <Link
+                textDecoration="none"
+                _hover={{ textDecoration: "none" }}
+                _focus={{ boxShadow: "none" }}
                 href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}
               >
                 Następne

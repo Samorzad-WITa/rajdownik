@@ -1,4 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
+import {ActivityRegistrationItem} from "@/hooks";
 
 export type ActivityItem = {
   id: string;
@@ -7,6 +8,7 @@ export type ActivityItem = {
   location: string;
   timeFrom: string;
   timeTo: string;
+  activityRegistration: ActivityRegistrationItem;
 };
 
 const fetchActivities = async (referenceDate: string) => {

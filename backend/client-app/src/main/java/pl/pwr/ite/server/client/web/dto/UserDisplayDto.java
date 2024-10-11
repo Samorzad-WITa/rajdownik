@@ -3,6 +3,7 @@ package pl.pwr.ite.server.client.web.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import pl.pwr.ite.server.mapping.MappingProperties;
+import pl.pwr.ite.server.model.enums.UserDisplayContactType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,4 +22,8 @@ public class UserDisplayDto {
     private UserDto user;
 
     private String label;
+
+    private String group;
+
+    private UserDisplayContactType contactType;
 }

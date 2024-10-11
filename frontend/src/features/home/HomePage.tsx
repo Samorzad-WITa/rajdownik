@@ -17,6 +17,7 @@ export const HomePage = () => {
           <Flex
             width="100%"
             bgColor="#FFFFF"
+            color="#1F3565"
             borderColor="#1F3565"
             borderRadius={20}
             padding={3}
@@ -52,7 +53,7 @@ const cards = [
     },
     {
         title: 'Regulamin',
-        href: 'https://drive.google.com/file/d/1vnCX1rHCBf8q9UWamHVeKvTetP0duA34/view?usp=sharing',
+        href: 'https://drive.google.com/file/d/1GSR0wouKrkgr-Mgo6oKmnkGVpKWWhTKU/view?usp=sharing',
         isExternal: true
     },
     {
