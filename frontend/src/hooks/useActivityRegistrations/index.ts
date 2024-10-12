@@ -15,7 +15,7 @@ const fetchActivityRegistrations = async () => {
     return parsed as ActivityRegistrationItem[];
 }
 
-const fetchActivityRegistration = async (id: string | string[], token: string) => {
+const fetchActivityRegistration = async (id: string | string[] | undefined, token: string) => {
     const res = await fetch(`/api/activity-registration/${id}`);
     const parsed = await res.json();
 
@@ -29,7 +29,7 @@ const useActivityRegistrations = () => {
     });
 };
 
-const useActivityRegistration = (id: string | string[], enabled: boolean = true, token: string)  => {
+const useActivityRegistration = (id: string | string[] | undefined, enabled: boolean = true, token: string)  => {
     return useQuery({
         queryKey: ['activityRegistration'],
         queryFn: () => fetchActivityRegistration(id, token),

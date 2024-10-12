@@ -68,7 +68,7 @@ export const ActivityRegistration = () => {
         const { checked } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            captainCode: checked ? authenticatedUser.code : '',
+            captainCode: (checked && authenticatedUser) ? authenticatedUser.code : '',
         }));
         setSelfCaptainChecked(checked);
     }

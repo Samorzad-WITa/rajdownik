@@ -13,7 +13,7 @@ export type ActivityEntryUserItem = {
     user: UserItem;
 }
 
-const fetchActivityEntry = async (token: string, registrationId: string | string[]) => {
+const fetchActivityEntry = async (token: string, registrationId: string | string[] | undefined) => {
     const res = await fetch(`/api/activity-entry/${registrationId}`, {
         headers: {
             Authorization: 'Bearer ' + token
@@ -24,7 +24,7 @@ const fetchActivityEntry = async (token: string, registrationId: string | string
     return parsed as ActivityEntryItem;
 }
 
-const useActivityEntry = (token: string, registrationId: string | string[]) => {
+const useActivityEntry = (token: string, registrationId: string | string[] | undefined) => {
     return useQuery({
         queryKey: ['activityEntry'],
         queryFn: () => fetchActivityEntry(token, registrationId),

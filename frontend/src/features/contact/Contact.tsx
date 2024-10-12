@@ -17,10 +17,10 @@ export const Contact = () => {
     console.log(data);
     return data.reduce(
         (result: { [key: string]: ContactItem[] }, currentValue: ContactItem) => {
-          if(!result[currentValue.group]) {
-            result[currentValue.group] = [];
+          if(!result[currentValue.groupName]) {
+            result[currentValue.groupName] = [];
           }
-          result[currentValue.group].push(currentValue);
+          result[currentValue.groupName]?.push(currentValue);
           return result;
         },
         {} as { [key: string]: ContactItem[] }
@@ -46,7 +46,7 @@ export const Contact = () => {
       }
       if(item.contactType === 'FacebookProfile' && item.user.profileUrl) {
           return (<Box>
-              <Link isExternal href={item.user.profileUrl}>
+              <Link href={item.user.profileUrl}>
                   <VStack paddingRight={3} paddingTop={1} gap={0}>
                       <Image
                           src="/images/messenger-icon.png"
@@ -63,7 +63,7 @@ export const Contact = () => {
       return (<></>);
   }
 
-  const groupedItems = groupItems(data);
+  const groupedItems = groupItems(data!);
 
   return (
     <Flex paddingX={1} gap={4} direction="column">
@@ -82,7 +82,7 @@ export const Contact = () => {
             >
                 {groupName}
             </Text>
-            {groupedItems[groupName].map((item) => (
+            {groupedItems[groupName]?.map((item) => (
                 <Flex
                     key={item.id}
                     backgroundColor="#E4E9F4"
