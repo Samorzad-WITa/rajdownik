@@ -52,6 +52,11 @@ const cards = [
         isExternal: false
     },
     {
+        title: 'Zapisy na atrakcje',
+        href: '/activity/registration',
+        isExternal: false
+    },
+    {
         title: 'Regulamin',
         href: 'https://drive.google.com/file/d/1GSR0wouKrkgr-Mgo6oKmnkGVpKWWhTKU/view?usp=sharing',
         isExternal: true

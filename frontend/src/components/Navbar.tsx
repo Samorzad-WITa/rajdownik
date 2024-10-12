@@ -21,7 +21,7 @@ export const Navbar = () => {
           <Box>
             <Link href="/">
               <Image
-                height="45px"
+                height="60px"
                 src="/images/rajd-logo.png"
                 alt="Logo Rajdu"
               />

@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ActivityEntryService extends FilterableEntityService<ActivityEntry, ActivityEntryFilter> {
 
     ActivityEntry findRegisteredActivityEntry(UUID activityRegistrationId, UUID userId);
+    boolean existByTeamName(UUID activityRegistrationId, String teamName);
 }

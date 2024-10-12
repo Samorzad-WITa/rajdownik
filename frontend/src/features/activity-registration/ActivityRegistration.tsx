@@ -14,16 +14,23 @@ import {
     Link,
     Input,
     Box,
-    IconButton
+    IconButton, Spacer, useToast
 } from "@chakra-ui/react";
 import React, {useState} from "react";
-import {useAuthenticatedUser} from "@/hooks/useUser";
-import {AddIcon} from "@chakra-ui/icons";
+import {useAuthenticatedUser, UserItem} from "@/hooks/useUser";
+import {AddIcon, CloseIcon} from "@chakra-ui/icons";
+import axios from "axios";
 
 type ActivityRegistrationForm = {
     teamName: string;
     captainCode: string;
     userCode: string;
+    users: UserItem[];
+}
+
+type FormError = {
+    code: string;
+    message: string;
 }
 
 export const ActivityRegistration = () => {
@@ -33,29 +40,76 @@ export const ActivityRegistration = () => {
     const { data: activityEntry, isPending: isActivityEntryPending } = useActivityEntry(token!, id);
     const { data: activityRegistration, isPending: isActivityRegistrationPending } = useActivityRegistration(id, !activityEntry, token!);
     const { data: authenticatedUser, isPending: isAuthenticatedUserPending} = useAuthenticatedUser(token!);
+    const toast = useToast();
 
     const [formData, setFormData] = useState<ActivityRegistrationForm>({
-        teamName: '',
-        captainCode: '',
-        userCode: ''
+        teamName: activityEntry ? activityEntry.teamName : '',
+        captainCode: (activityEntry && activityEntry.teamCaptain) ? activityEntry.teamCaptain.code : '',
+        userCode: '',
+        users: (activityEntry && activityEntry.users) ? activityEntry.users.map(u => u.user) : []
     });
-    const [errorMessage, setErrorMessage]  = useState('');
+    const [errorMessage, setErrorMessage]  = useState<FormError>({
+        code: '',
+        message: ''
+    });
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [selfCaptainChecked, setSelfCaptainChecked] = useState(false);
+    const [isSending, setIsSending] = useState(false);
 
     if(isActivityEntryPending || isActivityRegistrationPending || isAuthenticatedUserPending) return <PendingSpinner />
 
-    if(!activityEntry || !activityRegistration)
+    if(!activityEntry && !activityRegistration)
         return <SystemInformation>Nie udało się wczytać formularza</SystemInformation>
 
     const registration = !activityEntry ? activityRegistration : activityEntry.activityRegistration;
 
-    const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    if(!registration)
+        return <SystemInformation>Nie udało się wczytać formularza</SystemInformation>
+
+    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setErrorMessage('');
+        setErrorMessage({code: '', message: ''});
         if(!termsAccepted) {
-            setErrorMessage('Musisz zaakceptować regulamin');
+            setErrorMessage({code: 'terms_accept', message: 'Musisz zaakceptować regulamin'});
             return;
+        }
+        if(formData.teamName === '') {
+            setErrorMessage({code: 'empty_team_name', message: 'Nazwa drużyny nie może być pusta'});
+            return;
+        }
+        if(formData.captainCode === '' && !selfCaptainChecked) {
+            setErrorMessage({code: 'empty_team_captain', message: 'Drużyna musi mieć kapitana'});
+            return;
+        }
+        if(!(await checkCaptain())) {
+            return;
+        }
+
+        try {
+            setIsSending(true);
+            const response = await axios.post(`/api/activity-registration/${registration.id}/register-entry`, {
+                teamName: formData.teamName,
+                teamCaptain: { code: formData.captainCode },
+                users: formData.users.map(user => ({
+                    user: {
+                        id: user.id
+                    }
+                }))
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            });
+            setIsSending(false);
+            console.log('sent');
+        } catch (error: any) {
+            toast({
+                title: error.response.data.message,
+                position: 'top-left',
+                status: 'error',
+                isClosable: true
+            });
+            setIsSending(false);
         }
     }
 
@@ -64,13 +118,70 @@ export const ActivityRegistration = () => {
         setFormData(prevState => ({...prevState, [name]: value}));
     }
 
+    const checkCaptain = async (): Promise<boolean> => {
+        try {
+            const response = await axios.post(`/api/activity-registration/${registration.id}/validate-entry/${formData.captainCode.toUpperCase()}`, {}, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            });
+            const user = response.data as UserItem;
+            if(formData.users.some(u => u.code === user.code)) {
+                setErrorMessage({code: 'invalid_captain_code', message: 'Użytkownik jest już zapisany'});
+                return false;
+            }
+            clearErrorMessage();
+            setFormData(prevState => ({...prevState, userCode: ''}));
+            return true;
+        } catch (error: any) {
+            setErrorMessage({code: 'invalid_captain_code', message: error.response.data.message});
+            return false;
+        }
+    }
+
     const signSelfAsCaptain = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { checked } = e.target;
+        clearErrorMessage();
         setFormData(prevState => ({
             ...prevState,
             captainCode: (checked && authenticatedUser) ? authenticatedUser.code : '',
         }));
         setSelfCaptainChecked(checked);
+    }
+
+    const removeUser = (id: string) => {
+        console.log(formData.users);
+        setFormData(prevData => ({
+                ...prevData,
+                users: prevData.users.filter(user => user.id !== id)
+        }));
+    }
+
+    const addUser = async () => {
+        try {
+            const response = await axios.post(`/api/activity-registration/${registration.id}/validate-entry/${formData.userCode.toUpperCase()}`, {}, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            });
+            const user = response.data as UserItem;
+            if(formData.users.some(u => u.code === user.code)) {
+                setErrorMessage({code: 'invalid_user_code', message: 'Użytkownik jest już zapisany'});
+                return;
+            }
+            setFormData(prevData => ({
+                ...prevData,
+                users: [...prevData.users, user]
+            }));
+            clearErrorMessage();
+            setFormData(prevState => ({...prevState, userCode: ''}))
+        } catch (error: any) {
+            setErrorMessage({code: 'invalid_user_code', message: error.response.data.message});
+        }
+    }
+
+    const clearErrorMessage = () => {
+        setErrorMessage({code: '', message: ''});
     }
 
     return (
@@ -82,16 +193,12 @@ export const ActivityRegistration = () => {
             flexDirection="column"
         >
             <form onSubmit={handleSubmit}>
-                <FormControl>
-                    <Text
-                        fontSize={20}
-                        color="#1F3565"
-                    >
-                        Informacje o drużynie
-                    </Text>
-                    <Box padding={3}>
+                <FormControl isInvalid={errorMessage.code === 'empty_team_name'}>
+                    <Box marginBottom={5} padding={0}>
                         <Text fontSize={15} color="#1F3565">Nazwa drużyny</Text>
                         <Input
+                            borderRadius={30}
+                            isDisabled={!!activityEntry}
                             border={0}
                             bgColor="#EDEDED"
                             placeholder='Nazwa drużyny'
@@ -100,33 +207,43 @@ export const ActivityRegistration = () => {
                             name='teamName'
                             onChange={handleChange}
                         />
+                        <FormErrorMessage>
+                            {errorMessage.message}
+                        </FormErrorMessage>
                     </Box>
-                    <Box padding={3}>
-                        <Text fontSize={15} color="#1F3565">Kapitan drużyny</Text>
-                        <HStack>
-                            <Checkbox onChange={signSelfAsCaptain}/>
-                            <Text fontSize={15} color="#1F3565">Jestem kapitanem</Text>
-                        </HStack>
+                </FormControl>
+                <Box paddingBottom={0} marginBottom={10}>
+                    <Text fontSize={15} color="#1F3565">Kapitan drużyny</Text>
+                    {!activityEntry && <HStack>
+                        <Checkbox onChange={signSelfAsCaptain}/>
+                        <Text fontSize={15} color="#1F3565" fontWeight={'normal'}>Jestem kapitanem</Text>
+                    </HStack>}
+                    <FormControl isInvalid={errorMessage.code === 'invalid_captain_code'}>
                         <Input
+                            borderRadius={30}
                             border={0}
                             bgColor="#EDEDED"
                             placeholder='Kod uczestnika'
                             type={'text'}
-                            isDisabled={selfCaptainChecked}
-                            value={formData.captainCode}
+                            isDisabled={!!activityEntry || selfCaptainChecked}
+                            value={activityEntry ? activityEntry.teamCaptain.firstName + " " +activityEntry.teamCaptain.lastName : formData.captainCode}
                             name='captainCode'
                             onChange={handleChange}
                         />
-                    </Box>
-                </FormControl>
-                <FormControl isInvalid={!!errorMessage}>
+                        <FormErrorMessage>
+                            {errorMessage.message}
+                        </FormErrorMessage>
+                    </FormControl>
+                </Box>
+
+                <FormControl isInvalid={errorMessage.code === 'invalid_user_code'}>
                     <Text
                         fontSize={20}
                         color="#1F3565"
                     >
-                        Skład drużyny ({activityEntry ? activityEntry.users.length : 0}/{registration.teamSizeLimit})
+                        Skład drużyny ({activityEntry ? formData.users.length - 1 : formData.users.length}/{registration.teamSizeLimit - 1})
                     </Text>
-                    { (!activityEntry || (activityEntry && activityEntry.users.length < registration.teamSizeLimit)) && <HStack>
+                    { (formData.users.length < registration.teamSizeLimit - 1) && <HStack>
                         <Input
                             type='text'
                             onChange={handleChange}
@@ -139,11 +256,11 @@ export const ActivityRegistration = () => {
                             bgColor="#E4E9F4"
                             aria-label={'dodaj użytkownika'}
                             icon={<AddIcon />}
-                            onClick={() => {}}
+                            onClick={addUser}
                         />
                     </HStack> }
                     <FormErrorMessage>
-                        {errorMessage}
+                        {errorMessage.message}
                     </FormErrorMessage>
                 </FormControl>
                 <Flex
@@ -152,34 +269,48 @@ export const ActivityRegistration = () => {
                     gap={2}
                     flexDirection="column"
                 >
-                    { activityEntry && activityEntry.users.map((user, index) => (
-                        <Text
-                            key={user.user.code}
-                            color="#1F3565"
+                    { formData.users.map((user, index) => {
+                        if(activityEntry && user.code === activityEntry.teamCaptain.code) {
+                            return (<></>);
+                        }
+                        return (
+                        <HStack
+                            minH="40px"
+                            key={user.id}
+                            width="100%"
                         >
-                            {index + 1}. {user.user.firstName} {user.user.lastName}
-                        </Text>
-                    ))}
+                            <Text>{activityEntry ? index : index + 1}. {user.firstName} {user.lastName}</Text>
+                            <Spacer />
+                            {!activityEntry && <IconButton
+                                aria-label={'usuń uzytkownika'}
+                                icon={<CloseIcon />}
+                                bgColor="#E4E9F4"
+                                onClick={() => removeUser(user.id)}
+                            />}
+                        </HStack>
+                    )})}
                 </Flex>
-                <FormControl isInvalid={!!errorMessage}>
-                    <Flex flexDirection="row">
+                {!activityEntry && <FormControl isInvalid={errorMessage.code === 'terms_accept'}>
+                    <Flex flexDirection="row" marginTop={10}>
                         <HStack
                             gap={0}
+                            fontWeight={'normal'}
                         >
                             <Checkbox
                                 defaultChecked={termsAccepted}
                                 onChange={(e) => setTermsAccepted((oldValue) => !oldValue)}
                             />
-                            <Text fontSize={13} marginLeft={2}>Akceptuję <Link fontSize={13} href={registration.termsAndRulesUrl} color="red" isExternal>regulamin</Link></Text>
+                            <Text fontSize={13} marginLeft={2}>Akceptuję <Link fontSize={13} fontWeight={'bold'} href={registration.termsAndRulesUrl} textDecoration="underline" color="#1F3565" isExternal>regulamin</Link></Text>
 
                         </HStack>
                     </Flex>
                     <FormErrorMessage>
-                        {errorMessage}
+                        {errorMessage.message}
                     </FormErrorMessage>
-                </FormControl>
-                <Center
-                    marginTop={2}
+                </FormControl>}
+                {!activityEntry && <Center
+                    marginTop={4}
+                    padding={1}
                     bgColor="#1F3565"
                     borderRadius={100}
                     boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
@@ -193,10 +324,11 @@ export const ActivityRegistration = () => {
                             padding: "3px",
                         }}
                         type="submit"
+                        disabled={isSending}
                     >
                         Wyślij formularz
                     </button>
-                </Center>
+                </Center>}
             </form>
         </Flex>
     );

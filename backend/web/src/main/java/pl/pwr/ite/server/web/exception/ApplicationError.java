@@ -27,7 +27,11 @@ public enum ApplicationError implements ErrorDescriptor {
     RegistrationPartLocked(HttpStatus.FORBIDDEN),
     UserAlreadyRegistered(HttpStatus.FORBIDDEN),
     UserWithCodeNotFound(HttpStatus.NOT_FOUND),
-    UserAlreadyOwnsALock(HttpStatus.FORBIDDEN)
+    UserAlreadyOwnsALock(HttpStatus.FORBIDDEN),
+
+    //ACTIVITY REGISTRATION
+    ActivityRegistrationNotFound(HttpStatus.NOT_FOUND),
+    TeamNameAlreadyTaken(HttpStatus.FORBIDDEN)
     ;
 
     private final HttpStatus defaultStatus;

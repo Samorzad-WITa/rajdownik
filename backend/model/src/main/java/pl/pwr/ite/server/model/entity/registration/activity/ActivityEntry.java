@@ -32,7 +32,7 @@ public class ActivityEntry extends EntityBase {
     @JoinColumn(nullable = false, name = "team_captain_id")
     private User teamCaptain;
 
-    @Column(insertable = false, updatable = false, nullable = false, name = "name_captain_id")
+    @Column(insertable = false, updatable = false, nullable = false, name = "team_captain_id")
     private UUID teamCaptainId;
 
     @OneToMany(mappedBy = "activityEntry")

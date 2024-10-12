@@ -35,4 +35,13 @@ public class ActivityEntryServiceImpl extends FilterableEntityServiceBase<Activi
                         acEnPath.users.any().userId.eq(userId)
                 )).fetchOne();
     }
+
+    @Override
+    public boolean existByTeamName(UUID activityRegistrationId, String teamName) {
+        var path = QActivityEntry.activityEntry;
+        return createQuery().select(path.id).from(path).where(Expressions.allOf(
+                path.teamName.eq(teamName),
+                path.activityRegistrationId.eq(activityRegistrationId)
+        )).fetchFirst() != null;
+    }
 }
