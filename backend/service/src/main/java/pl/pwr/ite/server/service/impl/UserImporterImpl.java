@@ -54,6 +54,7 @@ public class UserImporterImpl implements UserImporter {
             user.setPhoneNumber(csvUser.getPhoneNumber());
             user.setIndexNumber(csvUser.getIndexNumber());
             user.setDietType(csvUser.getDietType());
+            user.setCode(userService.generateCode(user));
 
             if(csvUser.getBusNumber().equals("autokarem - I tura")) {
                 user.setBusNumber(1);

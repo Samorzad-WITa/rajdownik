@@ -18,11 +18,15 @@ public class UserDto {
 
     private UUID id;
 
+    private String code;
+
     private String email;
 
     private String phoneNumber;
 
     private String indexNumber;
+
+    private String profileUrl;
 
     private String firstName;
 

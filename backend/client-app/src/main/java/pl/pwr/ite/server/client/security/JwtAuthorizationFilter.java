@@ -1,5 +1,6 @@
 package pl.pwr.ite.server.client.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import pl.pwr.ite.server.security.JwtGrantedAuthorityConverter;
 import pl.pwr.ite.server.service.JwtService;
 import pl.pwr.ite.server.service.TransactionalService;
 import pl.pwr.ite.server.service.UserService;
+import pl.pwr.ite.server.web.exception.ApplicationError;
+import pl.pwr.ite.server.web.exception.ApplicationException;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -39,7 +42,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String accessToken = resolveToken(request);
-        if(accessToken == null) {
+        if(accessToken == null || accessToken.equals("null")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -59,6 +62,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
+        } catch (JwtException ex) {
+            handlerExceptionResolver.resolveException(request, response, null, new ApplicationException(ApplicationError.InvalidJwtToken));
         } catch (Exception ex) {
             handlerExceptionResolver.resolveException(request, response, null, ex);
         }

@@ -1,70 +1,101 @@
-import { OutlineButton } from '@/components';
+import {ScheduleDateButton} from '@/components';
 import { Schedule } from '@/features';
 import { fetchActivities } from '@/hooks';
 import { Box, HStack, Icon, Text, VStack } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
+import {useEffect, useState} from "react";
+import {useAppContext} from "@/features/context/AppContext";
+
+const dates = [
+  {
+    label: 'PIĄTEK',
+    date: "2024-10-18T12:00:00",
+    dateLabel: '12 kwietnia 2024'
+  },
+  {
+    label: 'SOBOTA',
+    date: "2024-10-19T12:00:00",
+    dateLabel: '13 kwietnia 2024'
+  },
+  {
+    label: 'NIEDZIELA',
+    date: "2024-10-20T12:00:00",
+    dateLabel: '14 kwietnia 2024'
+  },
+]
 
 export default function Page() {
+  const [dayIndex, setDayIndex] = useState(1);
+  const { setProps } = useAppContext();
+
+  useEffect(() => {
+    setProps((prevProps) => ({
+      ...prevProps,
+      pageTitle: 'Harmonogram',
+      shouldRenderNavbar: true,
+      shouldRenderFooter: true,
+      shouldRenderBackButton: false,
+    }));
+  }, [setProps]);
+
+  const handleDateChange = (index: number) => {
+    setDayIndex(index);
+  }
+
+  const prevDay = dates[dayIndex - 1];
+  const currentDay = dates[dayIndex];
+  const nextDay = dates[dayIndex + 1];
+
   return (
     <>
       <Head>
         <title>Harmonogram</title>
-        <meta name="description" content="Harmonogram rajdu" />
+        <meta name="description" content="Harmonogram" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack mt={3} gap={5}>
         <HStack gap={2}>
-          <OutlineButton
-            leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
+          <ScheduleDateButton
+            disabled={!prevDay}
+            leftIcon={prevDay && <Icon color="#1F3565" fontSize={25} as={ChevronLeft} />}
+            onClick={handleDateChange}
+            index={dayIndex - 1}
           >
-            Piątek
-          </OutlineButton>
+            {!prevDay ? '-' : prevDay.label}
+          </ScheduleDateButton>
 
           <Box
-            p={4}
+            p={2}
             paddingX={6}
-            bgColor="#ff1c37"
+            bgColor="#1F3565"
             borderRadius={15}
             display="flex"
             flexDir="column"
             alignItems="center"
           >
-            <Text as="b" fontSize="large">
-              Sobota
+            <Text as="b" fontSize="large" color="#FFFFFF">
+              {currentDay ? currentDay.label : 'Błąd'}
             </Text>
-            <br />
-            <Text as="b" fontSize="xx-small">
-              13 kwietnia 2024
+            <Text as="b" fontSize="xx-small" color="#FFFFFF">
+              { currentDay ? currentDay.dateLabel : 'Błąd' }
             </Text>
           </Box>
 
-          <OutlineButton
-            rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
+          <ScheduleDateButton
+            rightIcon={nextDay && <Icon color="#1F3565" fontSize={25} as={ChevronRight} />}
+            onClick={handleDateChange}
+            disabled={!nextDay}
+            index={dayIndex + 1}
           >
-            Niedziela
-          </OutlineButton>
+            {!nextDay ? '-' : nextDay.label}
+          </ScheduleDateButton>
         </HStack>
 
-        <Schedule />
+        <Schedule date={currentDay ? currentDay.date : ''} />
       </VStack>
     </>
   );
 }
-
-export const getServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ['activities'],
-    queryFn: () => fetchActivities(),
-  });
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};

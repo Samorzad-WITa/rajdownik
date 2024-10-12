@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.pwr.ite.server.model.enums.UserDisplayContactType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -24,6 +25,13 @@ public class UserDisplay extends EntityBase {
 
     @Column(length = 50)
     private String label;
+
+    @Column(length = 30)
+    private String groupName;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserDisplayContactType contactType;
 
     @Column
     private LocalDateTime timeFrom;

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.pwr.ite.server.admin.web.dto.UserDto;
 import pl.pwr.ite.server.admin.web.service.UserFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
+import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.service.MappingService;
 
 import java.util.Collection;
@@ -32,8 +33,8 @@ public class UserController implements InitializingBean {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<UserDto>> getAll() {
-        return ResponseEntity.ok(userFacade.getList(defaultListProperties));
+    public ResponseEntity<Collection<UserDto>> getAll(UserFilter filter) {
+        return ResponseEntity.ok(userFacade.getList(filter, defaultListProperties));
     }
 
     @PostMapping

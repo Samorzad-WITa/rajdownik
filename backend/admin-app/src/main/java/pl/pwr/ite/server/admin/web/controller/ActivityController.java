@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.pwr.ite.server.admin.web.dto.ActivityDto;
 import pl.pwr.ite.server.admin.web.service.ActivityFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
+import pl.pwr.ite.server.model.filter.ActivityFilter;
 import pl.pwr.ite.server.service.MappingService;
 
 import java.util.Collection;
@@ -31,8 +32,8 @@ public class ActivityController implements InitializingBean {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<ActivityDto>> getAll() {
-        return ResponseEntity.ok(activityFacade.getList(defaultListProperties));
+    public ResponseEntity<Collection<ActivityDto>> getAll(ActivityFilter filter) {
+        return ResponseEntity.ok(activityFacade.getList(filter, defaultListProperties));
     }
 
     @GetMapping("/{id}")

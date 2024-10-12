@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.pwr.ite.server.client.web.dto.ActivityDto;
 import pl.pwr.ite.server.client.web.service.ActivityFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
+import pl.pwr.ite.server.model.filter.ActivityFilter;
+import pl.pwr.ite.server.model.filter.Filter;
 import pl.pwr.ite.server.service.MappingService;
 
 import java.util.Collection;
@@ -26,12 +28,15 @@ public class ActivityController implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         defaultSingleProperties = mappingService.createProperties(ActivityDto.Properties.class);
-        defaultListProperties = mappingService.createProperties(ActivityDto.Properties.class);
+        defaultListProperties = mappingService.createProperties(ActivityDto.Properties.class)
+                .setIncludeActivityRegistration(true);
     }
 
     @GetMapping
-    public ResponseEntity<Collection<ActivityDto>> getAll() {
-        return ResponseEntity.ok(activityFacade.getList(defaultListProperties));
+    public ResponseEntity<Collection<ActivityDto>> getAll(ActivityFilter filter) {
+        filter.setSortSchema("timeFrom");
+        filter.setSortDirection("DESC");
+        return ResponseEntity.ok(activityFacade.getList(filter, defaultListProperties));
     }
 
     @GetMapping("/{id}")

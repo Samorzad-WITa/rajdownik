@@ -3,34 +3,33 @@ import { fetchAnnouncements } from '@/hooks';
 import { chakra } from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import Head from 'next/head';
+import {HomePage} from "@/features/home";
+import {useAppContext} from "@/features/context/AppContext";
+import {useEffect} from "react";
 
 export default function Home() {
+  const { setProps } = useAppContext();
+  useEffect(() => {
+    setProps((prevProps) => ({
+      ...prevProps,
+      pageTitle: 'Strona główna',
+      shouldRenderNavbar: true,
+      shouldRenderFooter: true,
+      shouldRenderBackButton: false,
+    }));
+  }, [setProps]);
+
   return (
     <>
       <Head>
-        <title>Ogłoszenia</title>
-        <meta name="description" content="Ogłoszenia" />
+        <title>Strona główna</title>
+        <meta name="description" content="Strona główna" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <chakra.main>
-        <Announcements />
+        <HomePage />
       </chakra.main>
     </>
   );
 }
-
-export const getServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ['announcements'],
-    queryFn: () => fetchAnnouncements(),
-  });
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};

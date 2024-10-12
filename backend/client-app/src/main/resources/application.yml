@@ -11,9 +11,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:postgresql://localhost:54321/rajdownik_dev
-    username: witta
-    password: witta
+    url: jdbc:postgresql://${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   jpa:
     properties:
       hibernate:
@@ -22,3 +22,19 @@ spring:
         default_schema: public
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+rajdownik:
+  auth:
+    jwtSecret: ${JWT_SECRET}
+  frontend-url: ${RAJDOWNIK_FRONTEND_URL}

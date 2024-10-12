@@ -6,6 +6,9 @@ import pl.pwr.ite.server.admin.web.dto.UserDisplayDto;
 import pl.pwr.ite.server.admin.web.mapper.UserDisplayMapper;
 import pl.pwr.ite.server.model.entity.UserDisplay;
 import pl.pwr.ite.server.model.enums.Permission;
+import pl.pwr.ite.server.model.filter.UserDataFilter;
+import pl.pwr.ite.server.model.filter.UserDisplayFilter;
+import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.service.UserDisplayService;
 import pl.pwr.ite.server.service.UserService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
@@ -16,7 +19,7 @@ import pl.pwr.ite.server.web.exception.ApplicationException;
 import java.util.UUID;
 
 @Component
-public class UserDisplayFacade extends EntityServiceFacade<UserDisplay, UserDisplayService, UserDisplayDto, UserDisplayDto.Properties, UserDisplayMapper> {
+public class UserDisplayFacade extends EntityServiceFacade<UserDisplay, UserDisplayFilter, UserDisplayService, UserDisplayDto, UserDisplayDto.Properties, UserDisplayMapper> {
 
     private final UserService userService;
 

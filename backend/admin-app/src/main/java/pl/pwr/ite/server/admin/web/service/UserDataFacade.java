@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.pwr.ite.server.admin.web.dto.UserDataDto;
 import pl.pwr.ite.server.admin.web.mapper.UserDataMapper;
 import pl.pwr.ite.server.model.entity.UserData;
+import pl.pwr.ite.server.model.filter.UserDataFilter;
 import pl.pwr.ite.server.service.DataService;
 import pl.pwr.ite.server.service.UserDataService;
 import pl.pwr.ite.server.service.UserService;
@@ -16,7 +17,7 @@ import pl.pwr.ite.server.web.exception.ApplicationException;
 import java.util.UUID;
 
 @Component
-public class UserDataFacade extends EntityServiceFacade<UserData, UserDataService, UserDataDto, UserDataDto.Properties, UserDataMapper> {
+public class UserDataFacade extends EntityServiceFacade<UserData, UserDataFilter, UserDataService, UserDataDto, UserDataDto.Properties, UserDataMapper> {
 
     private final UserService userService;
     private final DataService dataService;

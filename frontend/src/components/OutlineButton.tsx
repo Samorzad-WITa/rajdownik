@@ -1,4 +1,5 @@
 import { Button, ButtonOptions } from '@chakra-ui/react';
+import React from "react";
 
 export const OutlineButton = (props: {
   children: React.ReactNode;
@@ -8,16 +9,20 @@ export const OutlineButton = (props: {
 }) => {
   return (
     <Button
-      color="#283d4e"
-      fontSize={15}
+      color="#1F3565"
+      bgColor="#E4E9F4"
+      fontSize={12}
+      padding={4}
+      minWidth={105}
       fontWeight="bold"
-      outlineColor="#283d4e"
+      boxShadow="0px 10px 25px 0px rgba(0, 0, 0, 0.20)"
+      borderRadius={50}
       size="xs"
       textTransform="uppercase"
-      variant="outline"
+      visibility={props.disabled ? "hidden" : "visible"}
       pl={props.leftIcon ? 0 : undefined}
       pr={props.rightIcon ? 0 : undefined}
-      disabled={props.disabled}
+      isDisabled={props.disabled}
       leftIcon={props.leftIcon ?? undefined}
       rightIcon={props.rightIcon ?? undefined}
     >

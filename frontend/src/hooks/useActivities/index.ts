@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
+import {ActivityRegistrationItem} from "@/hooks";
 
 export type ActivityItem = {
   id: string;
@@ -7,20 +8,35 @@ export type ActivityItem = {
   location: string;
   timeFrom: string;
   timeTo: string;
+  activityRegistration: ActivityRegistrationItem;
 };
 
-const fetchActivities = async () => {
-  const res = await fetch('/api/activities');
+const fetchActivities = async (referenceDate: string) => {
+  const res = await fetch(`/api/activities?date=${referenceDate}`);
   const parsed = await res.json();
 
   return parsed as ActivityItem[];
 };
 
-const useActivities = () => {
+const fetchActivity = async (id: string) => {
+  const res = await fetch(`/api/activity/${id}`);
+  const parsed = await res.json();
+
+  return parsed as ActivityItem;
+}
+
+const useActivities = (date: string) => {
   return useQuery({
-    queryKey: ['activities'],
-    queryFn: () => fetchActivities(),
+    queryKey: ['activities', date],
+    queryFn: () => fetchActivities(date),
   });
 };
 
-export { fetchActivities, useActivities };
+const useActivity = (id: string) => {
+  return useQuery({
+    queryKey: ['activity', id],
+    queryFn: () => fetchActivity(id)
+  });
+}
+
+export { fetchActivities, useActivities, useActivity };

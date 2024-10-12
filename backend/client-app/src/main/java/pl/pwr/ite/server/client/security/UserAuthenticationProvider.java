@@ -13,7 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.pwr.ite.server.security.AuthenticatedUser;
+import pl.pwr.ite.server.security.MissingRoleException;
 import pl.pwr.ite.server.service.UserService;
+import pl.pwr.ite.server.web.exception.ApplicationError;
+import pl.pwr.ite.server.web.exception.ApplicationException;
 
 import java.util.HashSet;
 
@@ -37,12 +40,15 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         var email = authentication.getPrincipal().toString();
         var user = userService.findByEmail(email);
         if(user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found.", email));
+            throw new ApplicationException(ApplicationError.UserNotFound);
         }
         var passwordHash = user.getPasswordHash();
+        if(passwordHash == null) {
+            throw new ApplicationException(ApplicationError.PasswordHashNotPresent);
+        }
         var presentedPassword = authentication.getCredentials().toString();
         if(!passwordEncoder.matches(presentedPassword, passwordHash)) {
-            throw new BadCredentialsException(String.format("User '%s' presented wrong password.", email));
+            throw new ApplicationException(ApplicationError.WrongPassword);
         }
 
         var principal = AuthenticatedUser.builder().userId(user.getId()).email(email).userType(user.getType()).build();

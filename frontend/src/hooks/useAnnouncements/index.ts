@@ -13,6 +13,13 @@ const fetchAnnouncements = async () => {
   return parsed as AnnouncementItem[];
 };
 
+const fetchAnnouncement = async (id: string | undefined) => {
+  const res = await fetch(`/api/announcement/${id}`);
+  const parsed = await res.json();
+
+  return parsed as AnnouncementItem;
+}
+
 const useAnnouncements = () => {
   return useQuery({
     queryKey: ['announcements'],
@@ -20,4 +27,11 @@ const useAnnouncements = () => {
   });
 };
 
-export { fetchAnnouncements, useAnnouncements };
+const useAnnouncement = (id: string | undefined) => {
+  return useQuery({
+    queryKey: ['announcement'],
+    queryFn: () => fetchAnnouncement(id)
+  });
+}
+
+export { fetchAnnouncements, useAnnouncements, fetchAnnouncement, useAnnouncement };

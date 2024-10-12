@@ -13,6 +13,7 @@ public class ActivityDto {
     @Data
     @Accessors(chain = true)
     public static abstract class Properties implements MappingProperties {
+        private boolean includeActivityRegistration;
     }
 
     private UUID id;
@@ -26,5 +27,7 @@ public class ActivityDto {
     private String title;
 
     private String description;
+
+    private ActivityRegistrationDto activityRegistration;
 }
 

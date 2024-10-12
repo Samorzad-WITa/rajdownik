@@ -5,14 +5,17 @@ import pl.pwr.ite.server.GenericHelper;
 import pl.pwr.ite.server.mapping.Mapper;
 import pl.pwr.ite.server.mapping.MappingProperties;
 import pl.pwr.ite.server.model.entity.EntityBase;
+import pl.pwr.ite.server.model.filter.Filter;
+import pl.pwr.ite.server.model.querydsl.TypedPage;
 import pl.pwr.ite.server.service.EntityService;
+import pl.pwr.ite.server.service.FilterableEntityService;
 import pl.pwr.ite.server.service.MappingService;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class EntityServiceFacade<E extends EntityBase, S extends EntityService<E>, D, P extends MappingProperties, M extends Mapper<? super E, ? super D, P>> {
+public abstract class EntityServiceFacade<E extends EntityBase, F extends Filter, S extends FilterableEntityService<E, F>, D, P extends MappingProperties, M extends Mapper<? super E, ? super D, P>> {
 
     protected final S service;
     protected final M mapper;
@@ -20,6 +23,9 @@ public abstract class EntityServiceFacade<E extends EntityBase, S extends Entity
 
     @Autowired
     private MappingService mappingService;
+
+    @Autowired
+    private TypedPageMapper typedPageMapper;
 
     protected final SecurityFacade securityFacade;
 
@@ -39,12 +45,20 @@ public abstract class EntityServiceFacade<E extends EntityBase, S extends Entity
         return entity;
     }
 
-    public Collection<E> getList() {
-        return service.getAll();
+    public Collection<E> getList(F filter) {
+        return service.getList(filter);
     }
 
-    public Collection<D> getList(MappingProperties properties) {
-        return (List<D>) mapper.map(getList(), properties);
+    public TypedPage<E> getPage(F filter) {
+        return service.getPage(filter);
+    }
+
+    public PageDto<D> getPage(F filter, MappingProperties mappingProperties) {
+        return typedPageMapper.map(getPage(filter), mappingProperties.wrapAs(PageDto.Properties.class).setContentMapper(mapper));
+    }
+
+    public Collection<D> getList(F filter, MappingProperties properties) {
+        return (List<D>) mapper.map(getList(filter), properties);
     }
 
     public D getById(UUID id, MappingProperties properties) {

@@ -13,6 +13,9 @@ public class AnnouncementMapper extends MapperBase<Announcement, AnnouncementDto
     public void transform(Announcement source, AnnouncementDto destination, AnnouncementDto.Properties properties) {
         destination.setTitle(source.getTitle());
         destination.setId(source.getId());
-        destination.setDescription(source.getDescription());
+
+        if(properties.isIncludeDescription()) {
+            destination.setDescription(source.getDescription());
+        }
     }
 }

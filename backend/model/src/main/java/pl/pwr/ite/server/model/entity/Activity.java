@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.pwr.ite.server.model.entity.registration.activity.ActivityRegistration;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -36,6 +37,9 @@ public class Activity extends EntityBase {
 
     @Column(length = 100)
     private String location;
+
+    @OneToOne(mappedBy = "activity")
+    private ActivityRegistration activityRegistration;
 
     public void setEvent(Event event) {
         this.event = event;

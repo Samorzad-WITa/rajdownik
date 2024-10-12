@@ -6,6 +6,7 @@ import pl.pwr.ite.server.admin.web.dto.ActivityDto;
 import pl.pwr.ite.server.admin.web.mapper.ActivityMapper;
 import pl.pwr.ite.server.model.entity.Activity;
 import pl.pwr.ite.server.model.enums.Permission;
+import pl.pwr.ite.server.model.filter.ActivityFilter;
 import pl.pwr.ite.server.service.ActivityService;
 import pl.pwr.ite.server.web.EntityServiceFacade;
 import pl.pwr.ite.server.web.SecurityFacade;
@@ -15,7 +16,7 @@ import pl.pwr.ite.server.web.exception.ApplicationException;
 import java.util.UUID;
 
 @Component
-public class ActivityFacade extends EntityServiceFacade<Activity, ActivityService, ActivityDto, ActivityDto.Properties, ActivityMapper> {
+public class ActivityFacade extends EntityServiceFacade<Activity, ActivityFilter, ActivityService, ActivityDto, ActivityDto.Properties, ActivityMapper> {
     public ActivityFacade(ActivityService service, ActivityMapper mapper, SecurityFacade securityFacade) {
         super(service, mapper, securityFacade);
     }
@@ -29,6 +30,7 @@ public class ActivityFacade extends EntityServiceFacade<Activity, ActivityServic
         activity.setTimeFrom(dto.getTimeFrom());
         activity.setTimeTo(dto.getTimeTo());
         activity.setDescription(dto.getDescription());
+        activity.setLocation(dto.getLocation());
 
         return saveAndFlush(activity);
     }

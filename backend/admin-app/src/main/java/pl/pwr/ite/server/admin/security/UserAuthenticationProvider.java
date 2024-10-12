@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.pwr.ite.server.security.AuthenticatedUser;
+import pl.pwr.ite.server.security.MissingRoleException;
 import pl.pwr.ite.server.service.UserService;
 
 import java.util.HashSet;
@@ -42,6 +43,9 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         var presentedPassword = authentication.getCredentials().toString();
         if(!passwordEncoder.matches(presentedPassword, passwordHash)) {
             throw new BadCredentialsException(String.format("User '%s' presented wrong password.", email));
+        }
+        if(!userService.hasAdminPanelAccess(user.getId())) {
+            throw new MissingRoleException("Missing admin panel access.");
         }
 
         var principal = AuthenticatedUser.builder().userId(user.getId()).email(email).userType(user.getType()).build();

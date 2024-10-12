@@ -48,6 +48,10 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+        </dependency>
+        <dependency>
             <groupId>pl.pwr.ite.server</groupId>
             <artifactId>utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>

@@ -54,10 +54,14 @@ public class SecurityFacade implements InitializingBean {
     }
 
     public User getAuthenticatedUser() {
+        return getAuthenticatedUser(false);
+    }
+
+    public User getAuthenticatedUserReference() {
         return getAuthenticatedUser(true);
     }
 
-    public User getAuthenticatedUser(boolean reference) {
+    private User getAuthenticatedUser(boolean reference) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null) {
             throw new IllegalStateException("No authenticated user available.");

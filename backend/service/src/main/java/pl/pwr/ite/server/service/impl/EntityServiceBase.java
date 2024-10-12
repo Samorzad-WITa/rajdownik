@@ -1,7 +1,10 @@
 package pl.pwr.ite.server.service.impl;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.pwr.ite.server.model.entity.EntityBase;
+import pl.pwr.ite.server.model.querydsl.EntityRepository;
 import pl.pwr.ite.server.service.EntityService;
 
 import java.util.Collection;
@@ -9,9 +12,9 @@ import java.util.UUID;
 
 public abstract class EntityServiceBase<E extends EntityBase> implements EntityService<E> {
 
-    private final JpaRepository<E, UUID> repository;
+    private final EntityRepository<E> repository;
 
-    public EntityServiceBase(JpaRepository<E, UUID> repository) {
+    public EntityServiceBase(EntityRepository<E> repository) {
         this.repository = repository;
     }
 
@@ -43,6 +46,26 @@ public abstract class EntityServiceBase<E extends EntityBase> implements EntityS
     @Override
     public void deleteById(UUID id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public JPAQuery<?> createQuery() {
+        return new JPAQuery<>(getEntityManager());
+    }
+
+    public EntityRepository<E> getRepository() {
+        return this.repository;
+    }
+
+
+    @Override
+    public EntityManager getEntityManager() {
+        return repository.getEntityManager();
+    }
+
+    @Override
+    public <T> T getReference(Class<T> type, UUID id) {
+        return getEntityManager().getReference(type, id);
     }
 
     @Override

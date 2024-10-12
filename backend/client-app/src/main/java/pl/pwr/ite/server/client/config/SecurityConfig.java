@@ -1,5 +1,6 @@
 package pl.pwr.ite.server.client.config;
 
+import com.google.common.collect.ImmutableList;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -47,6 +48,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(httpRequests -> httpRequests
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
@@ -61,7 +63,10 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         var configuration = new CorsConfiguration();
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedOrigins(ImmutableList.of("http://localhost:3000"));
+        configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

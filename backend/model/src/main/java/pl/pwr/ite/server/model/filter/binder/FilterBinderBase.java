@@ -6,7 +6,6 @@ import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.internal.util.GenericsHelper;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.QSort;
 import pl.pwr.ite.server.GenericHelper;
@@ -33,10 +32,10 @@ public abstract class FilterBinderBase<T, F extends Filter, Q extends EntityPath
 
     @Override
     public Predicate bindFilter(F filter, Q path) {
-        return getDatePredicate(filter, path);
+        return getDataPredicate(filter, path);
     }
 
-    public Predicate getDatePredicate(F filter, Q path) {
+    public Predicate getDataPredicate(F filter, Q path) {
         return bindDataFilter(new PredicateBuilder<>(path, PredicateBuilder.Grouping.And, getBaseDatePredicate(filter, path)), filter);
     }
 

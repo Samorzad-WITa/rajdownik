@@ -1,6 +1,8 @@
 package pl.pwr.ite.server.admin.web.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -13,6 +15,7 @@ import pl.pwr.ite.server.admin.web.dto.UserDto;
 import pl.pwr.ite.server.admin.web.mapper.UserMapper;
 import pl.pwr.ite.server.model.entity.User;
 import pl.pwr.ite.server.model.enums.Permission;
+import pl.pwr.ite.server.model.filter.UserFilter;
 import pl.pwr.ite.server.security.AuthenticatedUser;
 import pl.pwr.ite.server.service.JwtService;
 import pl.pwr.ite.server.service.UserImporter;
@@ -27,13 +30,13 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Component
-public class UserFacade extends EntityServiceFacade<User, UserService, UserDto, UserDto.Properties, UserMapper> {
+public class UserFacade extends EntityServiceFacade<User, UserFilter, UserService, UserDto, UserDto.Properties, UserMapper> {
 
     private final UserImporter userImporter;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public UserFacade(UserService service, UserMapper mapper, SecurityFacade securityFacade, UserImporter userImporter, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public UserFacade(UserService service, UserMapper mapper, SecurityFacade securityFacade, @Qualifier("userImporterImpl") UserImporter userImporter, JwtService jwtService, AuthenticationManager authenticationManager) {
         super(service, mapper, securityFacade);
         this.userImporter = userImporter;
         this.jwtService = jwtService;

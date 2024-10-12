@@ -39,7 +39,7 @@ public class UserDisplayController implements InitializingBean {
                 .setIncludeDetails(false);
     }
 
-    @GetMapping("/api/user-display")
+    @GetMapping
     public ResponseEntity<Collection<UserDisplayDto>> getAll() {
         return ResponseEntity.ok(userDisplayFacade.map(userDisplayFacade.getAll(), defaultListProperties));
     }

@@ -5,7 +5,7 @@ import {
   PendingSpinner,
   SystemInformation,
 } from '@/components';
-import { fetchAnnouncements, useAnnouncements } from '@/hooks';
+import {fetchAnnouncements, useAnnouncement, useAnnouncements} from '@/hooks';
 import { nextItemExists, previousItemExists } from '@/utils';
 import { Link } from '@chakra-ui/next-js';
 import { Flex, Icon, VStack } from '@chakra-ui/react';
@@ -13,11 +13,23 @@ import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import {useEffect} from "react";
+import {useAppContext} from "@/features/context/AppContext";
 
 export default function Home() {
   const router = useRouter();
+  const { setProps } = useAppContext();
 
-  const { data, isPending } = useAnnouncements();
+  useEffect(() => {
+    setProps((prevProps) => ({
+      ...prevProps,
+      shouldRenderBackButton: true,
+      backButtonPath: '/announcements'
+    }));
+  }, [setProps]);
+
+  const {data, isPending} = useAnnouncements();
+
 
   if (isPending) return <PendingSpinner />;
 
@@ -36,23 +48,26 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Ogłoszenia</title>
+        <title>Szczegóły ogłoszenia</title>
         <meta name="description" content="Ogłoszenia" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <VStack gap={5}>
-        <BackButton to="/" />
+        {/*<BackButton to="/" />*/}
 
         <InfoCard item={announcement} />
 
-        <Flex width="100%" gap={2} justify="space-between">
+        <Flex width="100%" gap={2} justify="space-between" overflow="visible">
           <OutlineButton
             leftIcon={<Icon color="#283d4e" fontSize={30} as={ChevronLeft} />}
-            disabled={nextItemExists(announcementIndex, data?.length!)}
+            disabled={!nextItemExists(announcementIndex, data?.length!)}
           >
             {nextItemExists(announcementIndex, data?.length!) ? (
               <Link
+                textDecoration="none"
+                _hover={{ textDecoration: "none" }}
+                _focus={{ boxShadow: "none" }}
                 href={`/announcement/${data?.at(announcementIndex + 1)?.id}`}
               >
                 Poprzednie
@@ -64,10 +79,13 @@ export default function Home() {
 
           <OutlineButton
             rightIcon={<Icon color="#283d4e" fontSize={30} as={ChevronRight} />}
-            disabled={previousItemExists(announcementIndex)}
+            disabled={!previousItemExists(announcementIndex)}
           >
             {previousItemExists(announcementIndex) ? (
               <Link
+                textDecoration="none"
+                _hover={{ textDecoration: "none" }}
+                _focus={{ boxShadow: "none" }}
                 href={`/announcement/${data?.at(announcementIndex - 1)?.id}`}
               >
                 Następne
