@@ -1,10 +1,6 @@
 import { PendingSpinner, SystemInformation } from '@/components';
 import {ContactItem, useContact} from '@/hooks';
-import {Avatar, Box, Center, Container, Flex, Image, Text, VStack} from '@chakra-ui/react';
-import Link from 'next/link';
-import {useAppContext} from "@/features/context/AppContext";
-import {useEffect} from "react";
-import {ChatIcon} from "@chakra-ui/icons";
+import {Avatar, Box, Center, Container, Flex, Image, Text, VStack, Link} from '@chakra-ui/react';
 
 export const Contact = () => {
   const { data, isPending } = useContact();
