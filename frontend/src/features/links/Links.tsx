@@ -55,6 +55,21 @@ const groups = [
         groupLabel: 'Media społecznościowe',
         groupLinks: [
             {
+                label: 'Grupa na Facebooku',
+                href: 'https://www.facebook.com/groups/1917599038753483',
+                icon: <LinkIcon />
+            },
+            {
+                label: 'Wydarzenie na Facebooku',
+                href: 'https://www.facebook.com/events/878143053822784',
+                icon: <LinkIcon />
+            },
+            {
+                label: 'Facebook - Samorząd SSWArch (W1)',
+                href: 'https://www.facebook.com/SSWArch?locale=pl_PL',
+                icon: <LinkIcon />
+            },
+            {
                 label: 'Facebook - Samorząd SSWArch (W1)',
                 href: 'https://www.facebook.com/SSWArch?locale=pl_PL',
                 icon: <LinkIcon />
@@ -87,4 +102,39 @@ const groups = [
             },
         ]
     },
+    {
+        groupLabel: 'Regulaminy atrakcji',
+        groupLinks: [
+            {
+                label: 'Turniej Flanek',
+                href: 'https://drive.google.com/file/d/1KDwRjGs6rYagpfGydQnQo4DuF8Xi5G3J/view?usp=sharing',
+                icon: <LinkIcon />
+            },
+            {
+                label: 'Jugger',
+                href: 'https://pl.wikipedia.org/wiki/Jugger',
+                icon: <LinkIcon />
+            },
+            {
+                label: 'Beerpong',
+                href: 'https://drive.google.com/file/d/1HrR9Gt5KTlUF_AVSQdZSKRJSEy37FbsF/view?usp=sharing',
+                icon: <LinkIcon />
+            },
+            {
+                label: 'Quiz średniowieczny ',
+                href: 'https://drive.google.com/file/d/15lVtVNp_Bpyfhc494f4fxhpVJQvyjhFu/view?usp=sharing',
+                icon: <LinkIcon />
+            },
+            {
+                label: 'Turniej siatkówki',
+                href: 'https://drive.google.com/file/d/1j3h3j-jUxRvQ1s_fs2bndnh3EWFt6IvP/view?usp=sharing',
+                icon: <LinkIcon />
+            },
+            {
+                label: 'Gra Nocna',
+                href: 'https://drive.google.com/file/d/1cRbp6fcJ5vg8c0iPSWdcQJNzznBhIv9O/view?usp=sharing',
+                icon: <LinkIcon />
+            },
+        ]
+    }
 ]
