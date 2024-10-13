@@ -23,7 +23,7 @@ export const UserProfile = () => {
         await router.push('/');
     }
 
-    let busNumber;
+    let busNumber: string;
     switch (data.busNumber) {
         case 0:
             busNumber = 'Dojazd własny';
