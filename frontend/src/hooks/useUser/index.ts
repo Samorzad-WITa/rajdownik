@@ -12,7 +12,7 @@ export type UserItem = {
     roomNumber: string;
     profileUrl: string;
     dietType: string;
-    busNumber: string;
+    busNumber: number;
 }
 
 const fetchAuthenticatedUser = async (token: string) => {

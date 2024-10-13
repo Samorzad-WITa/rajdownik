@@ -126,6 +126,8 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
             "\n" +
             "Do akcji rusza aplikacja stworzona specjalnie na nasz wyjazd Rajdownik! Do zapisania drużyny wystarczy jedna osoba. Musi ona aktywować konto za pomocą funkcji “Zresetuj  hasło” oraz zebrać kody od członków swojej drużyny!\n" +
             "\n" +
+            "Link do aplikacji: http://rajdownik.wrss-wita.pl:3000/" +
+            "\n" +
             "Tutaj jest twój kod uczestnika: %s\n" +
             "\n" +
             "\n" +
@@ -139,6 +141,7 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
             "Wasza Straż Rycerskich Wyzwań!\n";
 
     public void sendMails() {
+        securityFacade.checkAccess(Permission.UserEdit);
         var userIterator = getService().getAll().iterator();
         while(userIterator.hasNext()) {
             var user = userIterator.next();
