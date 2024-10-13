@@ -254,7 +254,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                         fontSize={20}
                         color="#1F3565"
                     >
-                        Skład drużyny ({activityEntry ? activityEntry.users.length - 1 : formData.users.length}/{registration.teamSizeLimit - 1})
+                        Skład drużyny ({activityEntry ? activityEntry.users.length - 1 : formData.users.length}/{registration.teamSizeLimit - 1}) + kapitan
                     </Text>
                     { (!activityEntry && (formData.users.length < registration.teamSizeLimit - 1)) && <HStack>
                         <Input

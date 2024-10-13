@@ -12,17 +12,17 @@ const dates = [
   {
     label: 'PIĄTEK',
     date: "2024-10-18T12:00:00",
-    dateLabel: '12 kwietnia 2024'
+    dateLabel: '18 października 2024'
   },
   {
     label: 'SOBOTA',
     date: "2024-10-19T12:00:00",
-    dateLabel: '13 kwietnia 2024'
+    dateLabel: '19 października 2024'
   },
   {
     label: 'NIEDZIELA',
     date: "2024-10-20T12:00:00",
-    dateLabel: '14 kwietnia 2024'
+    dateLabel: '20 października 2024'
   },
 ]
 
