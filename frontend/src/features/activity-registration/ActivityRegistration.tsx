@@ -35,7 +35,7 @@ type FormError = {
 
 export const ActivityRegistration = ({id} : {id:string | string[]}) => {
     const { token } = useAuth(true);
-
+    const router = useRouter();
 
     const { data: activityEntry, isPending: isActivityEntryPending } = useActivityEntry(token!, id);
     const { data: activityRegistration, isPending: isActivityRegistrationPending } = useActivityRegistration(id, true, token!);
@@ -64,13 +64,22 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
     const registration = activityRegistration;
 
     if(!registration)
-        return <SystemInformation>Nie udało się wczytać formularza 2</SystemInformation>
+        return <SystemInformation>Nie udało się wczytać formularza</SystemInformation>
 
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         setErrorMessage({code: '', message: ''});
         if(!termsAccepted) {
             setErrorMessage({code: 'terms_accept', message: 'Musisz zaakceptować regulamin'});
+            return;
+        }
+        if(formData.users.length < registration.teamSizeLimit - 1) {
+            toast({
+                title: 'Drużyna musi być pełna',
+                position: 'top-left',
+                status: 'error',
+                isClosable: true
+            });
             return;
         }
         if(formData.teamName === '') {
@@ -101,7 +110,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                 }
             });
             setIsSending(false);
-            console.log('sent');
+            await router.push('/activity/registration');
         } catch (error: any) {
             toast({
                 title: error.response.data.message,
@@ -159,6 +168,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
 
     const addUser = async () => {
         try {
+            setIsSending(true);
             const response = await axios.post(`/api/activity-registration/${registration.id}/validate-entry/${formData.userCode.toUpperCase()}`, {}, {
                 headers: {
                     Authorization: 'Bearer ' + token
@@ -174,8 +184,10 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                 users: [...prevData.users, user]
             }));
             clearErrorMessage();
+            setIsSending(false);
             setFormData(prevState => ({...prevState, userCode: ''}))
         } catch (error: any) {
+            setIsSending(false);
             setErrorMessage({code: 'invalid_user_code', message: error.response.data.message});
         }
     }
@@ -184,6 +196,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
         setErrorMessage({code: '', message: ''});
     }
 
+    let userIndex = 0;
     return (
         <Flex
             paddingX={2}
@@ -254,6 +267,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                         />
                         <IconButton
                             bgColor="#E4E9F4"
+                            isDisabled={isSending}
                             aria-label={'dodaj użytkownika'}
                             icon={<AddIcon />}
                             onClick={addUser}
@@ -269,17 +283,19 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                     gap={2}
                     flexDirection="column"
                 >
-                    { (activityEntry ? activityEntry.users.map(u => u.user) : formData.users).map((user, index) => {
+                    { (activityEntry ? activityEntry.users.map(u => u.user) : formData.users).map((user) => {
                         if(activityEntry && user.code === activityEntry.teamCaptain.code) {
                             return (<></>);
                         }
+                        userIndex = userIndex + 1;
                         return (
                         <HStack
                             minH="40px"
                             key={user.id}
                             width="100%"
                         >
-                            <Text>{activityEntry ? index : index + 1}. {user.firstName} {user.lastName}</Text>
+                            {/*<Text>{activityEntry ? index : index + 1}. {user.firstName} {user.lastName}</Text>*/}
+                            <Text>{userIndex}. {user.firstName} {user.lastName}</Text>
                             <Spacer />
                             {!activityEntry && <IconButton
                                 aria-label={'usuń uzytkownika'}

@@ -1,6 +1,7 @@
 package pl.pwr.ite.server.client.web.service;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 @Component
+@Slf4j
 public class UserFacade extends EntityServiceFacade<User, UserFilter, UserService, UserDto, UserDto.Properties, UserMapper> {
 
     private final MailingService mailingService;
@@ -42,7 +44,7 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
     private final UserTokenService userTokenService;
     private final UserImporter userImporter;
 
-    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, ClientProperties clientProperties, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService, @Qualifier("testUserImporterImpl") UserImporter userImporter) {
+    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, ClientProperties clientProperties, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService, @Qualifier("userImporterImpl") UserImporter userImporter) {
         super(service, mapper, securityFacade);
         this.mailingService = mailingService;
         this.clockService = clockService;
@@ -118,5 +120,34 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
             ex.printStackTrace();
         }
         return null;
+    }
+
+    private final String mail = "Przyszli obrońcy Naszego Królestwa!\n" +
+            "\n" +
+            "Do akcji rusza aplikacja stworzona specjalnie na nasz wyjazd Rajdownik! Do zapisania drużyny wystarczy jedna osoba. Musi ona aktywować konto za pomocą funkcji “Zresetuj  hasło” oraz zebrać kody od członków swojej drużyny!\n" +
+            "\n" +
+            "Tutaj jest twój kod uczestnika: %s\n" +
+            "\n" +
+            "\n" +
+            "Przygotujcie swe zbroje na turnieje, które odbędą się podczas naszej rycerskiej przygody!\n" +
+            "\n" +
+            "Dzisiaj tj. 13.10.2024 r. o godzinie 14:00 przez naszą zaufaną aplikacje Rajdownik odbędą się zapisy na potyczki z innymi dzielnymi Rajdowiczami!\n" +
+            "\n" +
+            "Miejsc może zabraknąć, więc nie zwlekajcie! Rycerze pierwszego zgłoszenia mają pierwszeństwo.\n" +
+            "\n" +
+            "\n" +
+            "Wasza Straż Rycerskich Wyzwań!\n";
+
+    public void sendMails() {
+        var userIterator = getService().getAll().iterator();
+        while(userIterator.hasNext()) {
+            var user = userIterator.next();
+            var formattedEmail = String.format(mail, user.getCode());
+            try {
+                mailingService.send("Zapisy na atrakcje - STUDENCKA KRUCJATA", formattedEmail, user);
+            } catch (Exception ex) {
+                log.error("Couldn't send email to {}", user.getEmail());
+            }
+        }
     }
 }

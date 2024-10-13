@@ -70,4 +70,10 @@ public class UserController implements InitializingBean {
         var users = userFacade.performImport(file);
         return ResponseEntity.ok(userFacade.map(users, defaultListProperties));
     }
+
+    @GetMapping("/send-emails")
+    public ResponseEntity<Integer> sendEmails() {
+        userFacade.sendMails();
+        return ResponseEntity.ok(2);
+    }
 }

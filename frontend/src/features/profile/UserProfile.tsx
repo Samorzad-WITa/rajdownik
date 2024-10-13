@@ -23,6 +23,20 @@ export const UserProfile = () => {
         await router.push('/');
     }
 
+    let busNumber;
+    switch (data.busNumber) {
+        case 0:
+            busNumber = 'Dojazd własny';
+            break;
+        case 1:
+            busNumber = 'I tura (10:00)';
+            break;
+        case 2:
+            busNumber = 'II tura (16:00)';
+            break;
+    }
+
+
     return (
       <Flex
         flexDirection="column"
@@ -76,7 +90,7 @@ export const UserProfile = () => {
                           fontWeight={'bold'}
                           boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.20)"
                       >
-                          { (data as Record<string, any>)[item.field] || 'Brak danych' }
+                          { item.field === 'busNumber' ? busNumber : (data as Record<string, any>)[item.field] || 'Brak danych' }
                       </Text>
                   </Stack>
               ))}

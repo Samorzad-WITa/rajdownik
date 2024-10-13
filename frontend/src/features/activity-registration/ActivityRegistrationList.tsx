@@ -13,6 +13,10 @@ export const ActivityRegistrationList = () => {
     if(!data || data?.length === 0)
         return <SystemInformation>Brak aktywnych zapisów na atrakcje</SystemInformation>
 
+    if(data?.filter(i => i.active).length === 0) {
+        return <SystemInformation>Brak aktywnych zapisów na atrakcje</SystemInformation>
+    }
+
     return (
         <Flex
             paddingX={2}
@@ -21,8 +25,8 @@ export const ActivityRegistrationList = () => {
             gap={5}
             flexDirection="column"
         >
-            { data?.map((item) => (
-                <Link
+            { data?.map((item) =>{
+                return item.active ? (<Link
                     key={item.id}
                     href={`/activity/registration/${item.id}`}
                 >
@@ -36,8 +40,8 @@ export const ActivityRegistrationList = () => {
                         </Text>
                         <Icon fontSize={28} as={ChevronRight} />
                     </Flex>
-                </Link>
-            ))}
+                </Link>) : (<></>);
+            })}
         </Flex>
     );
 }

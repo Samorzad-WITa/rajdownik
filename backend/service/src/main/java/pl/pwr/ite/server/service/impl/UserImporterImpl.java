@@ -56,11 +56,11 @@ public class UserImporterImpl implements UserImporter {
             user.setDietType(csvUser.getDietType());
             user.setCode(userService.generateCode(user));
 
-            if(csvUser.getBusNumber().equals("autokarem - I tura")) {
+            if(csvUser.getBusNumber().equals("Autokar - I tura")) {
                 user.setBusNumber(1);
-            } else if (csvUser.getBusNumber().equals("autokarem - II tura")) {
+            } else if (csvUser.getBusNumber().equals("Autokar - II tura")) {
                 user.setBusNumber(2);
-            } else if (csvUser.getBusNumber().equals("własny")) {
+            } else if (csvUser.getBusNumber().equals("Dojazd własny")) {
                 user.setBusNumber(0);
             }
             user = userService.saveAndFlush(user);
