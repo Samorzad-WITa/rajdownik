@@ -86,6 +86,10 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
             setErrorMessage({code: 'empty_team_name', message: 'Nazwa drużyny nie może być pusta'});
             return;
         }
+        if(formData.teamName.length > 50) {
+            setErrorMessage({code: 'empty_team_name', message: 'Nazwa drużyny zbyt długa (max 50 znaków)'});
+            return;
+        }
         if(formData.captainCode === '' && !selfCaptainChecked) {
             setErrorMessage({code: 'empty_team_captain', message: 'Drużyna musi mieć kapitana'});
             return;
