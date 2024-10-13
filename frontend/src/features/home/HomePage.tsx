@@ -42,8 +42,8 @@ export const HomePage = () => {
 
 const cards = [
     {
-        title: 'Przydatne linki',
-        href: '/links',
+        title: 'Zapisy na atrakcje',
+        href: '/activity/registration',
         isExternal: false
     },
     {
@@ -52,8 +52,8 @@ const cards = [
         isExternal: false
     },
     {
-        title: 'Zapisy na atrakcje',
-        href: '/activity/registration',
+        title: 'Przydatne linki',
+        href: '/links',
         isExternal: false
     },
     {

@@ -35,6 +35,10 @@ public class ActivityRegistration extends EntityBase {
     private Integer teamSizeLimit;
 
     @Column(nullable = false)
+    @ColumnDefault("true")
+    private Boolean requireFullTeam;
+
+    @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean active;
 

@@ -73,7 +73,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
             setErrorMessage({code: 'terms_accept', message: 'Musisz zaakceptować regulamin'});
             return;
         }
-        if(formData.users.length < registration.teamSizeLimit - 1) {
+        if(registration.requireFullTeam && (formData.users.length < registration.teamSizeLimit - 1)) {
             toast({
                 title: 'Drużyna musi być pełna',
                 position: 'top-left',

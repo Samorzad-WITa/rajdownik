@@ -25,6 +25,8 @@ public class ActivityRegistrationDto {
 
     private Integer teamSizeLimit;
 
+    private boolean requireFullTeam;
+
     private String termsAndRulesUrl;
 
     private LocalDateTime startTime;

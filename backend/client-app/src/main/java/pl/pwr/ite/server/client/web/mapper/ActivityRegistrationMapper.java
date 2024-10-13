@@ -20,6 +20,7 @@ public class ActivityRegistrationMapper extends MapperBase<ActivityRegistration,
 
         if(properties.isIncludeDetails()) {
             destination.setTeamSizeLimit(source.getTeamSizeLimit());
+            destination.setRequireFullTeam(source.getRequireFullTeam());
             destination.setTermsAndRulesUrl(source.getTermsAndRulesUrl());
             destination.setStartTime(source.getStartTime());
         }

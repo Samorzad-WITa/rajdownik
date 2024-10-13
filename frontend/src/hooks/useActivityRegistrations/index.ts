@@ -6,6 +6,7 @@ export type ActivityRegistrationItem = {
     teamSizeLimit: number;
     termsAndRulesUrl: string;
     active: boolean;
+    requireFullTeam: boolean;
     startTime: string;
 }
 
