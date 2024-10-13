@@ -63,7 +63,7 @@ export default function Home() {
           </Text>
         </VStack>
         <InfoCard item={activity} />
-        { activity.activityRegistration &&
+        { (activity.activityRegistration && activity.activityRegistration.active ) &&
           <Link
             href={`/activity/registration/${activity.activityRegistration.id}`}
             bgColor="#1F3565"
