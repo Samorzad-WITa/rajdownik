@@ -1,5 +1,4 @@
-import { Link } from '@chakra-ui/next-js';
-import {Box, Circle, Flex, Icon, Image, Text, VStack} from '@chakra-ui/react';
+import {Box, Circle, Flex, Icon, Link, Image, Text, VStack} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 export const Footer = () => {

@@ -8,8 +8,7 @@ import {
 } from '@/components';
 import {fetchActivities, useActivities, useActivity} from '@/hooks';
 import {nextItemExists, previousItemExists, getPolishWeekday, capitalize} from '@/utils';
-import { Link } from '@chakra-ui/next-js';
-import {Flex, Icon, VStack, Text, Center} from '@chakra-ui/react';
+import {Flex, Icon, VStack, Text, Link, Center} from '@chakra-ui/react';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Head from 'next/head';

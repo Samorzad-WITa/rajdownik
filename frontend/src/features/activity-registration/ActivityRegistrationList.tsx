@@ -1,9 +1,8 @@
-import {Flex, Icon, Text} from "@chakra-ui/react";
+import {Flex, Icon, Text, Link} from "@chakra-ui/react";
 import {useActivityRegistrations} from "@/hooks";
 import {PendingSpinner, SystemInformation} from "@/components";
 import {useAuth} from "@/features/context/AuthProvider";
 import {ChevronRight} from "lucide-react";
-import {Link} from "@chakra-ui/next-js";
 
 export const ActivityRegistrationList = () => {
 

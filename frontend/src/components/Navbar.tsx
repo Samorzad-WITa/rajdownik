@@ -1,5 +1,4 @@
-import { Link } from '@chakra-ui/next-js';
-import { Box, Flex, Image } from '@chakra-ui/react';
+import { Box, Flex, Image, Link } from '@chakra-ui/react';
 import {BackButton} from "@/components/BackButton";
 import {useAppContext} from "@/features/context/AppContext";
 
