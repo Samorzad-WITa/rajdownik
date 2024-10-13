@@ -6,9 +6,13 @@ import Head from 'next/head';
 import {useAppContext} from "@/features/context/AppContext";
 import {useEffect} from "react";
 import {ActivityRegistration} from "@/features/activity-registration";
+import {useRouter} from "next/router";
+import {PendingSpinner} from "@/components";
 
 export default function Page() {
     const { setProps } = useAppContext();
+    const router = useRouter();
+    const { id } = router.query;
     useEffect(() => {
         setProps((prevProps) => ({
             ...prevProps,
@@ -20,6 +24,14 @@ export default function Page() {
         }));
     }, [setProps]);
 
+    if(!id) {
+        return (
+            <chakra.main>
+                <PendingSpinner />
+            </chakra.main>
+        )
+    }
+
     return (
         <>
             <Head>
@@ -29,7 +41,7 @@ export default function Page() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <chakra.main>
-                <ActivityRegistration />
+                <ActivityRegistration id={id}/>
             </chakra.main>
         </>
     );

@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 import pl.pwr.ite.server.mapping.MappingProperties;
 import pl.pwr.ite.server.model.enums.UserDisplayContactType;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -23,7 +22,7 @@ public class UserDisplayDto {
 
     private String label;
 
-    private String group;
+    private String groupName;
 
     private UserDisplayContactType contactType;
 }

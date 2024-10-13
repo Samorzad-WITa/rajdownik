@@ -33,12 +33,12 @@ type FormError = {
     message: string;
 }
 
-export const ActivityRegistration = () => {
-    const router = useRouter();
-    const { id } = router.query;
+export const ActivityRegistration = ({id} : {id:string | string[]}) => {
     const { token } = useAuth(true);
+
+
     const { data: activityEntry, isPending: isActivityEntryPending } = useActivityEntry(token!, id);
-    const { data: activityRegistration, isPending: isActivityRegistrationPending } = useActivityRegistration(id, !activityEntry, token!);
+    const { data: activityRegistration, isPending: isActivityRegistrationPending } = useActivityRegistration(id, true, token!);
     const { data: authenticatedUser, isPending: isAuthenticatedUserPending} = useAuthenticatedUser(token!);
     const toast = useToast();
 
@@ -61,10 +61,10 @@ export const ActivityRegistration = () => {
     if(!activityEntry && !activityRegistration)
         return <SystemInformation>Nie udało się wczytać formularza</SystemInformation>
 
-    const registration = !activityEntry ? activityRegistration : activityEntry.activityRegistration;
+    const registration = activityRegistration;
 
     if(!registration)
-        return <SystemInformation>Nie udało się wczytać formularza</SystemInformation>
+        return <SystemInformation>Nie udało się wczytać formularza 2</SystemInformation>
 
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -203,7 +203,7 @@ export const ActivityRegistration = () => {
                             bgColor="#EDEDED"
                             placeholder='Nazwa drużyny'
                             type={'text'}
-                            value={formData.teamName}
+                            value={!activityEntry ? formData.teamName : activityEntry.teamName}
                             name='teamName'
                             onChange={handleChange}
                         />
@@ -241,9 +241,9 @@ export const ActivityRegistration = () => {
                         fontSize={20}
                         color="#1F3565"
                     >
-                        Skład drużyny ({activityEntry ? formData.users.length - 1 : formData.users.length}/{registration.teamSizeLimit - 1})
+                        Skład drużyny ({activityEntry ? activityEntry.users.length - 1 : formData.users.length}/{registration.teamSizeLimit - 1})
                     </Text>
-                    { (formData.users.length < registration.teamSizeLimit - 1) && <HStack>
+                    { (!activityEntry && (formData.users.length < registration.teamSizeLimit - 1)) && <HStack>
                         <Input
                             type='text'
                             onChange={handleChange}
@@ -269,7 +269,7 @@ export const ActivityRegistration = () => {
                     gap={2}
                     flexDirection="column"
                 >
-                    { formData.users.map((user, index) => {
+                    { (activityEntry ? activityEntry.users.map(u => u.user) : formData.users).map((user, index) => {
                         if(activityEntry && user.code === activityEntry.teamCaptain.code) {
                             return (<></>);
                         }
