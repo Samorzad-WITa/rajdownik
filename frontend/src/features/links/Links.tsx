@@ -135,6 +135,11 @@ const groups = [
                 href: 'https://drive.google.com/file/d/1cRbp6fcJ5vg8c0iPSWdcQJNzznBhIv9O/view?usp=sharing',
                 icon: <LinkIcon />
             },
+            {
+                label: 'Szachoszermierkolej',
+                href: 'https://drive.google.com/file/d/1yp3qsKa9euswyg03_Azte1kFL0xpYwPA/view?usp=sharing',
+                icon: <LinkIcon />
+            },
         ]
     }
 ]
