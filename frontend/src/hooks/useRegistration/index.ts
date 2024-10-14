@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 export type RegistrationItem = {
     title: string;
     startTime: string;
+    hasPreAccess: boolean;
     parts: RegistrationPartItem[];
 };
 

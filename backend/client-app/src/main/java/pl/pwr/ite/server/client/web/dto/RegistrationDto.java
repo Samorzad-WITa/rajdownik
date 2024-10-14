@@ -19,5 +19,7 @@ public class RegistrationDto {
 
     private LocalDateTime startTime;
 
+    private Boolean hasPreAccess;
+
     private RegistrationPartDto[] parts;
 }
