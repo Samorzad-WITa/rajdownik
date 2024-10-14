@@ -8,5 +8,6 @@ public enum Permission {
     AnnouncementEdit,
     UserDisplayEdit,
     UserEdit,
-    RegistrationPartEdit
+    RegistrationPartEdit,
+    RegistrationEdit
 }

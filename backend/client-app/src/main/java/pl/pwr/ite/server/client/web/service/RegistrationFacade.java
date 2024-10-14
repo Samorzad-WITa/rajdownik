@@ -10,6 +10,7 @@ import pl.pwr.ite.server.model.entity.registration.Registration;
 import pl.pwr.ite.server.model.entity.registration.RegistrationEntry;
 import pl.pwr.ite.server.model.entity.registration.RegistrationLock;
 import pl.pwr.ite.server.model.entity.registration.RegistrationPart;
+import pl.pwr.ite.server.model.enums.Permission;
 import pl.pwr.ite.server.model.filter.RegistrationFilter;
 import pl.pwr.ite.server.service.*;
 import pl.pwr.ite.server.web.EntityServiceFacade;
@@ -87,7 +88,7 @@ public class RegistrationFacade extends EntityServiceFacade<Registration, Regist
         entry.setPart(part);
         entry.setUser(userToRegister);
         entry.setRegisteredBy(userService.findById(authenticatedUser.getId()));
-
+        userToRegister.setRoomNumber(part.getTitle());
         return registrationEntryService.saveAndFlush(entry);
     }
 
@@ -113,7 +114,9 @@ public class RegistrationFacade extends EntityServiceFacade<Registration, Regist
         if(!(entry.getRegisteredById().equals(authenticatedUserId) || entry.getUserId().equals(authenticatedUserId))) {
             throw new IllegalArgumentException(String.format("Entry with ID '%s' can't be removed by this user.", entryId));
         }
-
+        var user = entry.getUser();
+        user.setRoomNumber(null);
+        user = userService.saveAndFlush(user);
         registrationEntryService.delete(entry);
     }
 
@@ -170,5 +173,20 @@ public class RegistrationFacade extends EntityServiceFacade<Registration, Regist
     private LocalDateTime getExpireTime(RegistrationPart part) {
         var defaultDuration = part.getRegistration().getDefaultPartLockDuration();
         return clockService.getCurrentTime().plusSeconds(defaultDuration);
+    }
+
+    @Transactional
+    public void sync() {
+        securityFacade.checkAccess(Permission.RegistrationEdit);
+
+        var entries = registrationEntryService.getAll();
+        var iterator = entries.iterator();
+        while(iterator.hasNext()) {
+            var entry = iterator.next();
+            var user = entry.getUser();
+            user.setRoomNumber(entry.getPart().getTitle());
+            user = userService.saveAndFlush(user);
+        }
+
     }
 }

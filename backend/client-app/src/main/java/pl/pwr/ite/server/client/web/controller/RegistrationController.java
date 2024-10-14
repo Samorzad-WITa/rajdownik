@@ -66,4 +66,10 @@ public class RegistrationController implements InitializingBean {
     public void deleteEntry(@PathVariable UUID entryId) {
         registrationFacade.removeEntry(entryId);
     }
+
+    @PostMapping("/sync-users")
+    public ResponseEntity<String> syncUsers() {
+        registrationFacade.sync();
+        return ResponseEntity.ok("gotowe.");
+    }
 }
