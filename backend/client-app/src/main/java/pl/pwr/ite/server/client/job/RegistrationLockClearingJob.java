@@ -18,7 +18,7 @@ public class RegistrationLockClearingJob {
     private final RegistrationLockService registrationLockService;
     private final ClockService clockService;
 
-    @Scheduled(fixedDelay = 1 * 1000)
+//    @Scheduled(fixedDelay = 1 * 1000)
     public void executeJob() {
         var locks = registrationLockService.getAllInOngoingRegistration(clockService.getCurrentTime());
         if(locks.isEmpty()) {
