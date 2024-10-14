@@ -44,7 +44,7 @@ public class User extends EntityBase {
     @Column(length = 64)
     private String passwordHash;
 
-    @Column(length = 5)
+    @Column(length = 30)
     private String roomNumber;
 
     @Column(length = 15)
