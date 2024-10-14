@@ -3,6 +3,7 @@ import {useQuery} from "@tanstack/react-query";
 export type RegistrationPartItem = {
     id: string;
     title: string;
+    visible: boolean;
     entryLimit: number;
     locked: boolean;
     entryAmount: number;

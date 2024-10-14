@@ -23,6 +23,8 @@ public class RegistrationPartDto {
 
     private Integer entryLimit;
 
+    private Boolean visible;
+
     private boolean isLocked;
 
     private boolean ownsLock;

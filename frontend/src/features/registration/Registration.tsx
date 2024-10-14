@@ -70,9 +70,7 @@ export const Registration = () => {
                     paddingX={2}
                     gap={8}
                 >
-                    {data.parts.map((part) =>
-                        <RegistrationPart registration={data} key={part.id} part={part} refetchRegistrationMethod={refetchRegistration}/>
-                    )}
+                    {data.parts.map((part) => part.visible && <RegistrationPart registration={data} key={part.id} part={part} refetchRegistrationMethod={refetchRegistration}/>)}
                 </Flex>
         ) : (
             <>

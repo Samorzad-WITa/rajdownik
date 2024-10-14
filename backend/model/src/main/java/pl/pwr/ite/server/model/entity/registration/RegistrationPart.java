@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 import pl.pwr.ite.server.model.entity.EntityBase;
 
 import java.util.HashSet;
@@ -26,6 +27,10 @@ public class RegistrationPart extends EntityBase {
 
     @Column(nullable = false, length = 100)
     private String title;
+
+    @Column(nullable = false)
+    @ColumnDefault("true")
+    private Boolean visible;
 
     @OneToOne(mappedBy = "part")
     private RegistrationLock lock;
