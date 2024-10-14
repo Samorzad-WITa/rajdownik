@@ -31,8 +31,18 @@ export const RegistrationPart = ({ part, registration, refetchRegistrationMethod
     const isLocked = part.locked;
     const lockDuration = 15;
 
-    const timeout = () => {
-        setUnfolded(false);
+    const timeout = async () => {
+        try {
+            await axios.post(`/api/registration/release-part/${part.id}`, {}, {
+                headers: {
+                    Authorization: 'Bearer ' + token,
+                }
+            });
+            setUnfolded(false);
+            refetchRegistrationMethod(part.id);
+        } catch (error: any) {
+            showToast(error.response.data.message, 'error');
+        }
     }
 
     const refreshLock = () => {

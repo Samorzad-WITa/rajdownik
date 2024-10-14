@@ -43,6 +43,7 @@ export const Registration = () => {
     }, [data]);
 
     const refetchRegistration = (partId: string) => {
+        refetch();
         setUnfoldedPart(partId);
     }
 
