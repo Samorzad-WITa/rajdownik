@@ -31,5 +31,8 @@ export default async function handler(
 }
 
 const errorCodes: ErrorItem[] = [
-
+    {
+        apiCode: 'user_already_owns_a_lock',
+        message: 'Blokujesz już inny domek'
+    }
 ]
