@@ -70,11 +70,6 @@ const groups = [
                 icon: <LinkIcon />
             },
             {
-                label: 'Facebook - Samorząd SSWArch (W1)',
-                href: 'https://www.facebook.com/SSWArch?locale=pl_PL',
-                icon: <LinkIcon />
-            },
-            {
                 label: 'Facebook - Samorząd WITa (W4)',
                 href: 'https://www.facebook.com/samorzad.wita?locale=pl_PL',
                 icon: <LinkIcon />

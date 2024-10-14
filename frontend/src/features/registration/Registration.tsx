@@ -62,7 +62,7 @@ export const Registration = () => {
             >
                 { data ? data.title : 'Błąd' }
             </Text>
-        { data?.hasPreAccess && isActive ? (
+        { data?.hasPreAccess || isActive ? (
                 <Flex
                     flexDirection="column"
                     width="100%"
