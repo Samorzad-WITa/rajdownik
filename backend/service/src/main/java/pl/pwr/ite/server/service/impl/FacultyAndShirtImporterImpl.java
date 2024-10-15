@@ -60,7 +60,7 @@ public class FacultyAndShirtImporterImpl implements UserImporter {
         @CsvBindByPosition(position = 3)
         private String email;
 
-        @CsvBindByPosition(position = 9)
+        @CsvBindByPosition(position = 10)
         private String iceNumber;
     }
 }
