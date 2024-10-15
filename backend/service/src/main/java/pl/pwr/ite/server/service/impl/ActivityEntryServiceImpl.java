@@ -11,6 +11,7 @@ import pl.pwr.ite.server.model.querydsl.FilterableRepository;
 import pl.pwr.ite.server.model.repository.ActivityEntryRepository;
 import pl.pwr.ite.server.service.ActivityEntryService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -43,5 +44,17 @@ public class ActivityEntryServiceImpl extends FilterableEntityServiceBase<Activi
                 path.teamName.eq(teamName),
                 path.activityRegistrationId.eq(activityRegistrationId)
         )).fetchFirst() != null;
+    }
+
+    @Override
+    public List<ActivityEntry> getQualifiedByUserId(UUID userId) {
+        var aePath = QActivityEntry.activityEntry;
+        var aeuPath = QActivityEntryUser.activityEntryUser;
+        return createQuery().select(aePath).from(aePath)
+                .leftJoin(aeuPath).on(aeuPath.activityEntryId.eq(aePath.id))
+                .where(Expressions.allOf(
+                        aePath.qualified.isTrue(),
+                        aeuPath.userId.eq(userId)
+                )).fetch();
     }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 import pl.pwr.ite.server.model.entity.EntityBase;
 import pl.pwr.ite.server.model.entity.User;
 
@@ -34,6 +35,10 @@ public class ActivityEntry extends EntityBase {
 
     @Column(insertable = false, updatable = false, nullable = false, name = "team_captain_id")
     private UUID teamCaptainId;
+
+    @Column(nullable = false)
+    @ColumnDefault("false")
+    private Boolean qualified;
 
     @OneToMany(mappedBy = "activityEntry")
     private Set<ActivityEntryUser> users = new HashSet<>();

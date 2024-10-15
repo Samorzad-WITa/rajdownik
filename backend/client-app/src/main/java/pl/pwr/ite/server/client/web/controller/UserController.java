@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.pwr.ite.server.client.web.dto.PasswordResetDto;
-import pl.pwr.ite.server.client.web.dto.UserDataDto;
-import pl.pwr.ite.server.client.web.dto.UserDisplayDto;
-import pl.pwr.ite.server.client.web.dto.UserDto;
+import pl.pwr.ite.server.client.web.dto.*;
 import pl.pwr.ite.server.client.web.service.UserFacade;
 import pl.pwr.ite.server.mapping.MappingProperties;
 import pl.pwr.ite.server.service.MappingService;
@@ -36,9 +33,12 @@ public class UserController implements InitializingBean {
         defaultSingleProperties = mappingService.createProperties(UserDto.Properties.class)
                 .setIncludeData(false)
                 .setIncludeDetails(true)
+                .setIncludeActivityEntries(true)
                 .as(UserDataDto.Properties.class)
                 .setIncludeData(true)
-                .setIncludeUser(false);
+                .setIncludeUser(false)
+                .as(ActivityEntryDto.Properties.class)
+                .setIncludeActivityRegistration(true);
 
         defaultListProperties = mappingService.createProperties(UserDto.Properties.class)
                 .setIncludeData(false)

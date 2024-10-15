@@ -39,8 +39,4 @@ const errorCodes: ErrorItem[] = [
         apiCode: 'user_already_registered',
         message: 'Użytkownik jest już zapisany'
     },
-    {
-        apiCode: '',
-        message: ''
-    }
 ]

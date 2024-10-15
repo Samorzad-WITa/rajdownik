@@ -14,6 +14,7 @@ public class UserDto {
     public static abstract class Properties implements MappingProperties {
         private boolean includeData;
         private boolean includeDetails;
+        private boolean includeActivityEntries;
     }
 
     private UUID id;
@@ -38,5 +39,5 @@ public class UserDto {
 
     private Integer busNumber;
 
-//    private UserDataDto[] data;
+    private ActivityEntryDto[] activityEntries;
 }

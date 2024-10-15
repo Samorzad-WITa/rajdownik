@@ -1,9 +1,11 @@
-import {Button, Center, Circle, Flex, Image, Stack, Text, VStack} from "@chakra-ui/react";
+import {Button, Center, Circle, Flex, HStack, Icon, Image, Link, Stack, Text, VStack} from "@chakra-ui/react";
 import {useAuth} from "@/features/context/AuthProvider";
 import {useRouter} from "next/router";
 import {useAuthenticatedUser} from "@/hooks/useUser";
 import {PendingSpinner} from "@/components";
 import React, {useEffect, useState} from "react";
+import {format, isPast, parseISO} from "date-fns/index";
+import {ChevronRight} from "lucide-react";
 
 export const UserProfile = () => {
     const router = useRouter();
@@ -93,6 +95,33 @@ export const UserProfile = () => {
                           { item.field === 'busNumber' ? busNumber : (data as Record<string, any>)[item.field] || 'Brak danych' }
                       </Text>
                   </Stack>
+              ))}
+          </Flex>
+          <Text fontWeight={'bold'} fontSize={20} marginTop="5vh" color="#1F3565" marginBottom={3}>
+              Atrakcje
+          </Text>
+          <Flex flexDirection="column" gap={5} color="#1F3565">
+              {data.activityEntries.map((entry) => (
+                  <Link
+                      key={entry.activityRegistration.title}
+                      href={`/activity/registration/${entry.activityRegistration.id}`}
+                      textDecoration="none"
+                      _hover={{ textDecoration: "none" }}
+                      _focus={{ boxShadow: "none" }}
+                  >
+                      <HStack
+                          color="#1F3565"
+                          backgroundColor="#E4E9F4"
+                          borderRadius={30}
+                          padding={2}
+                          fontSize={14}
+                          fontWeight={'bold'}
+                          boxShadow="0px 10px 20px 0px rgba(0, 0, 0, 0.15)"
+                      >
+                          <Text flex={1} align="left" padding={1} paddingLeft={2}>{entry.activityRegistration.title}</Text>
+                          <Icon fontSize={28} as={ChevronRight} alignSelf="flex-end"/>
+                      </HStack>
+                  </Link>
               ))}
           </Flex>
           <Button

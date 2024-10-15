@@ -52,6 +52,7 @@ public class ActivityEntryFacade extends EntityServiceFacade<ActivityEntry, Acti
         var activityEntry = new ActivityEntry();
         activityEntry.setTeamName(dto.getTeamName());
         activityEntry.setActivityRegistration(activityRegistration);
+        activityEntry.setQualified(false);
 
         var teamCaptain = userService.findByCode(dto.getTeamCaptain().getCode());
         if(teamCaptain == null) {

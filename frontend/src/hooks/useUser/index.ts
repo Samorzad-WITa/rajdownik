@@ -1,5 +1,6 @@
 import {useQuery, UseQueryOptions} from "@tanstack/react-query";
 import {useRouter} from "next/router";
+import {ActivityEntryItem} from "@/hooks/useActivityEntry";
 
 
 export type UserItem = {
@@ -13,6 +14,7 @@ export type UserItem = {
     profileUrl: string;
     dietType: string;
     busNumber: number;
+    activityEntries: ActivityEntryItem[];
 }
 
 const fetchAuthenticatedUser = async (token: string) => {
