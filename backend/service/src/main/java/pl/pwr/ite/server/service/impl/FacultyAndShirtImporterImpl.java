@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.pwr.ite.server.model.entity.User;
-import pl.pwr.ite.server.model.entity.UserRole;
-import pl.pwr.ite.server.model.enums.UserType;
 import pl.pwr.ite.server.service.UserImporter;
 import pl.pwr.ite.server.service.UserService;
 
@@ -32,12 +30,11 @@ public class FacultyAndShirtImporterImpl implements UserImporter {
         var iterator = objects.iterator();
         while(iterator.hasNext()) {
             var csvUser = iterator.next();
-            var user = userService.findByEmail(csvUser.getEmail());
+            var user = userService.findByEmail(csvUser.getEmail().trim());
             if(user == null) {
                 continue;
             }
-            user.setFaculty(csvUser.getFaculty());
-            user.setShirtSize(csvUser.getShirtSize());
+            user.setIceNumber(csvUser.getIceNumber());
             user = userService.saveAndFlush(user);
             importedUsers.add(user);
         }
@@ -63,10 +60,7 @@ public class FacultyAndShirtImporterImpl implements UserImporter {
         @CsvBindByPosition(position = 3)
         private String email;
 
-        @CsvBindByPosition(position = 5)
-        private String faculty;
-
-        @CsvBindByPosition(position = 10)
-        private String shirtSize;
+        @CsvBindByPosition(position = 9)
+        private String iceNumber;
     }
 }

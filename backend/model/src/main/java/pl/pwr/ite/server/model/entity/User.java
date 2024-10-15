@@ -47,6 +47,9 @@ public class User extends EntityBase {
     @Column(length = 30)
     private String roomNumber;
 
+    @Column(length = 50)
+    private String iceNumber;
+
     @Column(length = 15)
     private String dietType;
 
