@@ -57,7 +57,7 @@ public class FacultyAndShirtImporterImpl implements UserImporter {
     @Data
     public static class CsvObject {
 
-        @CsvBindByPosition(position = 3)
+        @CsvBindByPosition(position = 2)
         private String email;
 
         @CsvBindByPosition(position = 9)
