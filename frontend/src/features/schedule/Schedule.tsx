@@ -31,8 +31,8 @@ export const Schedule = (props: {
             _focus={{ boxShadow: "none" }}
         >
           <HStack
-            // color={isPast(parseISO(item.timeTo)) ? '#616f7b' : '#1F3565'}
-            color="#1F3565"
+            color={isPast(parseISO(item.timeTo)) ? '#616f7b' : '#1F3565'}
+            // color="#1F3565"
             backgroundColor="#E4E9F4"
             borderRadius={15}
             padding={2}

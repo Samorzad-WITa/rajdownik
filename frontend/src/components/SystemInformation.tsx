@@ -6,7 +6,7 @@ export const SystemInformation = (props: { children: React.ReactNode }) => {
       fontSize={20}
       fontWeight="bold"
       textAlign="center"
-      color="#101d27"
+      color="#1F3565"
     >
       {props.children}
     </AbsoluteCenter>

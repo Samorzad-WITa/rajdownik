@@ -34,7 +34,11 @@ export const InfoCard = ({
       </CardHeader>
       <Divider borderWidth={1.5} borderRadius={100} color="#FFFFFF"/>
       <CardBody px={0} pt={3}>
-        <Text color="#FFFFFF">{item.description}</Text>
+        <Text color="#FFFFFF">
+          {item.description.split("\\n").map(text =>
+            <p>{text}</p>
+          )}
+        </Text>
       </CardBody>
     </Card>
   );

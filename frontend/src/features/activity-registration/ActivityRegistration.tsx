@@ -217,7 +217,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                             borderRadius={30}
                             isDisabled={!!activityEntry}
                             border={0}
-                            bgColor="#EDEDED"
+                            bgColor="#E4E9F4"
                             placeholder='Nazwa drużyny'
                             type={'text'}
                             value={!activityEntry ? formData.teamName : activityEntry.teamName}
@@ -239,7 +239,7 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                         <Input
                             borderRadius={30}
                             border={0}
-                            bgColor="#EDEDED"
+                            bgColor="#E4E9F4"
                             placeholder='Kod uczestnika'
                             type={'text'}
                             isDisabled={!!activityEntry || selfCaptainChecked}
@@ -267,7 +267,8 @@ export const ActivityRegistration = ({id} : {id:string | string[]}) => {
                             placeholder='Kod użytkownika'
                             name='userCode'
                             value={formData.userCode}
-                            paddingLeft={0}
+                            borderRadius={50}
+                            paddingLeft={3}
                         />
                         <IconButton
                             bgColor="#E4E9F4"
