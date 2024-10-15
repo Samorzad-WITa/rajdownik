@@ -53,6 +53,12 @@ public class User extends EntityBase {
     @Column
     private Integer busNumber;
 
+    @Column(length = 30)
+    private String shirtSize;
+
+    @Column(length = 20)
+    private String faculty;
+
     @OneToMany(mappedBy = "user")
     private Set<UserData> data = new HashSet<>();
 

@@ -102,7 +102,7 @@ const groups = [
         groupLinks: [
             {
                 label: 'Turniej Flanek',
-                href: 'https://drive.google.com/file/d/1KDwRjGs6rYagpfGydQnQo4DuF8Xi5G3J/view?usp=sharing',
+                href: 'https://drive.google.com/file/d/12BgqAVL3-mYWp4r6V2ybITwFR3C6aTxE/view?usp=sharing',
                 icon: <LinkIcon />
             },
             {
@@ -127,7 +127,7 @@ const groups = [
             },
             {
                 label: 'Gra Nocna',
-                href: 'https://drive.google.com/file/d/1cRbp6fcJ5vg8c0iPSWdcQJNzznBhIv9O/view?usp=sharing',
+                href: 'https://drive.google.com/file/d/14TJugR1_AXWAHKJ9jW6iGR0EdBvxg5_9/view?usp=sharing',
                 icon: <LinkIcon />
             },
             {

@@ -44,7 +44,7 @@ public class UserFacade extends EntityServiceFacade<User, UserFilter, UserServic
     private final UserTokenService userTokenService;
     private final UserImporter userImporter;
 
-    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, ClientProperties clientProperties, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService, @Qualifier("userImporterImpl") UserImporter userImporter) {
+    public UserFacade(UserService service, UserMapper mapper, MailingService mailingService, ClockService clockService, SecurityFacade securityFacade, ClientProperties clientProperties, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, UserTokenService userTokenService, @Qualifier("facultyAndShirtImporterImpl") UserImporter userImporter) {
         super(service, mapper, securityFacade);
         this.mailingService = mailingService;
         this.clockService = clockService;
