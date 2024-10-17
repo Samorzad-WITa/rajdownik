@@ -102,7 +102,7 @@ const groups = [
         groupLinks: [
             {
                 label: 'Turniej Flanek',
-                href: 'https://drive.google.com/file/d/12BgqAVL3-mYWp4r6V2ybITwFR3C6aTxE/view?usp=sharing',
+                href: 'https://drive.google.com/file/d/1u5DJ09tkhx6B7BU3x-5TJ_BnkKePCgqC/view?usp=sharing',
                 icon: <LinkIcon />
             },
             {
@@ -112,7 +112,7 @@ const groups = [
             },
             {
                 label: 'Beerpong',
-                href: 'https://drive.google.com/file/d/1HrR9Gt5KTlUF_AVSQdZSKRJSEy37FbsF/view?usp=sharing',
+                href: 'https://drive.google.com/file/d/1_V0Wao10LoWdmo0ApD7Sa20NThboPwyn/view?usp=sharing',
                 icon: <LinkIcon />
             },
             {
@@ -122,7 +122,7 @@ const groups = [
             },
             {
                 label: 'Turniej siatkówki',
-                href: 'https://drive.google.com/file/d/1j3h3j-jUxRvQ1s_fs2bndnh3EWFt6IvP/view?usp=sharing',
+                href: 'https://drive.google.com/file/d/1k1E5D-oPp-GyWk6eZTiViXBaii6lipbu/view?usp=sharing',
                 icon: <LinkIcon />
             },
             {
@@ -132,7 +132,7 @@ const groups = [
             },
             {
                 label: 'Szachoszermierkolej',
-                href: 'https://drive.google.com/file/d/1yp3qsKa9euswyg03_Azte1kFL0xpYwPA/view?usp=sharing',
+                href: 'https://drive.google.com/file/d/1mV4Z-kHO0NVY0imRdfsZQezvjrzMM_1P/view?usp=sharing',
                 icon: <LinkIcon />
             },
         ]
